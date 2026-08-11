@@ -78,7 +78,7 @@
     .modal-backdrop[hidden]{display:none}.modal-backdrop{position:fixed;inset:0;z-index:1000;background:var(--overlay);display:flex;align-items:center;justify-content:center;padding:18px}.modal{width:min(440px,100%);background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-lg);overflow:hidden}.modal-head{padding:18px 18px 8px}.modal-title{font-size:17px;font-weight:780;letter-spacing:-.015em}.modal-body{padding:0 18px 18px;color:var(--muted);line-height:1.55;white-space:pre-line}.modal-actions{display:flex;justify-content:flex-end;gap:8px;padding:12px 18px;border-top:1px solid var(--line2);background:var(--panel2)}
     .view-tabs{display:flex;align-items:center;gap:4px;width:max-content;max-width:100%;padding:4px;margin:0 0 12px;background:var(--tab-bg);border:1px solid var(--line);border-radius:10px}.view-tab{border:0;background:transparent;color:var(--muted);border-radius:7px;padding:7px 16px;cursor:pointer;font-weight:700}.view-tab:hover{color:var(--text)}.view-tab.active{background:var(--tab-active);color:var(--text);box-shadow:0 1px 2px rgba(16,24,40,.08)}.tab-panel[hidden]{display:none}.tab-panel{min-width:0}
     .charts-panel{margin:0}.charts-grid{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:12px;width:100%;margin:0;padding:10px}
-    .chart-card{flex:0 1 520px;width:520px;max-width:520px;min-width:460px;height:450px;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(16,24,40,.035)}
+    .chart-card{flex:1 1 430px;width:430px;max-width:520px;min-width:400px;height:450px;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(16,24,40,.035)}
     .chart-card.editing{height:auto;min-height:610px;border-color:var(--accent-line);box-shadow:0 0 0 2px var(--accent-soft)}
     .chart-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:12px 13px;border-bottom:1px solid var(--line2);flex:0 0 auto;min-height:61px}.chart-card-title{font-weight:760;font-size:14px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.chart-card-meta{font-size:11px;color:var(--muted);margin-top:3px}.chart-card-actions{display:flex;gap:6px;flex:0 0 auto}.chart-card-actions .btn{padding:5px 9px;min-height:30px;font-size:12px}
     .chart-body{padding:10px 11px 11px;min-height:0;flex:1 1 auto;display:flex;align-items:center;justify-content:center;overflow:auto}.chart-svg{display:block;width:100%;height:auto;max-width:100%;overflow:visible}.chart-empty{width:100%;padding:54px 12px;text-align:center;color:var(--muted)}
@@ -143,7 +143,7 @@
       <div class="kpi"><div class="label">Total Visits</div><div id="kpiVisits" class="value">0</div><div id="kpiVisitsFoot" class="foot">Current report</div></div>
       <div class="kpi"><div class="label">Delivered</div><div id="kpiDelivered" class="value">0</div><div id="kpiDeliveredFoot" class="foot">0.0%</div></div>
       <div class="kpi"><div class="label">Overall Cancellation</div><div id="kpiCancellation" class="value">0.0%</div><div class="foot">All non-Delivered ÷ all visits</div></div>
-      <div class="kpi"><div class="label">Total Time</div><div id="kpiTime" class="value">0:00</div><div class="foot">Start to end duration</div></div>
+      <div class="kpi"><div class="label">Total Time</div><div id="kpiTime" class="value">0:00</div><div id="kpiTimeFoot" class="foot">Valid start/end rows</div></div>
       <div class="kpi"><div class="label">15 Min Units</div><div id="kpiUnits" class="value">0</div><div class="foot">Rounded from combined time</div></div>
     </div>
 
@@ -160,7 +160,7 @@
             <div>Click <b>Add Excel</b> to load a report.</div>
           </div>
         </div>
-        <div class="footer-note">Cancellation % and Overall Cancellation % appear only on provider TOTAL rows. Productivity is shown against 5–40 hr/week targets and appears only on TOTAL rows.</div>
+        <div class="footer-note">Cancellation % and Overall Cancellation % appear only on provider TOTAL rows. Productivity is shown against 5–40 hr/week targets and appears only on TOTAL rows. Time metrics exclude rows with missing or invalid start/end times.</div>
       </section>
 
       <aside class="side">
@@ -212,18 +212,19 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 (() => {
   'use strict';
 
-  const REQUIRED = ['provider','service','status','start','end'];
+  const REQUIRED = ['provider','service','status','enteredOn','start','end'];
+  const REQUIRED_LABELS = ['Provider','Service','Status','Entered on','START_TIME','END_TIME'];
   const TARGETS = [5,10,15,20,25,30,35,40];
   const CHART_METRICS={visits:'Total Visits',delivered:'Delivered Visits',cancellations:'Cancelled Visits',cancellationPct:'Cancellation %',units:'15 Min Units',hours:'Total Hours',productivity:'Productivity %'};
-  const CHART_GROUPS={provider:'Provider',service:'Service',status:'Status'};
+  const CHART_GROUPS={provider:'Provider',service:'Service',status:'Status',month:'Month'};
   const CHART_COLORS=['var(--series-1)','var(--series-2)','var(--series-3)','var(--series-4)','var(--series-5)','var(--series-6)','var(--series-7)','var(--series-8)','var(--series-9)','var(--series-10)'];
-  const DB_NAME = 'ProviderVisitReportingDashboard';
+  const DB_NAME = 'ProviderVisitReportingDashboardV2';
   const DB_VERSION = 1;
-  const FILE_STORE = 'files';
+  const REPORT_STORE = 'reports';
   const META_STORE = 'meta';
 
   const state = {
-    rows:[], savedFiles:[], selectedFile:null,
+    rows:[], savedReports:[], selectedReportId:null,
     lastLoad:null,
     db:null, persistenceAvailable:true, charts:[], editingChartId:null, chartDraft:null, activeTab:'summary',
     theme:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'
@@ -235,7 +236,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     errorBox:$('errorBox'), addFilesBtn:$('addFilesBtn'), themeToggle:$('themeToggle'), themeIcon:$('themeIcon'), themeText:$('themeText'),
     monthFilter:$('monthFilter'), providerFilter:$('providerFilter'), serviceFilter:$('serviceFilter'), searchInput:$('searchInput'), clearFiltersBtn:$('clearFiltersBtn'),
     kpiProviders:$('kpiProviders'), kpiVisits:$('kpiVisits'), kpiVisitsFoot:$('kpiVisitsFoot'), kpiDelivered:$('kpiDelivered'),
-    kpiDeliveredFoot:$('kpiDeliveredFoot'), kpiCancellation:$('kpiCancellation'), kpiTime:$('kpiTime'), kpiUnits:$('kpiUnits'),
+    kpiDeliveredFoot:$('kpiDeliveredFoot'), kpiCancellation:$('kpiCancellation'), kpiTime:$('kpiTime'), kpiTimeFoot:$('kpiTimeFoot'), kpiUnits:$('kpiUnits'),
     reportTable:$('reportTable'), emptyState:$('emptyState'), tableMeta:$('tableMeta'), statusMeta:$('statusMeta'),
     statusList:$('statusList'), fileInput:$('fileInput'),
     reportSelect:$('reportSelect'), removeReportBtn:$('removeReportBtn'), deleteAllReportsBtn:$('deleteAllReportsBtn'), exportCsvBtn:$('exportCsvBtn'),
@@ -245,91 +246,100 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     confirmModalCancel:$('confirmModalCancel'), confirmModalConfirm:$('confirmModalConfirm')
   };
 
-  function cleanText(v){ return String(v ?? '').replace(/\u00a0/g,' ').trim(); }
-  function normHeader(v){ return cleanText(v).toLowerCase().replace(/[\s_\-]+/g,' ').replace(/[^a-z0-9 ]/g,'').trim(); }
+  function cleanText(v){return String(v??'').replace(/\u00a0/g,' ').replace(/\s+/g,' ').trim()}
+  function normalizedKey(v){return cleanText(v).toLocaleLowerCase()}
+  function normHeader(v){return cleanText(v).toLowerCase().replace(/[\s_\-]+/g,' ').replace(/[^a-z0-9 ]/g,'').trim()}
   function headerKey(v){
     const n=normHeader(v);
-    if(n==='provider') return 'provider';
-    if(n==='service') return 'service';
-    if(n==='status') return 'status';
-    if(['entered on','enteredon'].includes(n)) return 'enteredOn';
-    if(['start time','starttime','start'].includes(n)) return 'start';
-    if(['end time','endtime','end'].includes(n)) return 'end';
+    if(n==='provider')return'provider';
+    if(n==='service')return'service';
+    if(n==='status')return'status';
+    if(['entered on','enteredon'].includes(n))return'enteredOn';
+    if(['start time','starttime','start'].includes(n))return'start';
+    if(['end time','endtime','end'].includes(n))return'end';
     return null;
+  }
+  function canonicalValue(v,map,blankLabel=''){
+    const raw=cleanText(v);
+    if(!raw)return {key:'',label:blankLabel};
+    const key=normalizedKey(raw);
+    if(!map.has(key))map.set(key,key==='delivered'?'Delivered':raw);
+    return {key,label:map.get(key)};
   }
   function parseTime(v){
-    if(v==='' || v==null) return null;
-    if(typeof v==='number' && Number.isFinite(v)){ const f=((v%1)+1)%1; return Math.round(f*86400)/60; }
-    if(v instanceof Date && !Number.isNaN(v.getTime())) return v.getHours()*60+v.getMinutes()+v.getSeconds()/60;
-    const s=cleanText(v); if(!s) return null;
-    const m=s.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?\s*([ap]m)?$/i);
-    if(m){ let h=Number(m[1]),min=Number(m[2]),sec=Number(m[3]||0); const ap=(m[4]||'').toLowerCase(); if(ap){if(h===12)h=0;if(ap==='pm')h+=12;} if(h<24&&min<60&&sec<60)return h*60+min+sec/60; }
-    const d=new Date(s); if(!Number.isNaN(d.getTime())) return d.getHours()*60+d.getMinutes()+d.getSeconds()/60;
-    return null;
+    if(v===''||v==null)return null;
+    if(typeof v==='number'&&Number.isFinite(v)){const f=((v%1)+1)%1;return Math.round(f*86400)/60}
+    if(v instanceof Date&&!Number.isNaN(v.getTime()))return v.getHours()*60+v.getMinutes()+v.getSeconds()/60;
+    const s=cleanText(v);if(!s)return null;
+    let m=s.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?\s*([ap]m)?$/i);
+    if(!m)m=s.match(/T(\d{1,2}):(\d{2})(?::(\d{2}))?(?:\.\d+)?(?:Z|[+\-]\d{2}:?\d{2})?$/i);
+    if(!m)return null;
+    let h=Number(m[1]),min=Number(m[2]),sec=Number(m[3]||0);const ap=(m[4]||'').toLowerCase();
+    if(ap){if(h<1||h>12)return null;if(h===12)h=0;if(ap==='pm')h+=12}
+    if(h<0||h>=24||min<0||min>=60||sec<0||sec>=60)return null;
+    return h*60+min+sec/60;
+  }
+  function dateFromParts(y,m,d){
+    y=Number(y);m=Number(m);d=Number(d);
+    if(!Number.isInteger(y)||!Number.isInteger(m)||!Number.isInteger(d)||y<1900||y>9999||m<1||m>12||d<1||d>31)return null;
+    const out=new Date(y,m-1,d);
+    return out.getFullYear()===y&&out.getMonth()===m-1&&out.getDate()===d?out:null;
   }
   function parseEnteredDate(v){
-    if(v==='' || v==null) return null;
-    if(v instanceof Date && !Number.isNaN(v.getTime())) return new Date(v.getFullYear(),v.getMonth(),v.getDate());
-    if(typeof v==='number' && Number.isFinite(v)){
+    if(v===''||v==null)return null;
+    if(v instanceof Date&&!Number.isNaN(v.getTime()))return dateFromParts(v.getFullYear(),v.getMonth()+1,v.getDate());
+    if(typeof v==='number'&&Number.isFinite(v)){
       const serial=Math.floor(v);
-      if(serial>0 && serial<100000){
-        const d=new Date(Date.UTC(1899,11,30)+serial*86400000);
-        return Number.isNaN(d.getTime())?null:new Date(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate());
-      }
-      return null;
+      if(serial<=0||serial>=100000)return null;
+      const d=new Date(Date.UTC(1899,11,30)+serial*86400000);
+      return dateFromParts(d.getUTCFullYear(),d.getUTCMonth()+1,d.getUTCDate());
     }
-    const s=cleanText(v); if(!s)return null;
-    let m=s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
-    if(m){const d=new Date(Number(m[1]),Number(m[2])-1,Number(m[3]));return Number.isNaN(d.getTime())?null:d;}
-    m=s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{2,4})/);
-    if(m){let y=Number(m[3]);if(y<100)y+=y>=70?1900:2000;const d=new Date(y,Number(m[1])-1,Number(m[2]));return Number.isNaN(d.getTime())?null:d;}
-    const d=new Date(s); return Number.isNaN(d.getTime())?null:new Date(d.getFullYear(),d.getMonth(),d.getDate());
+    const s=cleanText(v);if(!s)return null;
+    let m=s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})(?:\D.*)?$/);
+    if(m)return dateFromParts(m[1],m[2],m[3]);
+    m=s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{2,4})(?:\D.*)?$/);
+    if(m){let y=Number(m[3]);if(y<100)y+=y>=70?1900:2000;return dateFromParts(y,m[1],m[2])}
+    return null;
   }
+  function dateIso(d){return d?`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`:''}
   function monthKeyFromDate(d){return d?`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`:''}
   function monthLabel(key){
-    const m=String(key||'').match(/^(\d{4})-(\d{2})$/);
-    if(!m)return '';
-    return new Date(Number(m[1]),Number(m[2])-1,1).toLocaleDateString([], {month:'long',year:'numeric'});
+    const m=String(key||'').match(/^(\d{4})-(\d{2})$/);if(!m)return'';
+    return new Date(Number(m[1]),Number(m[2])-1,1).toLocaleDateString([],{month:'long',year:'numeric'});
   }
-  function durationMinutes(start,end){ if(start==null||end==null)return 0; let d=end-start; if(d<0)d+=1440; return d; }
+  function durationMinutes(start,end){if(start==null||end==null)return null;let d=end-start;if(d<0)d+=1440;return d}
   function pct(n,d){return d?n/d:0}
-  function fmtPct(v){return `${(v*100).toFixed(1)}%`}
+  function fmtPct(v){return`${(v*100).toFixed(1)}%`}
   function fmtInt(v){return Math.round(v).toLocaleString()}
-  function fmtTime(totalMinutes){const m=Math.max(0,Math.round(totalMinutes));return `${Math.floor(m/60)}:${String(m%60).padStart(2,'0')}`}
-  function fmtDate(v){if(!v)return '';const d=new Date(v);return Number.isNaN(d.getTime())?'':d.toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}
+  function fmtTime(totalMinutes){const m=Math.max(0,Math.round(totalMinutes||0));return`${Math.floor(m/60)}:${String(m%60).padStart(2,'0')}`}
+  function fmtDate(v){if(!v)return'';const d=new Date(v);return Number.isNaN(d.getTime())?'':d.toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}
   function esc(s){return String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]))}
-  function extOK(name){return /\.(xlsx|xlsm)$/i.test(name)}
+  function extOK(name){return/\.(xlsx|xlsm)$/i.test(name)}
+  function newId(){return globalThis.crypto?.randomUUID?.()||`report-${Date.now()}-${Math.random().toString(36).slice(2,10)}`}
   function setSource(kind,title,detail){els.sourceDot.className='dot '+(kind||'');els.sourceTitle.textContent=title;els.sourceDetail.textContent=detail}
   function showError(msg){if(!msg){els.errorBox.classList.remove('show');els.errorBox.textContent='';return}els.errorBox.textContent=msg;els.errorBox.classList.add('show')}
 
   let confirmResolver=null;
   function closeConfirmModal(result){
     if(els.confirmModal.hidden)return;
-    els.confirmModal.hidden=true;
-    document.body.style.overflow='';
-    const resolve=confirmResolver; confirmResolver=null;
-    if(resolve)resolve(Boolean(result));
+    els.confirmModal.hidden=true;document.body.style.overflow='';
+    const resolve=confirmResolver;confirmResolver=null;if(resolve)resolve(Boolean(result));
   }
   function confirmAction({title='Confirm',message='',confirmText='Delete'}){
     if(confirmResolver)closeConfirmModal(false);
-    els.confirmModalTitle.textContent=title;
-    els.confirmModalBody.textContent=message;
-    els.confirmModalConfirm.textContent=confirmText;
-    els.confirmModal.hidden=false;
-    document.body.style.overflow='hidden';
-    requestAnimationFrame(()=>els.confirmModalCancel.focus());
+    els.confirmModalTitle.textContent=title;els.confirmModalBody.textContent=message;els.confirmModalConfirm.textContent=confirmText;
+    els.confirmModal.hidden=false;document.body.style.overflow='hidden';requestAnimationFrame(()=>els.confirmModalCancel.focus());
     return new Promise(resolve=>{confirmResolver=resolve});
   }
 
-  // Browser storage. Reports are keyed by filename, so reimporting the same filename replaces the previous copy.
   function openDatabase(){
     return new Promise((resolve,reject)=>{
-      if(!('indexedDB' in window)){reject(new Error('IndexedDB is unavailable in this browser.'));return;}
+      if(!('indexedDB'in window)){reject(new Error('IndexedDB is unavailable in this browser.'));return}
       const req=indexedDB.open(DB_NAME,DB_VERSION);
       req.onupgradeneeded=()=>{
         const db=req.result;
-        if(!db.objectStoreNames.contains(FILE_STORE)) db.createObjectStore(FILE_STORE,{keyPath:'name'});
-        if(!db.objectStoreNames.contains(META_STORE)) db.createObjectStore(META_STORE,{keyPath:'key'});
+        if(!db.objectStoreNames.contains(REPORT_STORE))db.createObjectStore(REPORT_STORE,{keyPath:'id'});
+        if(!db.objectStoreNames.contains(META_STORE))db.createObjectStore(META_STORE,{keyPath:'key'});
       };
       req.onsuccess=()=>resolve(req.result);
       req.onerror=()=>reject(req.error||new Error('Could not open browser storage.'));
@@ -337,211 +347,215 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
   function dbRequest(store,mode,action){
     return new Promise((resolve,reject)=>{
-      if(!state.db){resolve(null);return;}
-      const tx=state.db.transaction(store,mode), os=tx.objectStore(store), req=action(os);
-      req.onsuccess=()=>resolve(req.result);
-      req.onerror=()=>reject(req.error||new Error('Browser storage operation failed.'));
+      if(!state.db){resolve(null);return}
+      let result;
+      const tx=state.db.transaction(store,mode),os=tx.objectStore(store);
+      tx.oncomplete=()=>resolve(result);
+      tx.onerror=()=>reject(tx.error||new Error('Browser storage operation failed.'));
+      tx.onabort=()=>reject(tx.error||new Error('Browser storage operation was aborted.'));
+      try{
+        const req=action(os);
+        req.onsuccess=()=>{result=req.result};
+        req.onerror=()=>reject(req.error||new Error('Browser storage request failed.'));
+      }catch(err){reject(err)}
     });
   }
-  const dbGetAllFiles=()=>dbRequest(FILE_STORE,'readonly',os=>os.getAll());
-  const dbPutFile=record=>dbRequest(FILE_STORE,'readwrite',os=>os.put(record));
-  const dbDeleteFile=name=>dbRequest(FILE_STORE,'readwrite',os=>os.delete(name));
-  const dbClearFiles=()=>dbRequest(FILE_STORE,'readwrite',os=>os.clear());
+  const dbGetAllReports=()=>dbRequest(REPORT_STORE,'readonly',os=>os.getAll());
+  const dbPutReport=record=>dbRequest(REPORT_STORE,'readwrite',os=>os.put(record));
+  const dbDeleteReport=id=>dbRequest(REPORT_STORE,'readwrite',os=>os.delete(id));
+  const dbClearReports=()=>dbRequest(REPORT_STORE,'readwrite',os=>os.clear());
   const dbGetMeta=key=>dbRequest(META_STORE,'readonly',os=>os.get(key));
   const dbPutMeta=(key,value)=>dbRequest(META_STORE,'readwrite',os=>os.put({key,value}));
 
-  function localNameList(root,name){return [...root.getElementsByTagNameNS('*',name)]}
+  function localNameList(root,name){return[...root.getElementsByTagNameNS('*',name)]}
   function parseXml(text,name){const doc=new DOMParser().parseFromString(text,'application/xml');const err=doc.querySelector('parsererror');if(err)throw new Error(`Invalid XML in ${name}`);return doc}
   function joinPath(base,target){
-    if(/^\//.test(target)) return target.replace(/^\//,'');
-    const parts=(base+target).split('/'), out=[];
-    for(const p of parts){if(!p||p==='.')continue;if(p==='..')out.pop();else out.push(p)}
+    if(/^\//.test(target))return target.replace(/^\//,'');
+    const parts=(base+target).split('/'),out=[];
+    for(const part of parts){if(!part||part==='.')continue;if(part==='..')out.pop();else out.push(part)}
     return out.join('/');
   }
   function colIndex(ref){const m=String(ref||'').match(/^([A-Z]+)/i);if(!m)return 0;let n=0;for(const ch of m[1].toUpperCase())n=n*26+(ch.charCodeAt(0)-64);return n-1}
   function sharedText(si){return localNameList(si,'t').map(n=>n.textContent||'').join('')}
   function cellValue(c,shared){
     const t=c.getAttribute('t')||'';
-    if(t==='inlineStr') return localNameList(c,'t').map(n=>n.textContent||'').join('');
-    const v=localNameList(c,'v')[0]?.textContent ?? '';
+    if(t==='inlineStr')return localNameList(c,'t').map(n=>n.textContent||'').join('');
+    const v=localNameList(c,'v')[0]?.textContent??'';
     if(t==='s'){const i=Number(v);return Number.isFinite(i)?(shared[i]??''):''}
-    if(t==='str'||t==='e'||t==='d') return v;
-    if(t==='b') return v==='1';
-    if(v==='') return '';
-    const num=Number(v); return Number.isFinite(num)?num:v;
+    if(t==='str'||t==='e'||t==='d')return v;
+    if(t==='b')return v==='1';
+    if(v==='')return'';
+    const num=Number(v);return Number.isFinite(num)?num:v;
   }
-
   async function workbookAoAs(arrayBuffer){
-    if(typeof JSZip==='undefined') throw new Error('Embedded Excel ZIP reader did not initialize.');
+    if(typeof JSZip==='undefined')throw new Error('Embedded Excel ZIP reader did not initialize.');
     const zip=await JSZip.loadAsync(arrayBuffer);
     const getText=async path=>{const f=zip.file(path);return f?await f.async('string'):null};
-    const wbText=await getText('xl/workbook.xml'); if(!wbText) throw new Error('This file is not a supported .xlsx/.xlsm workbook.');
-    const relText=await getText('xl/_rels/workbook.xml.rels'); if(!relText) throw new Error('Workbook relationship file is missing.');
-    const wb=parseXml(wbText,'workbook.xml'), rel=parseXml(relText,'workbook.xml.rels');
-    const relMap=new Map();
-    for(const r of localNameList(rel,'Relationship')) relMap.set(r.getAttribute('Id'),r.getAttribute('Target'));
-    let shared=[]; const ssText=await getText('xl/sharedStrings.xml'); if(ssText){const ss=parseXml(ssText,'sharedStrings.xml');shared=localNameList(ss,'si').map(sharedText)}
+    const wbText=await getText('xl/workbook.xml');if(!wbText)throw new Error('This file is not a supported .xlsx/.xlsm workbook.');
+    const relText=await getText('xl/_rels/workbook.xml.rels');if(!relText)throw new Error('Workbook relationship file is missing.');
+    const wb=parseXml(wbText,'workbook.xml'),rel=parseXml(relText,'workbook.xml.rels'),relMap=new Map();
+    for(const r of localNameList(rel,'Relationship'))relMap.set(r.getAttribute('Id'),r.getAttribute('Target'));
+    let shared=[];const ssText=await getText('xl/sharedStrings.xml');if(ssText){const ss=parseXml(ssText,'sharedStrings.xml');shared=localNameList(ss,'si').map(sharedText)}
     const sheets=[];
     for(const s of localNameList(wb,'sheet')){
       const name=s.getAttribute('name')||'Sheet';
       const rid=s.getAttribute('r:id')||s.getAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships','id');
-      const target=relMap.get(rid); if(!target)continue;
-      const path=joinPath('xl/',target), sheetText=await getText(path); if(!sheetText)continue;
-      const doc=parseXml(sheetText,path), aoa=[];
+      const target=relMap.get(rid);if(!target)continue;
+      const path=joinPath('xl/',target),sheetText=await getText(path);if(!sheetText)continue;
+      const doc=parseXml(sheetText,path),aoa=[];
       for(const row of localNameList(doc,'row')){
-        const rowNum=Math.max(1,Number(row.getAttribute('r'))||aoa.length+1), arr=[];
-        for(const c of localNameList(row,'c')) arr[colIndex(c.getAttribute('r'))]=cellValue(c,shared);
+        const rowNum=Math.max(1,Number(row.getAttribute('r'))||aoa.length+1),arr=[];
+        for(const c of localNameList(row,'c'))arr[colIndex(c.getAttribute('r'))]=cellValue(c,shared);
         aoa[rowNum-1]=arr;
       }
       sheets.push({name,aoa});
     }
     return sheets;
   }
-
   function detectHeader(aoa){
     const limit=Math.min(20,aoa.length);
     for(let r=0;r<limit;r++){
       const row=aoa[r]||[],map={};
       row.forEach((v,i)=>{const k=headerKey(v);if(k&&map[k]==null)map[k]=i});
-      if(REQUIRED.every(k=>map[k]!=null))return {rowIndex:r,map};
+      if(REQUIRED.every(k=>map[k]!=null))return{rowIndex:r,map};
     }
     return null;
   }
-
   async function workbookRows(arrayBuffer,fileName){
-    const sheets=await workbookAoAs(arrayBuffer),out=[],usedSheets=[],skippedSheets=[];
+    const sheets=await workbookAoAs(arrayBuffer),out=[],usedSheets=[],skippedSheets=[],invalidDates=[];
+    const providerNames=new Map(),serviceNames=new Map(),statusNames=new Map();
     for(const item of sheets){
       const aoa=item.aoa;
       if(!aoa.length){skippedSheets.push(item.name);continue}
       const hdr=detectHeader(aoa);
       if(!hdr){skippedSheets.push(item.name);continue}
       usedSheets.push(item.name);
-      const {map,rowIndex}=hdr;
+      const{map,rowIndex}=hdr;
       for(let i=rowIndex+1;i<aoa.length;i++){
-        const row=aoa[i]||[],provider=cleanText(row[map.provider]);
-        if(!provider)continue;
-        const service=cleanText(row[map.service]),status=cleanText(row[map.status]),start=parseTime(row[map.start]),end=parseTime(row[map.end]);
-        const enteredOn=map.enteredOn==null?null:parseEnteredDate(row[map.enteredOn]),monthKey=monthKeyFromDate(enteredOn);
-        out.push({provider,service,status,statusKey:status.toLowerCase(),enteredOn:enteredOn?enteredOn.toISOString().slice(0,10):'',monthKey,minutes:durationMinutes(start,end),file:fileName,sheet:item.name,row:i+1});
+        const row=aoa[i]||[],providerRaw=cleanText(row[map.provider]);
+        if(!providerRaw)continue;
+        const provider=canonicalValue(providerRaw,providerNames);
+        const service=canonicalValue(row[map.service],serviceNames,'(Blank Service)');
+        const status=canonicalValue(row[map.status],statusNames,'(Blank Status)');
+        const enteredOn=parseEnteredDate(row[map.enteredOn]);
+        if(!enteredOn){invalidDates.push(`${item.name} row ${i+1}`);continue}
+        const start=parseTime(row[map.start]),end=parseTime(row[map.end]),minutes=durationMinutes(start,end);
+        out.push({
+          provider:provider.label,providerKey:provider.key,
+          service:service.label,serviceKey:service.key||'__blank__',
+          status:status.label,statusKey:status.key||'__blank__',
+          enteredOn:dateIso(enteredOn),monthKey:monthKeyFromDate(enteredOn),minutes,
+          file:fileName,sheet:item.name,row:i+1
+        });
       }
     }
-    return {rows:out,usedSheets,skippedSheets};
+    if(!usedSheets.length)throw new Error(`No worksheet contains all required columns: ${REQUIRED_LABELS.join(', ')}.`);
+    if(invalidDates.length){
+      const sample=invalidDates.slice(0,5).join(', '),more=invalidDates.length>5?` and ${invalidDates.length-5} more`:'';
+      throw new Error(`Entered on is missing or invalid on ${invalidDates.length} visit row${invalidDates.length===1?'':'s'} (${sample}${more}). Fix the source data and import again.`);
+    }
+    if(!out.length)throw new Error('No visit rows were found beneath the detected headers.');
+    return{rows:out,usedSheets,skippedSheets,invalidTimeRows:out.filter(r=>r.minutes==null).length};
   }
   async function parseFile(file){return workbookRows(await file.arrayBuffer(),file.name)}
 
-  function selectedRecord(){return state.savedFiles.find(f=>f.name===state.selectedFile)||null}
-  function sortReports(list){
-    return list.sort((a,b)=>{
-      const ad=new Date(a.importedAt||0).getTime()||0, bd=new Date(b.importedAt||0).getTime()||0;
-      return bd-ad || a.name.localeCompare(b.name);
-    });
-  }
-  function syncSelectedRows(){ state.rows=selectedRecord()?.rows||[]; }
+  function selectedRecord(){return state.savedReports.find(r=>r.id===state.selectedReportId)||null}
+  function reportLabel(rec){return`${rec.name} • ${fmtDate(rec.importedAt)}`}
+  function sortReports(list){return list.sort((a,b)=>(new Date(b.importedAt||0)-new Date(a.importedAt||0))||a.name.localeCompare(b.name))}
+  function syncSelectedRows(){state.rows=selectedRecord()?.rows||[]}
   function updateSelectedSource(){
-    if(!state.savedFiles.length){
+    if(!state.savedReports.length){
       setSource(state.persistenceAvailable?'warn':'bad','No report selected','Add an Excel file to begin.');
-      els.lastRefresh.textContent='Not loaded';
-      return;
+      els.lastRefresh.textContent='Not loaded';return;
     }
-    const rec=selectedRecord();
-    if(rec){
-      setSource('good','Ready',`${(rec.rows?.length||0).toLocaleString()} visit rows • ${rec.sheets||0} worksheet${rec.sheets===1?'':'s'}`);
-      els.lastRefresh.textContent=rec.importedAt?`Updated ${fmtDate(rec.importedAt)}`:'Loaded';
-    }
+    const rec=selectedRecord();if(!rec)return;
+    const details=[`${rec.rows.length.toLocaleString()} visit rows`,`${rec.sheets} worksheet${rec.sheets===1?'':'s'}`];
+    if(rec.skippedSheets?.length)details.push(`${rec.skippedSheets.length} skipped sheet${rec.skippedSheets.length===1?'':'s'}`);
+    if(rec.invalidTimeRows)details.push(`${rec.invalidTimeRows} invalid time row${rec.invalidTimeRows===1?'':'s'} excluded from time metrics`);
+    setSource(rec.invalidTimeRows?'warn':'good',rec.name,details.join(' • '));
+    els.lastRefresh.textContent=rec.importedAt?`Imported ${fmtDate(rec.importedAt)}`:'Loaded';
   }
-
-  async function reloadSavedFiles(preferredSelection=null){
-    if(state.db) state.savedFiles=sortReports(await dbGetAllFiles()||[]);
-    else state.savedFiles=sortReports(state.savedFiles);
-    if(preferredSelection && state.savedFiles.some(f=>f.name===preferredSelection)) state.selectedFile=preferredSelection;
-    if(!state.selectedFile || !state.savedFiles.some(f=>f.name===state.selectedFile)) state.selectedFile=state.savedFiles[0]?.name||null;
-    syncSelectedRows();
-    populateFilters(true);
-    render();
-    updateSelectedSource();
-    if(state.db) try{await dbPutMeta('selectedFile',state.selectedFile)}catch{}
+  async function reloadSavedReports(preferredId=null){
+    if(state.db)state.savedReports=sortReports(await dbGetAllReports()||[]);else state.savedReports=sortReports(state.savedReports);
+    if(preferredId&&state.savedReports.some(r=>r.id===preferredId))state.selectedReportId=preferredId;
+    if(!state.selectedReportId||!state.savedReports.some(r=>r.id===state.selectedReportId))state.selectedReportId=state.savedReports[0]?.id||null;
+    syncSelectedRows();populateFilters(true);render();updateSelectedSource();
+    if(state.db)try{await dbPutMeta('selectedReportId',state.selectedReportId)}catch{}
   }
-
   async function importFileArray(filesIn){
     const good=[...filesIn].filter(f=>extOK(f.name));
     if(!good.length)throw new Error('No .xlsx or .xlsm files found.');
-    els.addFilesBtn.disabled=true;
-    showError(''); setSource('warn','Importing Excel data…',`${good.length} file${good.length===1?'':'s'} to read`);
-    const imported=[], errors=[];
-    for(const file of good){
-      try{
-        const parsed=await parseFile(file);
-        const record={
-          name:file.name,
-          rows:parsed.rows,
-          sheets:parsed.usedSheets.length,
-          skipped:parsed.skippedSheets.length,
-          size:file.size||0,
-          lastModified:file.lastModified||0,
-          importedAt:new Date().toISOString()
-        };
-        if(state.db) await dbPutFile(record);
-        else{
-          const i=state.savedFiles.findIndex(f=>f.name===record.name);
-          if(i>=0)state.savedFiles[i]=record;else state.savedFiles.push(record);
-        }
-        imported.push(file.name);
-      }catch(err){errors.push(`${file.name}: ${err.message||String(err)}`)}
-    }
-    const preferred=imported.length?imported[imported.length-1]:state.selectedFile;
-    await reloadSavedFiles(preferred);
-    state.lastLoad=new Date();
-    if(imported.length){
-      updateSelectedSource();
-      els.lastRefresh.textContent=`Updated ${state.lastLoad.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}`;
-    }
-    if(errors.length) showError(`Some files were not imported. ${errors.join(' | ')}`);
-    els.addFilesBtn.disabled=false;
+    els.addFilesBtn.disabled=true;showError('');setSource('warn','Importing Excel data…',`${good.length} file${good.length===1?'':'s'} to read`);
+    const imported=[],errors=[];
+    try{
+      for(const file of good){
+        try{
+          const parsed=await parseFile(file),record={
+            id:newId(),name:file.name,rows:parsed.rows,sheets:parsed.usedSheets.length,skippedSheets:parsed.skippedSheets,
+            invalidTimeRows:parsed.invalidTimeRows,size:file.size||0,lastModified:file.lastModified||0,importedAt:new Date().toISOString()
+          };
+          if(state.db)await dbPutReport(record);else state.savedReports.push(record);
+          imported.push(record);
+        }catch(err){errors.push(`${file.name}: ${err.message||String(err)}`)}
+      }
+      if(imported.length){
+        await reloadSavedReports(imported[imported.length-1].id);state.lastLoad=new Date();updateSelectedSource();
+      }else{render();updateSelectedSource()}
+      if(errors.length)showError(`${imported.length?'Some files were not imported. ':'No files were imported. '}${errors.join(' | ')}`);
+    }finally{els.addFilesBtn.disabled=false}
   }
-
   function addFiles(){showError('');els.fileInput.value='';els.fileInput.click()}
 
-  function availableMonths(){return [...new Set(state.rows.map(r=>r.monthKey).filter(Boolean))].sort().reverse()}
+  function availableMonths(){return[...new Set(state.rows.map(r=>r.monthKey).filter(Boolean))].sort().reverse()}
   function latestMonth(){return availableMonths()[0]||''}
-  function monthScopedRows(){
-    const m=els.monthFilter.value;
-    return m?state.rows.filter(r=>r.monthKey===m):state.rows;
-  }
+  function monthScopedRows(){const m=els.monthFilter.value;return m?state.rows.filter(r=>r.monthKey===m):state.rows}
   function populateFilters(reset=false){
     const months=availableMonths(),curM=reset?(months[0]||''):els.monthFilter.value,curP=reset?'':els.providerFilter.value,curS=reset?'':els.serviceFilter.value;
     if(reset)els.searchInput.value='';
     els.monthFilter.innerHTML='<option value="">All Months</option>'+months.map(v=>`<option value="${esc(v)}">${esc(monthLabel(v))}</option>`).join('');
-    els.monthFilter.disabled=!months.length;
-    els.monthFilter.value=months.includes(curM)?curM:'';
+    els.monthFilter.disabled=!months.length;els.monthFilter.value=months.includes(curM)?curM:'';
     const scoped=monthScopedRows();
     const providers=[...new Set(scoped.map(r=>r.provider).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
     const services=[...new Set(scoped.map(r=>r.service).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
     els.providerFilter.innerHTML='<option value="">All Providers</option>'+providers.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');
     els.serviceFilter.innerHTML='<option value="">All Services</option>'+services.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');
-    if(providers.includes(curP))els.providerFilter.value=curP;
-    if(services.includes(curS))els.serviceFilter.value=curS;
+    if(providers.includes(curP))els.providerFilter.value=curP;if(services.includes(curS))els.serviceFilter.value=curS;
   }
   function baseFilteredRows(){
-    const p=els.providerFilter.value,s=els.serviceFilter.value,q=els.searchInput.value.trim().toLowerCase();
-    return monthScopedRows().filter(r=>{if(p&&r.provider!==p)return false;if(s&&r.service!==s)return false;if(q&&!(`${r.provider} ${r.service}`.toLowerCase().includes(q)))return false;return true});
+    const p=els.providerFilter.value,s=els.serviceFilter.value,q=normalizedKey(els.searchInput.value);
+    return monthScopedRows().filter(r=>{if(p&&r.provider!==p)return false;if(s&&r.service!==s)return false;if(q&&!normalizedKey(`${r.provider} ${r.service}`).includes(q))return false;return true});
   }
 
+  function newAggregate(){return{visits:0,delivered:0,minutes:0,invalidTimes:0,counts:new Map()}}
+  function addToAggregate(a,row){
+    a.visits++;if(row.statusKey==='delivered')a.delivered++;
+    if(row.minutes==null)a.invalidTimes++;else a.minutes+=row.minutes;
+    a.counts.set(row.status,(a.counts.get(row.status)||0)+1);
+  }
+  function finalizeAggregate(a,statuses){
+    const counts={};for(const status of statuses)counts[status]=a.counts.get(status)||0;
+    return{visits:a.visits,delivered:a.delivered,minutes:a.minutes,invalidTimes:a.invalidTimes,units:Math.round(a.minutes/15),counts,cancel:pct(a.visits-a.delivered,a.visits)};
+  }
   function summarize(rows,overallCancelOverride=null,statusesOverride=null){
     const statuses=statusesOverride||[...new Set(rows.map(r=>r.status).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
-    const allTotal=rows.length,allDelivered=rows.filter(r=>r.statusKey==='delivered').length;
-    const localOverallCancel=pct(allTotal-allDelivered,allTotal),overallCancel=overallCancelOverride==null?localOverallCancel:overallCancelOverride;
-    const providers=[...new Set(rows.map(r=>r.provider).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),report=[];
-    function aggregate(group){
-      const total=group.length,delivered=group.filter(r=>r.statusKey==='delivered').length,minutes=group.reduce((a,r)=>a+r.minutes,0),units=Math.round(minutes/15),counts={};
-      statuses.forEach(s=>counts[s]=0); group.forEach(r=>{if(r.status&&counts[r.status]!=null)counts[r.status]++});
-      return {visits:total,delivered,minutes,units,counts,cancel:pct(total-delivered,total)};
+    const providerMap=new Map(),all=newAggregate();
+    for(const row of rows){
+      addToAggregate(all,row);
+      let p=providerMap.get(row.providerKey);
+      if(!p){p={provider:row.provider,total:newAggregate(),services:new Map()};providerMap.set(row.providerKey,p)}
+      addToAggregate(p.total,row);
+      let svc=p.services.get(row.serviceKey);
+      if(!svc){svc={service:row.service,total:newAggregate()};p.services.set(row.serviceKey,svc)}
+      addToAggregate(svc.total,row);
     }
-    for(const provider of providers){
-      const pr=rows.filter(r=>r.provider===provider),services=[...new Set(pr.map(r=>r.service).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
-      for(const service of services){const a=aggregate(pr.filter(r=>r.service===service));report.push({provider,service,isTotal:false,...a})}
-      const a=aggregate(pr); report.push({provider,service:'TOTAL',isTotal:true,...a,overallCancel});
+    const localOverallCancel=pct(all.visits-all.delivered,all.visits),overallCancel=overallCancelOverride==null?localOverallCancel:overallCancelOverride;
+    const providers=[...providerMap.values()].sort((a,b)=>a.provider.localeCompare(b.provider)),report=[];
+    for(const p of providers){
+      for(const svc of [...p.services.values()].sort((a,b)=>a.service.localeCompare(b.service)))report.push({provider:p.provider,service:svc.service,isTotal:false,...finalizeAggregate(svc.total,statuses)});
+      report.push({provider:p.provider,service:'TOTAL',isTotal:true,...finalizeAggregate(p.total,statuses),overallCancel});
     }
-    return {statuses,providers,report,allTotal,allDelivered,overallCancel};
+    const totals=finalizeAggregate(all,statuses);
+    return{statuses,providers:providers.map(p=>p.provider),report,allTotal:totals.visits,allDelivered:totals.delivered,overallCancel,minutes:totals.minutes,units:totals.units,invalidTimes:totals.invalidTimes};
   }
   function productivityClass(v){if(v>=1)return'good';if(v>=.8)return'warn';return'bad'}
   function renderTable(summary){
@@ -549,397 +563,221 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     els.reportTable.tHead.innerHTML='<tr>'+head.map(h=>`<th>${esc(h)}</th>`).join('')+'</tr>';
     const body=[];
     for(const r of summary.report){
-      const cells=[];
-      cells.push(`<td>${esc(r.provider)}</td>`); cells.push(`<td>${r.isTotal?'<b>TOTAL</b>':esc(r.service)}</td>`);
+      const cells=[];cells.push(`<td>${esc(r.provider)}</td>`);cells.push(`<td>${r.isTotal?'<b>TOTAL</b>':esc(r.service)}</td>`);
       summary.statuses.forEach(s=>cells.push(`<td>${fmtInt(r.counts[s]||0)}</td>`));
-      cells.push(`<td>${fmtInt(r.visits)}</td>`); cells.push(`<td>${r.isTotal?fmtPct(r.cancel):''}</td>`); cells.push(`<td>${r.isTotal?fmtPct(r.overallCancel):''}</td>`);
-      cells.push(`<td>${fmtTime(r.minutes)}</td>`); cells.push(`<td>${fmtInt(r.units)}</td>`);
-      for(const h of TARGETS){if(!r.isTotal){cells.push('<td></td>');continue}const v=r.units/(h*4*4);cells.push(`<td class="pct ${productivityClass(v)}">${fmtPct(v)}</td>`)}
+      cells.push(`<td>${fmtInt(r.visits)}</td>`);cells.push(`<td>${r.isTotal?fmtPct(r.cancel):''}</td>`);cells.push(`<td>${r.isTotal?fmtPct(r.overallCancel):''}</td>`);
+      cells.push(`<td>${fmtTime(r.minutes)}</td>`);cells.push(`<td>${fmtInt(r.units)}</td>`);
+      for(const h of TARGETS){if(!r.isTotal){cells.push('<td></td>');continue}const v=r.units/(h*16);cells.push(`<td class="pct ${productivityClass(v)}">${fmtPct(v)}</td>`)}
       body.push(`<tr class="${r.isTotal?'total':''}">${cells.join('')}</tr>`);
     }
     els.reportTable.tBodies[0].innerHTML=body.join('');
-    els.emptyState.style.display=summary.report.length?'none':'block'; els.reportTable.style.display=summary.report.length?'table':'none';
-    els.exportCsvBtn.disabled=!summary.report.length;
-    const viewName=state.selectedFile||'Report';
-    els.tableMeta.textContent=summary.report.length?`${viewName} • ${summary.report.length.toLocaleString()} summary rows • ${summary.statuses.length} status column${summary.statuses.length===1?'':'s'}`:'No data loaded';
+    els.emptyState.style.display=summary.report.length?'none':'block';els.reportTable.style.display=summary.report.length?'table':'none';els.exportCsvBtn.disabled=!summary.report.length;
+    const viewName=selectedRecord()?.name||'Report',timeNote=summary.invalidTimes?` • ${summary.invalidTimes} invalid time row${summary.invalidTimes===1?'':'s'} excluded`:'';
+    els.tableMeta.textContent=summary.report.length?`${viewName} • ${summary.report.length.toLocaleString()} summary rows • ${summary.statuses.length} status column${summary.statuses.length===1?'':'s'}${timeNote}`:'No data loaded';
   }
-  function renderKPIs(rows,summary,globalSummary){
-    const minutes=rows.reduce((a,r)=>a+r.minutes,0),units=Math.round(minutes/15);
-    els.kpiProviders.textContent=summary.providers.length.toLocaleString(); els.kpiVisits.textContent=summary.allTotal.toLocaleString();
-    els.kpiVisitsFoot.textContent=state.selectedFile||'Current report';
-    els.kpiDelivered.textContent=summary.allDelivered.toLocaleString(); els.kpiDeliveredFoot.textContent=fmtPct(pct(summary.allDelivered,summary.allTotal));
-    els.kpiCancellation.textContent=fmtPct(globalSummary.overallCancel); els.kpiTime.textContent=fmtTime(minutes); els.kpiUnits.textContent=fmtInt(units);
+  function renderKPIs(summary,globalSummary){
+    els.kpiProviders.textContent=summary.providers.length.toLocaleString();els.kpiVisits.textContent=summary.allTotal.toLocaleString();
+    els.kpiVisitsFoot.textContent=selectedRecord()?.name||'Current report';
+    els.kpiDelivered.textContent=summary.allDelivered.toLocaleString();els.kpiDeliveredFoot.textContent=fmtPct(pct(summary.allDelivered,summary.allTotal));
+    els.kpiCancellation.textContent=fmtPct(globalSummary.overallCancel);els.kpiTime.textContent=fmtTime(summary.minutes);els.kpiUnits.textContent=fmtInt(summary.units);
+    if(els.kpiTimeFoot)els.kpiTimeFoot.textContent=summary.invalidTimes?`${summary.invalidTimes} invalid time row${summary.invalidTimes===1?'':'s'} excluded`:'All displayed rows have valid times';
   }
   function renderStatus(rows){
-    const total=rows.length,m=new Map(); rows.forEach(r=>{const name=r.status||'(Blank Status)';m.set(name,(m.get(name)||0)+1)});
-    const list=[...m.entries()].sort((a,b)=>b[1]-a[1]); els.statusMeta.textContent=`${total.toLocaleString()} visits`;
-    els.statusList.innerHTML=list.length?list.map(([name,count])=>{const w=total?count/total*100:0;return `<div class="status-item"><div class="status-top"><span class="status-name" title="${esc(name)}">${esc(name)}</span><span class="status-count">${count.toLocaleString()} • ${w.toFixed(1)}%</span></div><div class="bar"><span style="width:${Math.max(1,w)}%"></span></div></div>`}).join(''):'<div class="muted">No data</div>';
+    const total=rows.length,m=new Map();rows.forEach(r=>m.set(r.status,(m.get(r.status)||0)+1));
+    const list=[...m.entries()].sort((a,b)=>b[1]-a[1]);els.statusMeta.textContent=`${total.toLocaleString()} visits`;
+    els.statusList.innerHTML=list.length?list.map(([name,count])=>{const w=total?count/total*100:0;return`<div class="status-item"><div class="status-top"><span class="status-name" title="${esc(name)}">${esc(name)}</span><span class="status-count">${count.toLocaleString()} • ${w.toFixed(1)}%</span></div><div class="bar"><span style="width:${Math.max(1,w)}%"></span></div></div>`}).join(''):'<div class="muted">No data</div>';
   }
-  function defaultCharts(){
-    return [
-      {id:'visits-provider',title:'',type:'bar',group:'provider',metric:'visits',target:20,top:'10',sort:'desc'},
-      {id:'status-mix',title:'',type:'pie',group:'status',metric:'visits',target:20,top:'10',sort:'desc'}
-    ];
+
+  function defaultCharts(){return[
+    {id:'visits-provider',title:'',type:'bar',group:'provider',metric:'visits',target:20,top:'10',sort:'desc'},
+    {id:'status-mix',title:'',type:'pie',group:'status',metric:'visits',target:20,top:'10',sort:'desc'}
+  ]}
+  function sanitizeChartConfig(input){
+    const cfg={id:input.id||`chart-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,title:String(input.title||''),type:input.type||'bar',group:input.group||'provider',metric:input.metric||'visits',target:Number(input.target)||20,top:String(input.top||'10'),sort:input.sort||'desc'};
+    if(!['bar','line','pie'].includes(cfg.type))cfg.type='bar';
+    if(!Object.hasOwn(CHART_GROUPS,cfg.group))cfg.group='provider';
+    if(!Object.hasOwn(CHART_METRICS,cfg.metric))cfg.metric='visits';
+    if(!TARGETS.includes(cfg.target))cfg.target=20;
+    if(!['5','10','15','20','all'].includes(cfg.top))cfg.top='10';
+    if(!['desc','asc','name'].includes(cfg.sort))cfg.sort='desc';
+    if(cfg.metric==='productivity'){cfg.type='bar';cfg.group='provider'}
+    if(cfg.metric==='cancellationPct'&&cfg.group==='status')cfg.group='provider';
+    if(cfg.type==='pie'&&(cfg.metric==='cancellationPct'||cfg.metric==='productivity'))cfg.metric='visits';
+    if(cfg.type==='line'){cfg.group='month';cfg.top='all';cfg.sort='name';if(cfg.metric==='productivity')cfg.metric='visits'}
+    return cfg;
   }
-  function normalizeCharts(charts){
-    return charts.map(chart=>{
-      const cfg={...chart};
-      const title=String(cfg.title||'').trim();
-      const legacyDefault=(cfg.id==='visits-provider'&&title==='Visits by Provider')||(cfg.id==='status-mix'&&title==='Status Mix');
-      if(legacyDefault||title===autoChartTitle(cfg))cfg.title='';
-      return cfg;
-    });
-  }
-  async function saveCharts(){
-    if(state.db) try{await dbPutMeta('charts',state.charts)}catch{}
-  }
-  function chartGroupLabel(row,group){
-    if(group==='provider') return row.provider||'(Blank Provider)';
-    if(group==='service') return row.service||'(Blank Service)';
-    return row.status||'(Blank Status)';
+  function normalizeCharts(charts){return charts.map(sanitizeChartConfig)}
+  async function saveCharts(){if(state.db)try{await dbPutMeta('charts',state.charts)}catch{}}
+  function chartGroupInfo(row,group){
+    if(group==='provider')return{key:row.providerKey,label:row.provider,sortKey:row.provider};
+    if(group==='service')return{key:row.serviceKey,label:row.service,sortKey:row.service};
+    if(group==='status')return{key:row.statusKey,label:row.status,sortKey:row.status};
+    return{key:row.monthKey,label:monthLabel(row.monthKey),sortKey:row.monthKey};
   }
   function chartData(rows,cfg){
     const groups=new Map();
     for(const row of rows){
-      const key=chartGroupLabel(row,cfg.group);
-      let g=groups.get(key);
-      if(!g){g={label:key,visits:0,delivered:0,minutes:0};groups.set(key,g)}
-      g.visits++; if(row.statusKey==='delivered')g.delivered++; g.minutes+=Number(row.minutes)||0;
+      const info=chartGroupInfo(row,cfg.group);let g=groups.get(info.key);
+      if(!g){g={label:info.label,sortKey:info.sortKey,visits:0,delivered:0,minutes:0};groups.set(info.key,g)}
+      g.visits++;if(row.statusKey==='delivered')g.delivered++;if(row.minutes!=null)g.minutes+=row.minutes;
     }
     let data=[...groups.values()].map(g=>{
-      const cancellations=g.visits-g.delivered, units=Math.round(g.minutes/15);
-      let value=0;
-      if(cfg.metric==='visits')value=g.visits;
-      else if(cfg.metric==='delivered')value=g.delivered;
-      else if(cfg.metric==='cancellations')value=cancellations;
-      else if(cfg.metric==='cancellationPct')value=g.visits?cancellations/g.visits*100:0;
-      else if(cfg.metric==='units')value=units;
-      else if(cfg.metric==='hours')value=g.minutes/60;
-      else if(cfg.metric==='productivity'){const target=(Number(cfg.target)||20)*16;value=target?units/target*100:0;}
-      return {...g,cancellations,units,value};
+      const cancellations=g.visits-g.delivered,units=Math.round(g.minutes/15);let value=0;
+      if(cfg.metric==='visits')value=g.visits;else if(cfg.metric==='delivered')value=g.delivered;else if(cfg.metric==='cancellations')value=cancellations;
+      else if(cfg.metric==='cancellationPct')value=g.visits?cancellations/g.visits*100:0;else if(cfg.metric==='units')value=units;else if(cfg.metric==='hours')value=g.minutes/60;
+      else if(cfg.metric==='productivity'){const target=cfg.target*16;value=target?units/target*100:0}
+      return{...g,cancellations,units,value};
     });
-    if(cfg.sort==='name') data.sort((a,b)=>a.label.localeCompare(b.label));
+    if(cfg.type==='line'&&cfg.group==='month')data.sort((a,b)=>a.sortKey.localeCompare(b.sortKey));
+    else if(cfg.sort==='name')data.sort((a,b)=>cfg.group==='month'?a.sortKey.localeCompare(b.sortKey):a.label.localeCompare(b.label));
     else data.sort((a,b)=>cfg.sort==='asc'?a.value-b.value:b.value-a.value);
-    const limit=cfg.top==='all'?Infinity:Number(cfg.top)||10;
-    return data.slice(0,limit);
+    const limit=cfg.top==='all'?Infinity:Number(cfg.top)||10;return data.slice(0,limit);
   }
-  function chartValueText(metric,v){
-    if(metric==='cancellationPct'||metric==='productivity')return `${v.toFixed(1)}%`;
-    if(metric==='hours')return `${v.toFixed(1)} h`;
-    return Math.round(v).toLocaleString();
-  }
-  function autoChartTitle(cfg){return `${CHART_METRICS[cfg.metric]||'Metric'} by ${CHART_GROUPS[cfg.group]||'Group'}`}
+  function chartValueText(metric,v){if(metric==='cancellationPct'||metric==='productivity')return`${v.toFixed(1)}%`;if(metric==='hours')return`${v.toFixed(1)} h`;return Math.round(v).toLocaleString()}
+  function autoChartTitle(cfg){return`${CHART_METRICS[cfg.metric]||'Metric'} by ${CHART_GROUPS[cfg.group]||'Group'}`}
   function shortenLabel(v,n=24){v=String(v??'');return v.length>n?v.slice(0,n-1)+'…':v}
   function barChartSvg(data,cfg){
     const w=620,rowH=32,left=165,right=82,top=24,bottom=34,h=Math.max(285,top+bottom+data.length*rowH),plotW=w-left-right,max=Math.max(1,...data.map(d=>d.value));
     let svg=`<svg class="chart-svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(autoChartTitle(cfg))}">`;
-    for(let i=0;i<=4;i++){
-      const x=left+plotW*i/4,val=max*i/4;
-      svg+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${h-bottom}" stroke="var(--chart-grid)" stroke-width="1"/><text x="${x}" y="${h-10}" text-anchor="middle" font-size="11" fill="var(--chart-text)">${esc(chartValueText(cfg.metric,val))}</text>`;
-    }
-    data.forEach((d,i)=>{
-      const y=top+i*rowH+5,bw=Math.max(2,plotW*(d.value/max));
-      svg+=`<text x="${left-10}" y="${y+15}" text-anchor="end" font-size="12" font-weight="600" fill="var(--text2)"><title>${esc(d.label)}</title>${esc(shortenLabel(d.label,24))}</text><rect class="chart-bar" x="${left}" y="${y}" width="${bw}" height="20" rx="5" fill="var(--accent)" opacity=".9"><title>${esc(d.label)}: ${esc(chartValueText(cfg.metric,d.value))}</title></rect><text x="${Math.min(left+bw+8,w-5)}" y="${y+15}" font-size="12" font-weight="650" fill="var(--text2)">${esc(chartValueText(cfg.metric,d.value))}</text>`;
-    });
+    for(let i=0;i<=4;i++){const x=left+plotW*i/4,val=max*i/4;svg+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${h-bottom}" stroke="var(--chart-grid)" stroke-width="1"/><text x="${x}" y="${h-10}" text-anchor="middle" font-size="11" fill="var(--chart-text)">${esc(chartValueText(cfg.metric,val))}</text>`}
+    data.forEach((d,i)=>{const y=top+i*rowH+5,bw=Math.max(2,plotW*(d.value/max));svg+=`<text x="${left-10}" y="${y+15}" text-anchor="end" font-size="12" font-weight="600" fill="var(--text2)"><title>${esc(d.label)}</title>${esc(shortenLabel(d.label,24))}</text><rect class="chart-bar" x="${left}" y="${y}" width="${bw}" height="20" rx="5" fill="var(--accent)" opacity=".9"><title>${esc(d.label)}: ${esc(chartValueText(cfg.metric,d.value))}</title></rect><text x="${Math.min(left+bw+8,w-5)}" y="${y+15}" font-size="12" font-weight="650" fill="var(--text2)">${esc(chartValueText(cfg.metric,d.value))}</text>`});
     return svg+'</svg>';
   }
   function lineChartSvg(data,cfg){
     const w=620,h=340,left=64,right=24,top=34,bottom=66,plotW=w-left-right,plotH=h-top-bottom,max=Math.max(1,...data.map(d=>d.value));
     let svg=`<svg class="chart-svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(autoChartTitle(cfg))}">`;
-    for(let i=0;i<=4;i++){
-      const y=top+plotH-(plotH*i/4),val=max*i/4;
-      svg+=`<line x1="${left}" y1="${y}" x2="${w-right}" y2="${y}" stroke="var(--chart-grid)" stroke-width="1"/><text x="${left-10}" y="${y+4}" text-anchor="end" font-size="11" fill="var(--chart-text)">${esc(chartValueText(cfg.metric,val))}</text>`;
-    }
-    const pts=data.map((d,i)=>{const x=data.length===1?left+plotW/2:left+plotW*i/(data.length-1),y=top+plotH-(d.value/max)*plotH;return {x,y,d}});
+    for(let i=0;i<=4;i++){const y=top+plotH-(plotH*i/4),val=max*i/4;svg+=`<line x1="${left}" y1="${y}" x2="${w-right}" y2="${y}" stroke="var(--chart-grid)" stroke-width="1"/><text x="${left-10}" y="${y+4}" text-anchor="end" font-size="11" fill="var(--chart-text)">${esc(chartValueText(cfg.metric,val))}</text>`}
+    const pts=data.map((d,i)=>{const x=data.length===1?left+plotW/2:left+plotW*i/(data.length-1),y=top+plotH-(d.value/max)*plotH;return{x,y,d}});
     if(pts.length)svg+=`<polyline points="${pts.map(p=>`${p.x},${p.y}`).join(' ')}" fill="none" stroke="var(--accent)" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>`;
-    pts.forEach((p,i)=>{
-      svg+=`<circle class="chart-point" cx="${p.x}" cy="${p.y}" r="4.5" fill="var(--panel)" stroke="var(--accent)" stroke-width="3"><title>${esc(p.d.label)}: ${esc(chartValueText(cfg.metric,p.d.value))}</title></circle>`;
-      if(data.length<=8) svg+=`<text x="${p.x}" y="${Math.max(15,p.y-10)}" text-anchor="middle" font-size="10.5" font-weight="650" fill="var(--text2)">${esc(chartValueText(cfg.metric,p.d.value))}</text>`;
-      const show=data.length<=10||i%Math.ceil(data.length/9)===0||i===data.length-1;
-      if(show)svg+=`<text x="${p.x}" y="${h-31}" text-anchor="middle" font-size="11" fill="var(--chart-text)">${esc(shortenLabel(p.d.label,11))}</text>`;
-    });
+    pts.forEach((p,i)=>{svg+=`<circle class="chart-point" cx="${p.x}" cy="${p.y}" r="4.5" fill="var(--panel)" stroke="var(--accent)" stroke-width="3"><title>${esc(p.d.label)}: ${esc(chartValueText(cfg.metric,p.d.value))}</title></circle>`;if(data.length<=8)svg+=`<text x="${p.x}" y="${Math.max(15,p.y-10)}" text-anchor="middle" font-size="10.5" font-weight="650" fill="var(--text2)">${esc(chartValueText(cfg.metric,p.d.value))}</text>`;const show=data.length<=10||i%Math.ceil(data.length/9)===0||i===data.length-1;if(show)svg+=`<text x="${p.x}" y="${h-31}" text-anchor="middle" font-size="11" fill="var(--chart-text)">${esc(shortenLabel(p.d.label,11))}</text>`});
     return svg+'</svg>';
   }
-  function polar(cx,cy,r,a){const rad=(a-90)*Math.PI/180;return {x:cx+r*Math.cos(rad),y:cy+r*Math.sin(rad)}}
-  function piePath(cx,cy,r,start,end){const s=polar(cx,cy,r,end),e=polar(cx,cy,r,start),large=end-start>180?1:0;return `M ${cx} ${cy} L ${s.x} ${s.y} A ${r} ${r} 0 ${large} 0 ${e.x} ${e.y} Z`}
+  function polar(cx,cy,r,a){const rad=(a-90)*Math.PI/180;return{x:cx+r*Math.cos(rad),y:cy+r*Math.sin(rad)}}
+  function piePath(cx,cy,r,start,end){const s=polar(cx,cy,r,end),e=polar(cx,cy,r,start),large=end-start>180?1:0;return`M ${cx} ${cy} L ${s.x} ${s.y} A ${r} ${r} 0 ${large} 0 ${e.x} ${e.y} Z`}
   function pieChartSvg(data,cfg){
-    let plotData=data;
-    if(data.length>8){
-      const kept=data.slice(0,7),rest=data.slice(7),sum=rest.reduce((a,d)=>a+Math.max(0,d.value),0);
-      plotData=[...kept,{label:`Other (${rest.length})`,value:sum}];
-    }
+    let plotData=data;if(data.length>8){const kept=data.slice(0,7),rest=data.slice(7),sum=rest.reduce((a,d)=>a+Math.max(0,d.value),0);plotData=[...kept,{label:`Other (${rest.length})`,value:sum}]}
     const w=620,h=340,cx=160,cy=170,r=112,total=plotData.reduce((a,d)=>a+Math.max(0,d.value),0)||1;let angle=0;
     let svg=`<svg class="chart-svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(autoChartTitle(cfg))}">`;
     plotData.forEach((d,i)=>{const val=Math.max(0,d.value),span=val/total*360,start=angle,end=angle+span,color=CHART_COLORS[i%CHART_COLORS.length];if(span>0)svg+=`<path d="${piePath(cx,cy,r,start,end)}" fill="${color}" stroke="var(--panel)" stroke-width="3"><title>${esc(d.label)}: ${esc(chartValueText(cfg.metric,d.value))} (${(val/total*100).toFixed(1)}%)</title></path>`;angle=end});
     svg+=`<circle cx="${cx}" cy="${cy}" r="55" fill="var(--panel)"/><text x="${cx}" y="${cy-5}" text-anchor="middle" font-size="11" fill="var(--chart-text)">Total</text><text x="${cx}" y="${cy+22}" text-anchor="middle" font-size="20" font-weight="760" fill="var(--text)">${esc(chartValueText(cfg.metric,plotData.reduce((a,d)=>a+d.value,0)))}</text>`;
-    plotData.forEach((d,i)=>{const y=49+i*34,pct=Math.max(0,d.value)/total*100;svg+=`<rect x="320" y="${y-11}" width="11" height="11" rx="3" fill="${CHART_COLORS[i%CHART_COLORS.length]}"/><text x="340" y="${y}" font-size="12" font-weight="600" fill="var(--text2)">${esc(shortenLabel(d.label,20))}</text><text x="598" y="${y}" text-anchor="end" font-size="11.5" fill="var(--chart-text)">${esc(chartValueText(cfg.metric,d.value))} · ${pct.toFixed(1)}%</text>`});
+    plotData.forEach((d,i)=>{const y=49+i*34,p=Math.max(0,d.value)/total*100;svg+=`<rect x="320" y="${y-11}" width="11" height="11" rx="3" fill="${CHART_COLORS[i%CHART_COLORS.length]}"/><text x="340" y="${y}" font-size="12" font-weight="600" fill="var(--text2)">${esc(shortenLabel(d.label,20))}</text><text x="598" y="${y}" text-anchor="end" font-size="11.5" fill="var(--chart-text)">${esc(chartValueText(cfg.metric,d.value))} · ${p.toFixed(1)}%</text>`});
     return svg+'</svg>';
   }
-  function chartBodyFor(rows,cfg){
-    const data=chartData(rows,cfg);
-    if(!data.length)return '<div class="chart-empty">No data for the current report and filters.</div>';
-    if(cfg.type==='line')return lineChartSvg(data,cfg);
-    if(cfg.type==='pie')return pieChartSvg(data,cfg);
-    return barChartSvg(data,cfg);
-  }
+  function chartBodyFor(rows,cfg){const data=chartData(rows,cfg);if(!data.length)return'<div class="chart-empty">No data for the current report and filters.</div>';if(cfg.type==='line')return lineChartSvg(data,cfg);if(cfg.type==='pie')return pieChartSvg(data,cfg);return barChartSvg(data,cfg)}
+  function option(value,label,current,disabled=false){return`<option value="${value}"${current===value?' selected':''}${disabled?' disabled':''}>${label}</option>`}
   function chartEditorHtml(cfg){
-    const targetStyle=cfg.metric==='productivity'?'':' style="display:none"';
-    return `<div class="chart-inline-editor" data-editor-id="${esc(cfg.id)}">
+    const isProductivity=cfg.metric==='productivity',isPercentage=cfg.metric==='cancellationPct'||isProductivity,isLine=cfg.type==='line',isPie=cfg.type==='pie';
+    const targetStyle=isProductivity?'':' style="display:none"',sortName=cfg.group==='month'?'Chronological':'Name A-Z';
+    return`<div class="chart-inline-editor" data-editor-id="${esc(cfg.id)}">
       <div class="field title-field"><label>Title</label><input class="chart-field" data-field="title" type="text" maxlength="80" value="${esc(cfg.title||'')}" placeholder="${esc(autoChartTitle(cfg))}"></div>
-      <div class="field"><label>Chart type</label><select class="chart-field" data-field="type"><option value="bar"${cfg.type==='bar'?' selected':''}>Bar</option><option value="line"${cfg.type==='line'?' selected':''}>Line</option><option value="pie"${cfg.type==='pie'?' selected':''}>Pie</option></select></div>
-      <div class="field"><label>Group by</label><select class="chart-field" data-field="group"><option value="provider"${cfg.group==='provider'?' selected':''}>Provider</option><option value="service"${cfg.group==='service'?' selected':''}>Service</option><option value="status"${cfg.group==='status'?' selected':''}>Status</option></select></div>
-      <div class="field"><label>Metric</label><select class="chart-field" data-field="metric"><option value="visits"${cfg.metric==='visits'?' selected':''}>Total Visits</option><option value="delivered"${cfg.metric==='delivered'?' selected':''}>Delivered Visits</option><option value="cancellations"${cfg.metric==='cancellations'?' selected':''}>Cancelled Visits</option><option value="cancellationPct"${cfg.metric==='cancellationPct'?' selected':''}>Cancellation %</option><option value="units"${cfg.metric==='units'?' selected':''}>15 Min Units</option><option value="hours"${cfg.metric==='hours'?' selected':''}>Total Hours</option><option value="productivity"${cfg.metric==='productivity'?' selected':''}>Productivity %</option></select></div>
-      <div class="field chart-target-field"${targetStyle}><label>Productivity target</label><select class="chart-field" data-field="target">${[5,10,15,20,25,30,35,40].map(v=>`<option value="${v}"${Number(cfg.target)===v?' selected':''}>${v} Hr/Wk</option>`).join('')}</select></div>
-      <div class="field"><label>Items</label><select class="chart-field" data-field="top"><option value="5"${String(cfg.top)==='5'?' selected':''}>Top 5</option><option value="10"${String(cfg.top)==='10'?' selected':''}>Top 10</option><option value="15"${String(cfg.top)==='15'?' selected':''}>Top 15</option><option value="20"${String(cfg.top)==='20'?' selected':''}>Top 20</option><option value="all"${String(cfg.top)==='all'?' selected':''}>All</option></select></div>
-      <div class="field"><label>Sort</label><select class="chart-field" data-field="sort"><option value="desc"${cfg.sort==='desc'?' selected':''}>Largest first</option><option value="asc"${cfg.sort==='asc'?' selected':''}>Smallest first</option><option value="name"${cfg.sort==='name'?' selected':''}>Name A-Z</option></select></div>
+      <div class="field"><label>Chart type</label><select class="chart-field" data-field="type">${option('bar','Bar',cfg.type)}${option('line','Line',cfg.type,isProductivity)}${option('pie','Pie',cfg.type,isPercentage)}</select></div>
+      <div class="field"><label>Group by</label><select class="chart-field" data-field="group">${option('provider','Provider',cfg.group)}${option('service','Service',cfg.group,isProductivity)}${option('status','Status',cfg.group,isProductivity||cfg.metric==='cancellationPct')}${option('month','Month',cfg.group,isProductivity)}</select></div>
+      <div class="field"><label>Metric</label><select class="chart-field" data-field="metric">${option('visits','Total Visits',cfg.metric)}${option('delivered','Delivered Visits',cfg.metric)}${option('cancellations','Cancelled Visits',cfg.metric)}${option('cancellationPct','Cancellation %',cfg.metric,isPie||cfg.group==='status')}${option('units','15 Min Units',cfg.metric)}${option('hours','Total Hours',cfg.metric)}${option('productivity','Productivity %',cfg.metric,isPie||isLine||cfg.group!=='provider')}</select></div>
+      <div class="field chart-target-field"${targetStyle}><label>Productivity target</label><select class="chart-field" data-field="target">${TARGETS.map(v=>option(String(v),`${v} Hr/Wk`,String(cfg.target))).join('')}</select></div>
+      <div class="field"><label>Items</label><select class="chart-field" data-field="top"${isLine?' disabled':''}>${option('5','Top 5',cfg.top)}${option('10','Top 10',cfg.top)}${option('15','Top 15',cfg.top)}${option('20','Top 20',cfg.top)}${option('all','All',cfg.top)}</select></div>
+      <div class="field"><label>Sort</label><select class="chart-field" data-field="sort"${isLine?' disabled':''}>${option('desc','Largest first',cfg.sort)}${option('asc','Smallest first',cfg.sort)}${option('name',sortName,cfg.sort)}</select></div>
     </div>`;
   }
-  function visibleChartConfigs(){
-    if(!state.editingChartId||!state.chartDraft)return state.charts;
-    const exists=state.charts.some(c=>c.id===state.editingChartId);
-    if(exists)return state.charts.map(c=>c.id===state.editingChartId?state.chartDraft:c);
-    return [...state.charts,state.chartDraft];
-  }
+  function visibleChartConfigs(){if(!state.editingChartId||!state.chartDraft)return state.charts;const exists=state.charts.some(c=>c.id===state.editingChartId);return exists?state.charts.map(c=>c.id===state.editingChartId?state.chartDraft:c):[...state.charts,state.chartDraft]}
   function renderCharts(){
-    const rows=baseFilteredRows();
-    els.chartsMeta.textContent=state.selectedFile?`${state.selectedFile} • ${rows.length.toLocaleString()} visible visit${rows.length===1?'':'s'}`:'No report selected';
-    els.addChartBtn.disabled=!state.selectedFile||!!state.editingChartId;
-    const configs=visibleChartConfigs();
-    if(!configs.length){els.chartsGrid.innerHTML='<div class="chart-empty">No graphs yet. Use <b>Add Graph</b> to create one.</div>';return;}
+    const rows=baseFilteredRows(),rec=selectedRecord();
+    els.chartsMeta.textContent=rec?`${rec.name} • ${rows.length.toLocaleString()} visible visit${rows.length===1?'':'s'}`:'No report selected';
+    els.addChartBtn.disabled=!rec||!!state.editingChartId;
+    const configs=visibleChartConfigs();if(!configs.length){els.chartsGrid.innerHTML='<div class="chart-empty">No graphs yet. Use <b>Add Graph</b> to create one.</div>';return}
     els.chartsGrid.innerHTML=configs.map(cfg=>{
-      const editing=cfg.id===state.editingChartId;
-      const title=cfg.title?.trim()||autoChartTitle(cfg),targetNote=cfg.metric==='productivity'?` • ${cfg.target} Hr/Wk target`:'';
-      const actions=editing
-        ? `<button class="btn chart-cancel" type="button" data-id="${esc(cfg.id)}">Cancel</button><button class="btn primary chart-done" type="button" data-id="${esc(cfg.id)}">Done</button>`
-        : `<button class="btn chart-edit" type="button" data-id="${esc(cfg.id)}">Edit</button><button class="btn chart-remove" type="button" data-id="${esc(cfg.id)}">Remove</button>`;
-      return `<article class="chart-card${editing?' editing':''}" data-chart-id="${esc(cfg.id)}"><div class="chart-card-head"><div style="min-width:0"><div class="chart-card-title" title="${esc(title)}">${esc(title)}</div><div class="chart-card-meta">${esc(CHART_GROUPS[cfg.group])} • ${esc(CHART_METRICS[cfg.metric])}${esc(targetNote)}</div></div><div class="chart-card-actions">${actions}</div></div>${editing?chartEditorHtml(cfg):''}<div class="chart-body">${chartBodyFor(rows,cfg)}</div></article>`;
+      const editing=cfg.id===state.editingChartId,title=cfg.title.trim()||autoChartTitle(cfg),targetNote=cfg.metric==='productivity'?` • ${cfg.target} Hr/Wk target`:'';
+      const actions=editing?`<button class="btn chart-cancel" type="button" data-id="${esc(cfg.id)}">Cancel</button><button class="btn primary chart-done" type="button" data-id="${esc(cfg.id)}">Done</button>`:`<button class="btn chart-edit" type="button" data-id="${esc(cfg.id)}">Edit</button><button class="btn chart-remove" type="button" data-id="${esc(cfg.id)}">Remove</button>`;
+      return`<article class="chart-card${editing?' editing':''}" data-chart-id="${esc(cfg.id)}"><div class="chart-card-head"><div style="min-width:0"><div class="chart-card-title" title="${esc(title)}">${esc(title)}</div><div class="chart-card-meta">${esc(CHART_GROUPS[cfg.group])} • ${esc(CHART_METRICS[cfg.metric])}${esc(targetNote)}</div></div><div class="chart-card-actions">${actions}</div></div>${editing?chartEditorHtml(cfg):''}<div class="chart-body">${chartBodyFor(rows,cfg)}</div></article>`;
     }).join('');
   }
   function beginChartEdit(id=null){
-    if(!state.selectedFile)return;
-    if(id){
-      const cfg=state.charts.find(c=>c.id===id);
-      if(!cfg)return;
-      state.editingChartId=id;
-      state.chartDraft={...cfg};
-    }else{
-      const idNew=`chart-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
-      state.editingChartId=idNew;
-      state.chartDraft={id:idNew,title:'',type:'bar',group:'provider',metric:'visits',target:20,top:'10',sort:'desc'};
-    }
-    renderCharts();
-    requestAnimationFrame(()=>els.chartsGrid.querySelector(`[data-chart-id="${CSS.escape(state.editingChartId)}"] input[data-field="title"]`)?.focus());
+    if(!selectedRecord())return;
+    if(id){const cfg=state.charts.find(c=>c.id===id);if(!cfg)return;state.editingChartId=id;state.chartDraft={...cfg}}
+    else{state.chartDraft=sanitizeChartConfig({id:`chart-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,title:'',type:'bar',group:'provider',metric:'visits',target:20,top:'10',sort:'desc'});state.editingChartId=state.chartDraft.id}
+    renderCharts();requestAnimationFrame(()=>els.chartsGrid.querySelector(`[data-chart-id="${CSS.escape(state.editingChartId)}"] input[data-field="title"]`)?.focus());
   }
-  function cancelChartEdit(){
-    state.editingChartId=null;
-    state.chartDraft=null;
-    renderCharts();
-  }
+  function cancelChartEdit(){state.editingChartId=null;state.chartDraft=null;renderCharts()}
   async function finishChartEdit(){
-    if(!state.editingChartId||!state.chartDraft)return;
-    const cfg={...state.chartDraft};
-    const i=state.charts.findIndex(c=>c.id===cfg.id);
-    if(i>=0)state.charts[i]=cfg;else state.charts.push(cfg);
-    state.editingChartId=null;
-    state.chartDraft=null;
-    await saveCharts();
-    renderCharts();
+    if(!state.editingChartId||!state.chartDraft)return;const cfg=sanitizeChartConfig(state.chartDraft),i=state.charts.findIndex(c=>c.id===cfg.id);
+    if(i>=0)state.charts[i]=cfg;else state.charts.push(cfg);state.editingChartId=null;state.chartDraft=null;await saveCharts();renderCharts();
   }
   function updateChartDraftFromField(field,value){
     if(!state.chartDraft)return;
-    if(field==='target')state.chartDraft.target=Number(value)||20;
-    else state.chartDraft[field]=value;
-    const card=els.chartsGrid.querySelector(`[data-chart-id="${CSS.escape(state.chartDraft.id)}"]`);
-    if(!card)return;
-    const title=state.chartDraft.title?.trim()||autoChartTitle(state.chartDraft);
-    const targetNote=state.chartDraft.metric==='productivity'?` • ${state.chartDraft.target} Hr/Wk target`:'';
-    const titleEl=card.querySelector('.chart-card-title');
-    const metaEl=card.querySelector('.chart-card-meta');
-    const bodyEl=card.querySelector('.chart-body');
-    if(titleEl){titleEl.textContent=title;titleEl.title=title;}
-    if(metaEl)metaEl.textContent=`${CHART_GROUPS[state.chartDraft.group]} • ${CHART_METRICS[state.chartDraft.metric]}${targetNote}`;
-    const titleInput=card.querySelector('input[data-field="title"]');
-    if(titleInput)titleInput.placeholder=autoChartTitle(state.chartDraft);
-    const targetField=card.querySelector('.chart-target-field');
-    if(targetField)targetField.style.display=state.chartDraft.metric==='productivity'?'block':'none';
-    if(bodyEl)bodyEl.innerHTML=chartBodyFor(baseFilteredRows(),state.chartDraft);
+    if(field==='title'){
+      state.chartDraft.title=value;const card=els.chartsGrid.querySelector(`[data-chart-id="${CSS.escape(state.chartDraft.id)}"]`);if(!card)return;
+      const title=value.trim()||autoChartTitle(state.chartDraft),titleEl=card.querySelector('.chart-card-title');if(titleEl){titleEl.textContent=title;titleEl.title=title}return;
+    }
+    const next={...state.chartDraft,[field]:field==='target'?Number(value):value};state.chartDraft=sanitizeChartConfig(next);renderCharts();
   }
   async function removeChart(id){state.charts=state.charts.filter(c=>c.id!==id);await saveCharts();renderCharts()}
 
-
   function renderReportSelect(){
-    const current=state.selectedFile||'';
-    els.reportSelect.innerHTML='';
-    if(!state.savedFiles.length){
-      els.reportSelect.add(new Option('No reports',''));
-      els.reportSelect.disabled=true;
-      els.removeReportBtn.disabled=true;
-      els.deleteAllReportsBtn.disabled=true;
-      return;
-    }
-    for(const f of state.savedFiles) els.reportSelect.add(new Option(f.name,f.name));
-    els.reportSelect.disabled=false;
-    els.reportSelect.value=state.savedFiles.some(f=>f.name===current)?current:state.savedFiles[0].name;
-    els.removeReportBtn.disabled=!state.selectedFile;
-    els.deleteAllReportsBtn.disabled=false;
+    const current=state.selectedReportId||'';els.reportSelect.innerHTML='';
+    if(!state.savedReports.length){els.reportSelect.add(new Option('No reports',''));els.reportSelect.disabled=true;els.removeReportBtn.disabled=true;els.deleteAllReportsBtn.disabled=true;return}
+    for(const rec of state.savedReports)els.reportSelect.add(new Option(reportLabel(rec),rec.id));
+    els.reportSelect.disabled=false;els.reportSelect.value=state.savedReports.some(r=>r.id===current)?current:state.savedReports[0].id;els.removeReportBtn.disabled=!state.selectedReportId;els.deleteAllReportsBtn.disabled=false;
   }
   function applyTheme(theme,persist=true){
-    state.theme=theme==='dark'?'dark':'light';
-    document.documentElement.dataset.theme=state.theme;
-    const dark=state.theme==='dark';
-    if(els.themeIcon)els.themeIcon.textContent=dark?'☀':'☾';
-    if(els.themeText)els.themeText.textContent=dark?'Light':'Dark';
-    if(els.themeToggle){
-      els.themeToggle.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme');
-      els.themeToggle.title=dark?'Switch to light theme':'Switch to dark theme';
-    }
+    state.theme=theme==='dark'?'dark':'light';document.documentElement.dataset.theme=state.theme;const dark=state.theme==='dark';
+    if(els.themeIcon)els.themeIcon.textContent=dark?'☀':'☾';if(els.themeText)els.themeText.textContent=dark?'Light':'Dark';
+    if(els.themeToggle){els.themeToggle.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme');els.themeToggle.title=dark?'Switch to light theme':'Switch to dark theme'}
     if(persist&&state.db)dbPutMeta('theme',state.theme).catch(()=>{});
   }
   function toggleTheme(){applyTheme(state.theme==='dark'?'light':'dark')}
-
   function renderTabs(){
-    const graphsActive=state.activeTab==='graphs';
-    els.summaryTab.classList.toggle('active',!graphsActive);
-    els.graphsTab.classList.toggle('active',graphsActive);
-    els.summaryTab.setAttribute('aria-selected',String(!graphsActive));
-    els.graphsTab.setAttribute('aria-selected',String(graphsActive));
-    els.summaryTab.tabIndex=graphsActive?-1:0;
-    els.graphsTab.tabIndex=graphsActive?0:-1;
-    els.summaryView.hidden=graphsActive;
-    els.graphsView.hidden=!graphsActive;
+    const graphsActive=state.activeTab==='graphs';els.summaryTab.classList.toggle('active',!graphsActive);els.graphsTab.classList.toggle('active',graphsActive);
+    els.summaryTab.setAttribute('aria-selected',String(!graphsActive));els.graphsTab.setAttribute('aria-selected',String(graphsActive));els.summaryTab.tabIndex=graphsActive?-1:0;els.graphsTab.tabIndex=graphsActive?0:-1;els.summaryView.hidden=graphsActive;els.graphsView.hidden=!graphsActive;
   }
-  function setActiveTab(tab,persist=true){
-    state.activeTab=tab==='graphs'?'graphs':'summary';
-    renderTabs();
-    if(state.activeTab==='graphs') requestAnimationFrame(renderCharts);
-    if(persist&&state.db) dbPutMeta('activeTab',state.activeTab).catch(()=>{});
-  }
+  function setActiveTab(tab,persist=true){state.activeTab=tab==='graphs'?'graphs':'summary';renderTabs();if(state.activeTab==='graphs')requestAnimationFrame(renderCharts);if(persist&&state.db)dbPutMeta('activeTab',state.activeTab).catch(()=>{})}
+
   function render(){
     const rows=baseFilteredRows(),monthRows=monthScopedRows(),globalSummary=summarize(monthRows),summary=summarize(rows,globalSummary.overallCancel,globalSummary.statuses);
-    renderKPIs(rows,summary,globalSummary); renderTable(summary); renderStatus(rows); renderReportSelect(); renderCharts(); renderTabs();
+    renderKPIs(summary,globalSummary);renderTable(summary);renderStatus(rows);renderReportSelect();renderTabs();if(state.activeTab==='graphs')renderCharts();
   }
-
   function exportVisibleCsv(){
-    const rows=[...els.reportTable.querySelectorAll('tr')];
-    if(!rows.length || els.reportTable.style.display==='none') return;
-    const csv=rows.map(tr=>[...tr.querySelectorAll('th,td')].map(cell=>{
-      const value=cell.innerText.replace(/\r?\n/g,' ').trim();
-      return `"${value.replace(/"/g,'""')}"`;
-    }).join(',')).join('\r\n');
-    const base=(state.selectedFile||'provider-report').replace(/\.(xlsx|xlsm)$/i,'').replace(/[\\/:*?"<>|]+/g,'_');
-    const blob=new Blob(['\ufeff',csv],{type:'text/csv;charset=utf-8;'});
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.href=url; a.download=`${base}_provider_summary.csv`;
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),0);
+    const rows=[...els.reportTable.querySelectorAll('tr')];if(!rows.length||els.reportTable.style.display==='none')return;
+    const csv=rows.map(tr=>[...tr.querySelectorAll('th,td')].map(cell=>`"${cell.innerText.replace(/\r?\n/g,' ').trim().replace(/"/g,'""')}"`).join(',')).join('\r\n');
+    const base=(selectedRecord()?.name||'provider-report').replace(/\.(xlsx|xlsm)$/i,'').replace(/[\\/:*?"<>|]+/g,'_'),blob=new Blob(['\ufeff',csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=url;a.download=`${base}_provider_summary.csv`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),0);
   }
-
-  async function selectFile(name){
-    if(!state.savedFiles.some(f=>f.name===name))return;
-    state.selectedFile=name; syncSelectedRows(); populateFilters(true); render(); updateSelectedSource();
-    if(state.db)try{await dbPutMeta('selectedFile',name)}catch{}
+  async function selectReport(id){
+    if(!state.savedReports.some(r=>r.id===id))return;state.selectedReportId=id;syncSelectedRows();populateFilters(true);render();updateSelectedSource();if(state.db)try{await dbPutMeta('selectedReportId',id)}catch{}
   }
-  async function removeReport(name){
-    if(!name)return;
-    const ok=await confirmAction({
-      title:'Remove report?',
-      message:`Remove "${name}" from this dashboard?\n\nThe original Excel file will not be changed.`,
-      confirmText:'Remove'
-    });
-    if(!ok)return;
-    try{
-      if(state.db)await dbDeleteFile(name);else state.savedFiles=state.savedFiles.filter(f=>f.name!==name);
-      if(state.selectedFile===name) state.selectedFile=null;
-      await reloadSavedFiles();
-    }catch(err){showError(err.message||String(err))}
+  async function removeReport(id){
+    const rec=state.savedReports.find(r=>r.id===id);if(!rec)return;
+    const ok=await confirmAction({title:'Remove report?',message:`Remove "${rec.name}" from this dashboard?\n\nThe original Excel file will not be changed.`,confirmText:'Remove'});if(!ok)return;
+    try{if(state.db)await dbDeleteReport(id);else state.savedReports=state.savedReports.filter(r=>r.id!==id);if(state.selectedReportId===id)state.selectedReportId=null;await reloadSavedReports()}catch(err){showError(err.message||String(err))}
   }
-
   async function deleteAllReports(){
-    const count=state.savedFiles.length;
-    if(!count)return;
-    const ok=await confirmAction({
-      title:'Delete all reports?',
-      message:`This will remove all ${count} report${count===1?'':'s'} from this dashboard.\n\nThe original Excel files will not be changed.`,
-      confirmText:'Delete All'
-    });
-    if(!ok)return;
-    try{
-      if(state.db){
-        await dbClearFiles();
-        await dbPutMeta('selectedFile',null);
-      }else{
-        state.savedFiles=[];
-      }
-      state.selectedFile=null;
-      state.rows=[];
-      await reloadSavedFiles();
-    }catch(err){showError(err.message||String(err))}
+    const count=state.savedReports.length;if(!count)return;
+    const ok=await confirmAction({title:'Delete all reports?',message:`This will remove all ${count} report${count===1?'':'s'} from this dashboard.\n\nThe original Excel files will not be changed.`,confirmText:'Delete All'});if(!ok)return;
+    try{if(state.db){await dbClearReports();await dbPutMeta('selectedReportId',null)}else state.savedReports=[];state.selectedReportId=null;state.rows=[];await reloadSavedReports()}catch(err){showError(err.message||String(err))}
   }
 
-  els.addFilesBtn.addEventListener('click',addFiles);
-  els.themeToggle.addEventListener('click',toggleTheme);
-  els.fileInput.addEventListener('change',async e=>{
-    try{await importFileArray(e.target.files)}catch(err){showError(err.message||String(err));setSource('bad','Could not read Excel files',err.message||String(err))}
-  });
-  els.reportSelect.addEventListener('change',e=>selectFile(e.target.value));
-  els.removeReportBtn.addEventListener('click',()=>removeReport(state.selectedFile));
-  els.deleteAllReportsBtn.addEventListener('click',deleteAllReports);
-  els.exportCsvBtn.addEventListener('click',exportVisibleCsv);
+  els.addFilesBtn.addEventListener('click',addFiles);els.themeToggle.addEventListener('click',toggleTheme);
+  els.fileInput.addEventListener('change',async e=>{try{await importFileArray(e.target.files)}catch(err){showError(err.message||String(err));setSource('bad','Could not read Excel files',err.message||String(err));els.addFilesBtn.disabled=false}});
+  els.reportSelect.addEventListener('change',e=>selectReport(e.target.value));els.removeReportBtn.addEventListener('click',()=>removeReport(state.selectedReportId));els.deleteAllReportsBtn.addEventListener('click',deleteAllReports);els.exportCsvBtn.addEventListener('click',exportVisibleCsv);
   els.viewTabs.addEventListener('click',e=>{const tab=e.target.closest('.view-tab');if(tab)setActiveTab(tab.dataset.tab)});
-  els.viewTabs.addEventListener('keydown',e=>{
-    if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;
-    e.preventDefault();
-    const tabs=[els.summaryTab,els.graphsTab];
-    let i=tabs.indexOf(document.activeElement);
-    if(e.key==='Home')i=0;else if(e.key==='End')i=tabs.length-1;else if(e.key==='ArrowRight')i=(i+1)%tabs.length;else i=(i-1+tabs.length)%tabs.length;
-    tabs[i].focus(); setActiveTab(tabs[i].dataset.tab);
-  });
+  els.viewTabs.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=[els.summaryTab,els.graphsTab];let i=tabs.indexOf(document.activeElement);if(e.key==='Home')i=0;else if(e.key==='End')i=tabs.length-1;else if(e.key==='ArrowRight')i=(i+1)%tabs.length;else i=(i-1+tabs.length)%tabs.length;tabs[i].focus();setActiveTab(tabs[i].dataset.tab)});
   els.addChartBtn.addEventListener('click',()=>beginChartEdit());
-  els.chartsGrid.addEventListener('click',e=>{
-    const edit=e.target.closest('.chart-edit'),remove=e.target.closest('.chart-remove'),done=e.target.closest('.chart-done'),cancel=e.target.closest('.chart-cancel');
-    if(edit)beginChartEdit(edit.dataset.id);
-    else if(remove)removeChart(remove.dataset.id);
-    else if(done)finishChartEdit();
-    else if(cancel)cancelChartEdit();
-  });
+  els.chartsGrid.addEventListener('click',e=>{const edit=e.target.closest('.chart-edit'),remove=e.target.closest('.chart-remove'),done=e.target.closest('.chart-done'),cancel=e.target.closest('.chart-cancel');if(edit)beginChartEdit(edit.dataset.id);else if(remove)removeChart(remove.dataset.id);else if(done)finishChartEdit();else if(cancel)cancelChartEdit()});
   els.chartsGrid.addEventListener('input',e=>{const field=e.target.closest('.chart-field');if(field&&field.dataset.field==='title')updateChartDraftFromField(field.dataset.field,field.value)});
   els.chartsGrid.addEventListener('change',e=>{const field=e.target.closest('.chart-field');if(field)updateChartDraftFromField(field.dataset.field,field.value)});
-  els.confirmModalCancel.addEventListener('click',()=>closeConfirmModal(false));
-  els.confirmModalConfirm.addEventListener('click',()=>closeConfirmModal(true));
-  els.confirmModal.addEventListener('click',e=>{if(e.target===els.confirmModal)closeConfirmModal(false)});
+  els.confirmModalCancel.addEventListener('click',()=>closeConfirmModal(false));els.confirmModalConfirm.addEventListener('click',()=>closeConfirmModal(true));els.confirmModal.addEventListener('click',e=>{if(e.target===els.confirmModal)closeConfirmModal(false)});
   document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(state.editingChartId)cancelChartEdit();else if(!els.confirmModal.hidden)closeConfirmModal(false)});
-  els.monthFilter.addEventListener('change',()=>{populateFilters(false);render()});
-  [els.providerFilter,els.serviceFilter].forEach(el=>el.addEventListener('change',render));
-  els.searchInput.addEventListener('input',render);
+  els.monthFilter.addEventListener('change',()=>{populateFilters(false);render()});[els.providerFilter,els.serviceFilter].forEach(el=>el.addEventListener('change',render));els.searchInput.addEventListener('input',render);
   els.clearFiltersBtn.addEventListener('click',()=>{els.monthFilter.value=latestMonth();els.providerFilter.value='';els.serviceFilter.value='';els.searchInput.value='';populateFilters(false);render()});
 
   async function init(){
-    state.charts=defaultCharts();
-    applyTheme(state.theme,false);
-    render();
+    state.charts=defaultCharts();applyTheme(state.theme,false);render();
     try{
-      state.db=await openDatabase();
-      const savedSelection=await dbGetMeta('selectedFile');
-      const savedCharts=await dbGetMeta('charts');
-      const savedTab=await dbGetMeta('activeTab');
-      const savedTheme=await dbGetMeta('theme');
-      state.selectedFile=savedSelection?.value||null;
-      state.charts=normalizeCharts(Array.isArray(savedCharts?.value)?savedCharts.value:defaultCharts());
-      state.activeTab=savedTab?.value==='graphs'?'graphs':'summary';
-      applyTheme(savedTheme?.value==='dark'?'dark':savedTheme?.value==='light'?'light':state.theme,false);
-      await saveCharts();
-      await reloadSavedFiles();
-      updateSelectedSource();
-    }catch(err){
-      state.persistenceAvailable=false; state.db=null;
-      setSource('bad','Report history unavailable','Reports will work for this session, but previously loaded reports may not be available after closing the browser.');
-      showError(`Report history could not be opened: ${err.message||String(err)}`);
-      render();
-    }
+      state.db=await openDatabase();const savedSelection=await dbGetMeta('selectedReportId'),savedCharts=await dbGetMeta('charts'),savedTab=await dbGetMeta('activeTab'),savedTheme=await dbGetMeta('theme');
+      state.selectedReportId=savedSelection?.value||null;state.charts=normalizeCharts(Array.isArray(savedCharts?.value)?savedCharts.value:defaultCharts());state.activeTab=savedTab?.value==='graphs'?'graphs':'summary';
+      applyTheme(savedTheme?.value==='dark'?'dark':savedTheme?.value==='light'?'light':state.theme,false);await saveCharts();await reloadSavedReports();updateSelectedSource();
+    }catch(err){state.persistenceAvailable=false;state.db=null;setSource('bad','Report history unavailable','Reports will work for this session, but previously loaded reports will not persist after closing the browser.');showError(`Report history could not be opened: ${err.message||String(err)}`);render()}
   }
   init();
-})();
+})()
 </script>
 </body>
 </html>
