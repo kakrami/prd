@@ -134,7 +134,7 @@
   <div class="topbar">
     <div class="brand">
       <h1>Provider Visit Reporting Dashboard</h1>
-      <div class="sub">Provider and service reporting from Excel or pasted data <span class="app-version">v1.6</span></div>
+      <div class="sub">Provider and service reporting from Excel or pasted data <span class="app-version">v1.6.1</span></div>
     </div>
     <div class="actions">
       <button class="btn primary" id="addFilesBtn" type="button">Add Excel</button>
@@ -177,8 +177,8 @@
 
   <div id="viewTabs" class="view-tabs" role="tablist" aria-label="Dashboard view">
     <button id="summaryTab" class="view-tab active" type="button" role="tab" aria-selected="true" aria-controls="summaryView" tabindex="0" data-tab="summary">Summary</button>
-    <button id="graphsTab" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="graphsView" tabindex="-1" data-tab="graphs">Graphs</button>
     <button id="frequenciesTab" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="frequenciesView" tabindex="-1" data-tab="frequencies">Frequencies</button>
+    <button id="graphsTab" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="graphsView" tabindex="-1" data-tab="graphs">Graphs</button>
   </div>
 
   <section id="summaryView" class="tab-panel" role="tabpanel" aria-labelledby="summaryTab">
@@ -969,10 +969,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function toggleTheme(){applyTheme(state.theme==='dark'?'light':'dark')}
   function renderTabs(){
     const active=state.activeTab;
-    const tabs=[['summary',els.summaryTab,els.summaryView],['graphs',els.graphsTab,els.graphsView],['frequencies',els.frequenciesTab,els.frequenciesView]];
+    const tabs=[['summary',els.summaryTab,els.summaryView],['frequencies',els.frequenciesTab,els.frequenciesView],['graphs',els.graphsTab,els.graphsView]];
     for(const [name,tab,view] of tabs){const isActive=active===name;tab.classList.toggle('active',isActive);tab.setAttribute('aria-selected',String(isActive));tab.tabIndex=isActive?0:-1;view.hidden=!isActive}
   }
-  function setActiveTab(tab,persist=true){state.activeTab=['summary','graphs','frequencies'].includes(tab)?tab:'summary';renderTabs();if(state.activeTab==='graphs')requestAnimationFrame(renderCharts);if(state.activeTab==='frequencies')renderFrequencies(baseFilteredRows());if(persist&&state.db)dbPutMeta('activeTab',state.activeTab).catch(()=>{})}
+  function setActiveTab(tab,persist=true){state.activeTab=['summary','frequencies','graphs'].includes(tab)?tab:'summary';renderTabs();if(state.activeTab==='graphs')requestAnimationFrame(renderCharts);if(state.activeTab==='frequencies')renderFrequencies(baseFilteredRows());if(persist&&state.db)dbPutMeta('activeTab',state.activeTab).catch(()=>{})}
 
   function render(){
     const hasReport=!!selectedRecord();document.body.classList.toggle('has-report',hasReport);
@@ -1006,7 +1006,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   els.fileInput.addEventListener('change',async e=>{try{await importFileArray(e.target.files)}catch(err){showError(err.message||String(err));setSource('bad','Could not read Excel files',err.message||String(err));els.addFilesBtn.disabled=false}});
   els.reportSelect.addEventListener('change',e=>selectReport(e.target.value));els.removeReportBtn.addEventListener('click',()=>removeReport(state.selectedReportId));els.deleteAllReportsBtn.addEventListener('click',deleteAllReports);els.exportCsvBtn.addEventListener('click',exportVisibleCsv);els.columnsBtn.addEventListener('click',()=>openColumnsModal('summary'));els.frequencyColumnsBtn.addEventListener('click',()=>openColumnsModal('frequencies'));els.frequencyExportCsvBtn.addEventListener('click',exportFrequencyCsv);els.exportPdfBtn.addEventListener('click',exportGraphsPdf);
   els.viewTabs.addEventListener('click',e=>{const tab=e.target.closest('.view-tab');if(tab)setActiveTab(tab.dataset.tab)});
-  els.viewTabs.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=[els.summaryTab,els.graphsTab,els.frequenciesTab];let i=tabs.indexOf(document.activeElement);if(e.key==='Home')i=0;else if(e.key==='End')i=tabs.length-1;else if(e.key==='ArrowRight')i=(i+1)%tabs.length;else i=(i-1+tabs.length)%tabs.length;tabs[i].focus();setActiveTab(tabs[i].dataset.tab)});
+  els.viewTabs.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=[els.summaryTab,els.frequenciesTab,els.graphsTab];let i=tabs.indexOf(document.activeElement);if(e.key==='Home')i=0;else if(e.key==='End')i=tabs.length-1;else if(e.key==='ArrowRight')i=(i+1)%tabs.length;else i=(i-1+tabs.length)%tabs.length;tabs[i].focus();setActiveTab(tabs[i].dataset.tab)});
   els.addChartBtn.addEventListener('click',()=>beginChartEdit());
   els.chartsGrid.addEventListener('click',e=>{const edit=e.target.closest('.chart-edit'),remove=e.target.closest('.chart-remove'),done=e.target.closest('.chart-done'),cancel=e.target.closest('.chart-cancel');if(edit)beginChartEdit(edit.dataset.id);else if(remove)removeChart(remove.dataset.id);else if(done)finishChartEdit();else if(cancel)cancelChartEdit()});
   els.chartsGrid.addEventListener('input',e=>{const field=e.target.closest('.chart-field');if(field&&field.dataset.field==='title')updateChartDraftFromField(field.dataset.field,field.value)});
