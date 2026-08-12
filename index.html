@@ -83,6 +83,8 @@
     .chart-inline-editor{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:12px 13px;border-bottom:1px solid var(--line2);background:var(--panel2);flex:0 0 auto}.chart-inline-editor .field{min-width:0}.chart-inline-editor .field.title-field{grid-column:1/-1}.chart-inline-editor label{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-bottom:4px}.chart-inline-editor input,.chart-inline-editor select{width:100%;padding:7px 8px;font-size:12px}.chart-card.editing .chart-card-head{background:var(--accent-soft)}.panel-head-actions{display:flex;gap:8px;align-items:center}
     .chart-bar{transition:opacity .12s}.chart-bar:hover{opacity:1!important}.chart-point{transition:r .12s}.chart-point:hover{r:6px}
     .frequency-table th,.frequency-table td{text-align:left}.frequency-table td{font-variant-numeric:tabular-nums}
+    .filter-add-wrap{position:relative;flex:0 0 auto}.filter-picker{position:absolute;z-index:90;left:0;top:calc(100% + 5px);width:min(340px,calc(100vw - 24px));max-height:390px;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:9px;box-shadow:var(--shadow-lg);overflow:hidden}.filter-picker[hidden]{display:none}.filter-picker-search{width:100%;border:0;border-bottom:1px solid var(--line2);border-radius:0;background:var(--panel);color:var(--text);padding:10px 11px;outline:0}.filter-picker-list{overflow:auto;padding:5px}.filter-picker-item{display:block;width:100%;border:0;background:transparent;color:var(--text);text-align:left;padding:8px 9px;border-radius:6px;cursor:pointer}.filter-picker-item:hover,.filter-picker-item:focus-visible{background:var(--control-hover);outline:0}.filter-picker-empty{padding:14px 10px;color:var(--muted);font-size:12px;text-align:center}
+    .custom-filters{display:flex;align-items:center;gap:7px;flex-wrap:wrap;flex:1 1 100%;padding-top:7px;margin-top:1px;border-top:1px solid var(--line2)}.custom-filters[hidden]{display:none}.custom-filter{display:flex;align-items:stretch;min-width:220px;max-width:320px}.custom-filter .multi-select{flex:1 1 auto;min-width:0}.custom-filter .multi-select-trigger{border-radius:8px 0 0 8px}.custom-filter-remove{width:34px;min-width:34px;border:1px solid var(--line);border-left:0;border-radius:0 8px 8px 0;background:var(--control);color:var(--muted);cursor:pointer;font-size:16px;line-height:1}.custom-filter-remove:hover{background:var(--control-hover);color:var(--text)}
 
     .multi-select{position:relative;min-width:150px}.multi-select-trigger{width:100%;min-height:36px;padding:8px 30px 8px 10px;text-align:left;cursor:pointer;position:relative;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.multi-select-trigger::after{content:"";position:absolute;right:11px;top:50%;width:7px;height:7px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:translateY(-68%) rotate(45deg)}.multi-select.open .multi-select-trigger{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
     .multi-select-menu{position:absolute;z-index:80;left:0;top:calc(100% + 5px);width:max(100%,230px);max-width:min(360px,calc(100vw - 24px));max-height:300px;overflow:auto;padding:5px;background:var(--panel);border:1px solid var(--line);border-radius:9px;box-shadow:var(--shadow-lg)}.multi-select-menu[hidden]{display:none}.multi-option{display:flex;align-items:center;gap:8px;padding:8px;border-radius:6px;cursor:pointer;line-height:1.25}.multi-option:hover{background:var(--control-hover)}.multi-option input{width:16px;height:16px;accent-color:var(--accent);flex:0 0 auto}.multi-option span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.multi-option.all-option{font-weight:700;border-bottom:1px solid var(--line2);border-radius:6px 6px 0 0;margin-bottom:3px}
@@ -101,7 +103,7 @@
       .statusbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:9px;align-items:end}
       .report-control{display:grid;grid-template-columns:1fr 1fr;gap:7px;width:100%;min-width:0;grid-column:1/-1}.status-label{display:none}.report-select{grid-column:1/-1;width:100%;min-width:0;max-width:none}.report-control .btn{width:100%}
       .source-line{grid-column:1;border-left:0;border-top:0;padding:0;min-width:0;width:100%}.source-detail{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.3}.pill{grid-column:2;justify-self:end;margin:0;align-self:end;white-space:nowrap}
-      .toolbar{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:9px}.toolbar .label{display:none}.toolbar #monthFilter,.toolbar #poeFilter,.toolbar .search{grid-column:1/-1}.filter,.search{width:100%;min-width:0;max-width:none}.spacer{display:none}.toolbar #clearFiltersBtn{grid-column:1/-1;width:auto;min-width:72px;justify-self:end}
+      .toolbar{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:9px}.toolbar .label{display:none}.toolbar #monthFilter,.toolbar #poeFilter,.toolbar .search,.toolbar .custom-filters{grid-column:1/-1}.filter,.search{width:100%;min-width:0;max-width:none}.spacer{display:none}.toolbar #clearFiltersBtn{width:auto;min-width:72px;justify-self:end}.filter-add-wrap{justify-self:start}.custom-filters{display:grid;grid-template-columns:1fr;gap:7px;padding-top:8px}.custom-filter{width:100%;max-width:none}.filter-picker{position:fixed;left:10px;right:10px;top:18vh;width:auto;max-height:58vh}
       .view-tabs{width:100%;gap:0;margin-bottom:8px}.view-tab{flex:1;min-height:42px;padding:8px 12px;touch-action:manipulation}.view-tab.active::after{left:50%;right:auto;width:34px;transform:translateX(-50%)}
       .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-bottom:8px}.kpi{padding:10px 11px}.kpi .label{font-size:10px;margin-bottom:4px}.kpi .value{font-size:20px}.kpi .foot{font-size:10px;white-space:normal;line-height:1.25;min-height:24px}
       .grid{gap:10px}.side{grid-template-columns:1fr;gap:10px}.panel{border-radius:10px}.panel-head{padding:10px 11px;gap:8px}.panel-meta{font-size:11px;line-height:1.3}.panel-head>.btn,.panel-head-actions .btn{min-height:40px}
@@ -132,7 +134,7 @@
   <div class="topbar">
     <div class="brand">
       <h1>Provider Visit Reporting Dashboard</h1>
-      <div class="sub">Provider and service reporting from Excel or pasted data <span class="app-version">v1.5</span></div>
+      <div class="sub">Provider and service reporting from Excel or pasted data <span class="app-version">v1.6</span></div>
     </div>
     <div class="actions">
       <button class="btn primary" id="addFilesBtn" type="button">Add Excel</button>
@@ -166,9 +168,11 @@
     <div id="providerFilter" class="multi-select filter" data-label-singular="Provider" data-label-plural="Providers"><button class="multi-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All Providers</button><div class="multi-select-menu" hidden></div></div>
     <div id="serviceFilter" class="multi-select filter" data-label-singular="Service" data-label-plural="Services"><button class="multi-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All Services</button><div class="multi-select-menu" hidden></div></div>
     <div id="poeFilter" class="multi-select filter" data-label-singular="POE" data-label-plural="POE Values"><button class="multi-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All POE</button><div class="multi-select-menu" hidden></div></div>
+    <div id="addFilterWrap" class="filter-add-wrap"><button id="addFilterBtn" class="btn" type="button">+ Filter</button><div id="filterPicker" class="filter-picker" hidden><input id="filterPickerSearch" class="filter-picker-search" type="search" placeholder="Find a field…" autocomplete="off"><div id="filterPickerList" class="filter-picker-list"></div></div></div>
     <input id="searchInput" class="search" type="search" placeholder="Search provider or service…">
     <div class="spacer"></div>
     <button id="clearFiltersBtn" class="btn">Reset</button>
+    <div id="customFilters" class="custom-filters" hidden></div>
   </div>
 
   <div id="viewTabs" class="view-tabs" role="tablist" aria-label="Dashboard view">
@@ -223,14 +227,13 @@
     <section class="panel">
       <div class="panel-head">
         <div><div class="panel-title">Frequencies Report</div><div id="frequenciesMeta" class="panel-meta">Current report and filters</div></div>
+        <div class="panel-head-actions"><button id="frequencyColumnsBtn" class="btn" type="button" disabled>Columns</button><button id="frequencyExportCsvBtn" class="btn" type="button" disabled>Export CSV</button></div>
       </div>
       <div class="table-wrap">
-        <table id="frequenciesTable" class="frequency-table" style="display:none">
-          <thead><tr><th>ID</th><th>Last Name</th><th>First Name</th><th>SC</th><th>Service</th><th>Provider</th><th>SERVICE_DATE</th><th>Entered On</th><th>Status</th><th>Location</th><th>By Whom</th></tr></thead>
-          <tbody></tbody>
-        </table>
+        <table id="frequenciesTable" class="frequency-table" style="display:none"><thead></thead><tbody></tbody></table>
         <div id="frequenciesEmpty" class="empty"><strong>No data</strong><div>Load a report to view frequencies.</div></div>
       </div>
+      <div class="footer-note">One row per visit. The same report, DOS, Provider, Service, POE, search, and custom filters used elsewhere in the dashboard apply here.</div>
     </section>
   </section>
 </div>
@@ -321,16 +324,17 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   const TARGETS = [5,10,15,20,25,30,35,40];
   const CHART_METRICS={visits:'Scheduled Visits',delivered:'Delivered Visits',deliveryPct:'Delivery Rate',cancellations:'Cancelled Visits',cancellationPct:'Cancellation Rate',hours:'Total Hours',avgHours:'Avg Hours / Visit',units:'15 Min Units',productivity:'Productivity %',over10:'Visits > 10 Business Days',over10Pct:'Late Entry Rate (>10 Business Days)'};
   const CHART_GROUPS={provider:'Provider',service:'Service',status:'Status',month:'Month'};
+  const CUSTOM_FILTER_DEFS={status:{label:'Status',get:r=>r.status},sc:{label:'SC',get:r=>r.sc},location:{label:'Location',get:r=>r.location},byWhom:{label:'By Whom',get:r=>r.byWhom},childId:{label:'ID',get:r=>r.childId},lastName:{label:'Last Name',get:r=>r.lastName},firstName:{label:'First Name',get:r=>r.firstName},dos:{label:'DOS',get:r=>r.dos},enteredOn:{label:'Entered On',get:r=>r.enteredOn},startTime:{label:'Start Time',get:r=>r.startTime},endTime:{label:'End Time',get:r=>r.endTime},late:{label:'> 10 Business Days',get:r=>r.over10BusinessDays?'Yes':'No'},businessDays:{label:'Business Days to Entry',get:r=>r.businessDays==null?'':String(r.businessDays)}};
   const CHART_COLORS=['var(--series-1)','var(--series-2)','var(--series-3)','var(--series-4)','var(--series-5)','var(--series-6)','var(--series-7)','var(--series-8)','var(--series-9)','var(--series-10)'];
   const DB_NAME = 'ProviderVisitReportingDashboardV3';
-  const DB_VERSION = 3;
+  const DB_VERSION = 4;
   const REPORT_STORE = 'reports';
   const META_STORE = 'meta';
 
   const state = {
     rows:[], savedReports:[], selectedReportId:null,
     lastLoad:null,
-    db:null, persistenceAvailable:true, charts:[], editingChartId:null, chartDraft:null, activeTab:'summary', hiddenColumns:new Set(), columnDraftHidden:null, lastTableColumns:[], learnedAliases:{},
+    db:null, persistenceAvailable:true, charts:[], editingChartId:null, chartDraft:null, activeTab:'summary', hiddenColumns:new Set(), hiddenFrequencyColumns:new Set(), columnDraftHidden:null, columnModalMode:'summary', lastTableColumns:[], lastFrequencyColumns:[], learnedAliases:{}, customFilters:[], openCustomFilterKey:null,
     theme:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'
   };
 
@@ -338,17 +342,17 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   const els = {
     sourceDot:$('sourceDot'), sourceTitle:$('sourceTitle'), sourceDetail:$('sourceDetail'), lastRefresh:$('lastRefresh'),
     errorBox:$('errorBox'), addFilesBtn:$('addFilesBtn'), pasteDataBtn:$('pasteDataBtn'), themeToggle:$('themeToggle'), themeIcon:$('themeIcon'),
-    monthFilter:$('monthFilter'), providerFilter:$('providerFilter'), serviceFilter:$('serviceFilter'), poeFilter:$('poeFilter'), searchInput:$('searchInput'), clearFiltersBtn:$('clearFiltersBtn'),
+    monthFilter:$('monthFilter'), providerFilter:$('providerFilter'), serviceFilter:$('serviceFilter'), poeFilter:$('poeFilter'), addFilterWrap:$('addFilterWrap'), addFilterBtn:$('addFilterBtn'), filterPicker:$('filterPicker'), filterPickerSearch:$('filterPickerSearch'), filterPickerList:$('filterPickerList'), customFilters:$('customFilters'), searchInput:$('searchInput'), clearFiltersBtn:$('clearFiltersBtn'),
     kpiProviders:$('kpiProviders'), kpiVisits:$('kpiVisits'), kpiVisitsFoot:$('kpiVisitsFoot'), kpiDelivered:$('kpiDelivered'),
     kpiDeliveredFoot:$('kpiDeliveredFoot'), kpiCancellation:$('kpiCancellation'), kpiTime:$('kpiTime'), kpiTimeFoot:$('kpiTimeFoot'), kpiUnits:$('kpiUnits'),
     reportTable:$('reportTable'), emptyState:$('emptyState'), tableMeta:$('tableMeta'), statusMeta:$('statusMeta'),
     statusList:$('statusList'), fileInput:$('fileInput'),
     reportSelect:$('reportSelect'), removeReportBtn:$('removeReportBtn'), deleteAllReportsBtn:$('deleteAllReportsBtn'), exportCsvBtn:$('exportCsvBtn'), columnsBtn:$('columnsBtn'),
     chartsMeta:$('chartsMeta'), chartsGrid:$('chartsGrid'), addChartBtn:$('addChartBtn'), exportPdfBtn:$('exportPdfBtn'),
-    viewTabs:$('viewTabs'), summaryTab:$('summaryTab'), graphsTab:$('graphsTab'), frequenciesTab:$('frequenciesTab'), summaryView:$('summaryView'), graphsView:$('graphsView'), frequenciesView:$('frequenciesView'), frequenciesTable:$('frequenciesTable'), frequenciesMeta:$('frequenciesMeta'), frequenciesEmpty:$('frequenciesEmpty'),
+    viewTabs:$('viewTabs'), summaryTab:$('summaryTab'), graphsTab:$('graphsTab'), frequenciesTab:$('frequenciesTab'), summaryView:$('summaryView'), graphsView:$('graphsView'), frequenciesView:$('frequenciesView'), frequenciesTable:$('frequenciesTable'), frequenciesMeta:$('frequenciesMeta'), frequenciesEmpty:$('frequenciesEmpty'), frequencyColumnsBtn:$('frequencyColumnsBtn'), frequencyExportCsvBtn:$('frequencyExportCsvBtn'),
     confirmModal:$('confirmModal'), confirmModalTitle:$('confirmModalTitle'), confirmModalBody:$('confirmModalBody'),
     confirmModalCancel:$('confirmModalCancel'), confirmModalConfirm:$('confirmModalConfirm'),
-    columnsModal:$('columnsModal'), columnsList:$('columnsList'), columnsShowAll:$('columnsShowAll'), columnsCancel:$('columnsCancel'), columnsDone:$('columnsDone'),
+    columnsModal:$('columnsModal'), columnsModalTitle:$('columnsModalTitle'), columnsList:$('columnsList'), columnsShowAll:$('columnsShowAll'), columnsCancel:$('columnsCancel'), columnsDone:$('columnsDone'),
     pasteModal:$('pasteModal'), pasteReportName:$('pasteReportName'), pasteDataInput:$('pasteDataInput'), pasteCancel:$('pasteCancel'), pasteImport:$('pasteImport'),
     mappingModal:$('mappingModal'), mappingContext:$('mappingContext'), mappingList:$('mappingList'), mappingRemember:$('mappingRemember'), mappingCancel:$('mappingCancel'), mappingApply:$('mappingApply')
   };
@@ -565,17 +569,35 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   async function resolveHeaderMapping(aoa,sourceLabel){
     const candidate=findHeaderCandidate(aoa);if(!candidate)return null;const map={...candidate.map};if(map.status==null){const inferred=inferStatusColumn(aoa,candidate);if(inferred!=null)map.status=inferred}let missing=REQUIRED.filter(k=>map[k]==null);
     if(missing.length){const result=await requestColumnMapping({headers:candidate.headers,map,missing,sourceLabel});if(!result)throw new Error('Import cancelled.');const chosen=new Set();for(const [field,index] of Object.entries(result.mapping)){if(chosen.has(index)||Object.values(map).includes(index))throw new Error('Each required field must use a different source column.');chosen.add(index);map[field]=index}missing=REQUIRED.filter(k=>map[k]==null);if(missing.length)throw new Error(`Map the following required field${missing.length===1?'':'s'}: ${missing.map(k=>FIELD_DEFS[k].label).join(', ')}.`);if(result.remember){for(const [field,index] of Object.entries(result.mapping)){const alias=normHeader(candidate.headers[index]);if(alias)state.learnedAliases[alias]=field}if(state.db)try{await dbPutMeta('headerAliases',state.learnedAliases)}catch{}}}
-    return{rowIndex:candidate.rowIndex,map};
+    return{rowIndex:candidate.rowIndex,map,headers:candidate.headers};
+  }
+  function extraColumnsForHeaders(headers,map){
+    const mapped=new Set(Object.values(map)),seen=new Map(),out=[];
+    headers.forEach((label,index)=>{label=cleanText(label);if(!label||mapped.has(index))return;const norm=normHeader(label);if(!norm)return;const count=(seen.get(norm)||0)+1;seen.set(norm,count);const key=`extra:${norm}${count>1?`:${count}`:''}`;out.push({key,label,index})});
+    return out;
   }
   async function rowsFromAoA(aoa,sourceName,rowPrefix='row',sourceLabel=sourceName){
-    const hdr=await resolveHeaderMapping(aoa,sourceLabel);if(!hdr)return null;const out=[],invalidDates=[],providerNames=new Map(),serviceNames=new Map(),statusNames=new Map(),poeNames=new Map(),{map,rowIndex}=hdr;let ignoredInactiveRows=0;
-    for(let i=rowIndex+1;i<aoa.length;i++){const row=aoa[i]||[];if(map.activeStatus!=null&&normalizedKey(row[map.activeStatus])==='inactive'){ignoredInactiveRows++;continue}const providerRaw=cleanText(row[map.provider]);if(!providerRaw)continue;const provider=canonicalValue(providerRaw,providerNames),service=canonicalValue(row[map.service],serviceNames,'(Blank Service)'),status=canonicalValue(row[map.status],statusNames,'(Blank Status)'),poe=canonicalValue(map.poe!=null?row[map.poe]:'',poeNames,'(Blank POE)');const dos=parseDateValue(row[map.dos]),enteredOn=parseDateValue(row[map.enteredOn]);if(!dos||!enteredOn){invalidDates.push(`${rowPrefix} ${i+1}`);continue}const start=parseTime(row[map.start]),end=parseTime(row[map.end]),minutes=durationMinutes(start,end),businessDays=businessDaysBetween(dos,enteredOn);out.push({childId:cleanText(map.childId!=null?row[map.childId]:''),lastName:cleanText(map.lastName!=null?row[map.lastName]:''),firstName:cleanText(map.firstName!=null?row[map.firstName]:''),sc:cleanText(map.sc!=null?row[map.sc]:''),location:cleanText(map.location!=null?row[map.location]:''),byWhom:cleanText(map.byWhom!=null?row[map.byWhom]:''),provider:provider.label,providerKey:provider.key,service:service.label,serviceKey:service.key||'__blank__',poe:poe.label,poeKey:poe.key||'__blank__',status:status.label,statusKey:status.key||'__blank__',dos:dateIso(dos),enteredOn:dateIso(enteredOn),monthKey:monthKeyFromDate(dos),businessDays,over10BusinessDays:businessDays>10,minutes,file:sourceName,row:i+1})}
-    return{rows:out,invalidDates,ignoredInactiveRows};
+    const hdr=await resolveHeaderMapping(aoa,sourceLabel);if(!hdr)return null;const out=[],invalidDates=[],providerNames=new Map(),serviceNames=new Map(),statusNames=new Map(),poeNames=new Map(),{map,rowIndex,headers}=hdr;let ignoredInactiveRows=0;
+    const extraColumns=extraColumnsForHeaders(headers,map),customFields=Object.fromEntries(extraColumns.map(c=>[c.key,c.label]));
+    for(let i=rowIndex+1;i<aoa.length;i++){
+      const row=aoa[i]||[];if(map.activeStatus!=null&&normalizedKey(row[map.activeStatus])==='inactive'){ignoredInactiveRows++;continue}
+      const providerRaw=cleanText(row[map.provider]);if(!providerRaw)continue;
+      const provider=canonicalValue(providerRaw,providerNames),service=canonicalValue(row[map.service],serviceNames,'(Blank Service)'),status=canonicalValue(row[map.status],statusNames,'(Blank Status)'),poe=canonicalValue(map.poe!=null?row[map.poe]:'',poeNames,'(Blank POE)');
+      const dos=parseDateValue(row[map.dos]),enteredOn=parseDateValue(row[map.enteredOn]);if(!dos||!enteredOn){invalidDates.push(`${rowPrefix} ${i+1}`);continue}
+      const start=parseTime(row[map.start]),end=parseTime(row[map.end]),minutes=durationMinutes(start,end),businessDays=businessDaysBetween(dos,enteredOn),extra={};
+      extraColumns.forEach(c=>{const value=cleanText(row[c.index]);if(value)extra[c.key]=value});
+      out.push({childId:cleanText(map.childId!=null?row[map.childId]:''),lastName:cleanText(map.lastName!=null?row[map.lastName]:''),firstName:cleanText(map.firstName!=null?row[map.firstName]:''),sc:cleanText(map.sc!=null?row[map.sc]:''),location:cleanText(map.location!=null?row[map.location]:''),byWhom:cleanText(map.byWhom!=null?row[map.byWhom]:''),startTime:cleanText(row[map.start]),endTime:cleanText(row[map.end]),provider:provider.label,providerKey:provider.key,service:service.label,serviceKey:service.key||'__blank__',poe:poe.label,poeKey:poe.key||'__blank__',status:status.label,statusKey:status.key||'__blank__',dos:dateIso(dos),enteredOn:dateIso(enteredOn),monthKey:monthKeyFromDate(dos),businessDays,over10BusinessDays:businessDays>10,minutes,extra,file:sourceName,row:i+1});
+    }
+    return{rows:out,invalidDates,ignoredInactiveRows,customFields};
   }
-  async function workbookRows(arrayBuffer,fileName){const sheets=await workbookAoAs(arrayBuffer),out=[],usedSheets=[],skippedSheets=[],invalidDates=[];let ignoredInactiveRows=0;for(const item of sheets){if(!item.aoa.length){skippedSheets.push(item.name);continue}const parsed=await rowsFromAoA(item.aoa,fileName,`${item.name} row`,`${fileName} — ${item.name}`);if(!parsed){skippedSheets.push(item.name);continue}usedSheets.push(item.name);for(const row of parsed.rows){row.sheet=item.name;out.push(row)}invalidDates.push(...parsed.invalidDates);ignoredInactiveRows+=parsed.ignoredInactiveRows||0}if(!usedSheets.length)throw new Error(`No worksheet contains a recognizable report table. Expected fields include ${REQUIRED_LABELS.join(', ')}.`);if(invalidDates.length){const sample=invalidDates.slice(0,5).join(', '),more=invalidDates.length>5?` and ${invalidDates.length-5} more`:'';throw new Error(`DOS or Entered On is missing or invalid on ${invalidDates.length} visit row${invalidDates.length===1?'':'s'} (${sample}${more}). Fix the source data and import again.`)}if(!out.length)throw new Error('No visit rows were found beneath the detected headers.');return{rows:out,usedSheets,skippedSheets,invalidTimeRows:out.filter(r=>r.minutes==null).length,ignoredInactiveRows}}
+  async function workbookRows(arrayBuffer,fileName){
+    const sheets=await workbookAoAs(arrayBuffer),out=[],usedSheets=[],skippedSheets=[],invalidDates=[],customFields={};let ignoredInactiveRows=0;
+    for(const item of sheets){if(!item.aoa.length){skippedSheets.push(item.name);continue}const parsed=await rowsFromAoA(item.aoa,fileName,`${item.name} row`,`${fileName} — ${item.name}`);if(!parsed){skippedSheets.push(item.name);continue}usedSheets.push(item.name);for(const row of parsed.rows){row.sheet=item.name;out.push(row)}Object.assign(customFields,parsed.customFields||{});invalidDates.push(...parsed.invalidDates);ignoredInactiveRows+=parsed.ignoredInactiveRows||0}
+    if(!usedSheets.length)throw new Error(`No worksheet contains a recognizable report table. Expected fields include ${REQUIRED_LABELS.join(', ')}.`);if(invalidDates.length){const sample=invalidDates.slice(0,5).join(', '),more=invalidDates.length>5?` and ${invalidDates.length-5} more`:'';throw new Error(`DOS or Entered On is missing or invalid on ${invalidDates.length} visit row${invalidDates.length===1?'':'s'} (${sample}${more}). Fix the source data and import again.`)}if(!out.length)throw new Error('No visit rows were found beneath the detected headers.');return{rows:out,usedSheets,skippedSheets,invalidTimeRows:out.filter(r=>r.minutes==null).length,ignoredInactiveRows,customFields}
+  }
   async function parseFile(file){return workbookRows(await file.arrayBuffer(),file.name)}
   function parseDelimitedText(text){text=String(text||'').replace(/^\uFEFF/,'');if(!text.trim())return[];const parseWith=delimiter=>{const rows=[];let row=[],cell='',quoted=false;for(let i=0;i<text.length;i++){const ch=text[i];if(ch==='"'){if(quoted&&text[i+1]==='"'){cell+='"';i++}else quoted=!quoted;continue}if(ch===delimiter&&!quoted){row.push(cell);cell='';continue}if((ch==='\n'||ch==='\r')&&!quoted){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(cell);if(row.some(v=>cleanText(v)))rows.push(row);row=[];cell='';continue}cell+=ch}row.push(cell);if(row.some(v=>cleanText(v)))rows.push(row);return rows};const tabRows=parseWith('\t'),csvRows=parseWith(','),tabScore=findHeaderCandidate(tabRows)?.score||0,csvScore=findHeaderCandidate(csvRows)?.score||0;if(tabScore||csvScore)return tabScore>=csvScore?tabRows:csvRows;return tabRows.some(r=>r.length>1)?tabRows:csvRows}
-  async function parsePastedData(text,name){const aoa=parseDelimitedText(text),parsed=await rowsFromAoA(aoa,name,'row',name);if(!parsed)throw new Error(`Pasted data must include a recognizable report table. Expected fields include ${REQUIRED_LABELS.join(', ')}.`);if(parsed.invalidDates.length){const sample=parsed.invalidDates.slice(0,5).join(', '),more=parsed.invalidDates.length>5?` and ${parsed.invalidDates.length-5} more`:'';throw new Error(`DOS or Entered On is missing or invalid on ${parsed.invalidDates.length} visit row${parsed.invalidDates.length===1?'':'s'} (${sample}${more}). Fix the pasted data and try again.`)}if(!parsed.rows.length)throw new Error('No visit rows were found beneath the pasted header row.');return{rows:parsed.rows,usedSheets:[],skippedSheets:[],invalidTimeRows:parsed.rows.filter(r=>r.minutes==null).length,ignoredInactiveRows:parsed.ignoredInactiveRows||0}}
+  async function parsePastedData(text,name){const aoa=parseDelimitedText(text),parsed=await rowsFromAoA(aoa,name,'row',name);if(!parsed)throw new Error(`Pasted data must include a recognizable report table. Expected fields include ${REQUIRED_LABELS.join(', ')}.`);if(parsed.invalidDates.length){const sample=parsed.invalidDates.slice(0,5).join(', '),more=parsed.invalidDates.length>5?` and ${parsed.invalidDates.length-5} more`:'';throw new Error(`DOS or Entered On is missing or invalid on ${parsed.invalidDates.length} visit row${parsed.invalidDates.length===1?'':'s'} (${sample}${more}). Fix the pasted data and try again.`)}if(!parsed.rows.length)throw new Error('No visit rows were found beneath the pasted header row.');return{rows:parsed.rows,usedSheets:[],skippedSheets:[],invalidTimeRows:parsed.rows.filter(r=>r.minutes==null).length,ignoredInactiveRows:parsed.ignoredInactiveRows||0,customFields:parsed.customFields||{}}}
 
   function selectedRecord(){return state.savedReports.find(r=>r.id===state.selectedReportId)||null}
   function reportLabel(rec){return`${rec.name} • ${fmtDate(rec.importedAt)}`}
@@ -610,7 +632,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         try{
           const parsed=await parseFile(file),record={
             id:newId(),name:file.name,sourceType:'excel',rows:parsed.rows,sheets:parsed.usedSheets.length,skippedSheets:parsed.skippedSheets,
-            invalidTimeRows:parsed.invalidTimeRows,ignoredInactiveRows:parsed.ignoredInactiveRows||0,size:file.size||0,lastModified:file.lastModified||0,importedAt:new Date().toISOString()
+            invalidTimeRows:parsed.invalidTimeRows,ignoredInactiveRows:parsed.ignoredInactiveRows||0,customFields:parsed.customFields||{},size:file.size||0,lastModified:file.lastModified||0,importedAt:new Date().toISOString()
           };
           if(state.db)await dbPutReport(record);else state.savedReports.push(record);
           imported.push(record);
@@ -628,15 +650,15 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   async function importPastedData(){
     const text=els.pasteDataInput.value,name=cleanText(els.pasteReportName.value)||`Pasted Report ${new Date().toLocaleDateString()}`;if(!text.trim()){showError('Paste report data before importing.');return}
     els.pasteImport.disabled=true;showError('');
-    try{const parsed=await parsePastedData(text,name),record={id:newId(),name,sourceType:'paste',rows:parsed.rows,sheets:0,skippedSheets:[],invalidTimeRows:parsed.invalidTimeRows,ignoredInactiveRows:parsed.ignoredInactiveRows||0,size:new Blob([text]).size,lastModified:Date.now(),importedAt:new Date().toISOString()};if(state.db)await dbPutReport(record);else state.savedReports.push(record);closePasteModal();await reloadSavedReports(record.id);state.lastLoad=new Date();updateSelectedSource()}catch(err){showError(err.message||String(err))}finally{els.pasteImport.disabled=false}
+    try{const parsed=await parsePastedData(text,name),record={id:newId(),name,sourceType:'paste',rows:parsed.rows,sheets:0,skippedSheets:[],invalidTimeRows:parsed.invalidTimeRows,ignoredInactiveRows:parsed.ignoredInactiveRows||0,customFields:parsed.customFields||{},size:new Blob([text]).size,lastModified:Date.now(),importedAt:new Date().toISOString()};if(state.db)await dbPutReport(record);else state.savedReports.push(record);closePasteModal();await reloadSavedReports(record.id);state.lastLoad=new Date();updateSelectedSource()}catch(err){showError(err.message||String(err))}finally{els.pasteImport.disabled=false}
   }
 
   function availableMonths(){return[...new Set(state.rows.map(r=>r.monthKey).filter(Boolean))].sort().reverse()}
   function latestMonth(){return availableMonths()[0]||''}
   function multiValues(el){return new Set([...el.querySelectorAll('.multi-option input[data-value]:checked')].map(i=>i.dataset.value).filter(Boolean))}
-  function closeMultiSelect(el){el.classList.remove('open');el.querySelector('.multi-select-menu').hidden=true;el.querySelector('.multi-select-trigger').setAttribute('aria-expanded','false')}
-  function closeAllMultiSelects(except=null){[els.monthFilter,els.providerFilter,els.serviceFilter,els.poeFilter].forEach(el=>{if(el!==except)closeMultiSelect(el)})}
-  function multiSummary(el,selected,allLabel){const singular=el.dataset.labelSingular,plural=el.dataset.labelPlural;if(!selected.size)return allLabel;if(selected.size===1)return[...selected][0];return`${selected.size} ${plural}`}
+  function closeMultiSelect(el){if(!el)return;el.classList.remove('open');const menu=el.querySelector('.multi-select-menu'),trigger=el.querySelector('.multi-select-trigger');if(menu)menu.hidden=true;if(trigger)trigger.setAttribute('aria-expanded','false')}
+  function closeAllMultiSelects(except=null){document.querySelectorAll('.multi-select.open').forEach(el=>{if(el!==except)closeMultiSelect(el)});if(!except||!except.classList.contains('custom-filter-select'))state.openCustomFilterKey=null}
+  function multiSummary(el,selected,allLabel){const plural=el.dataset.labelPlural;if(!selected.size)return allLabel;if(selected.size===1)return[...selected][0];return`${selected.size} ${plural}`}
   function setMultiOptions(el,options,selectedValues,allLabel){
     const selected=new Set([...selectedValues].filter(v=>options.some(o=>o.value===v))),menu=el.querySelector('.multi-select-menu');
     menu.innerHTML=`<label class="multi-option all-option"><input type="checkbox" data-value=""${selected.size?'':' checked'}><span>${esc(allLabel)}</span></label>`+options.map(o=>`<label class="multi-option"><input type="checkbox" data-value="${esc(o.value)}"${selected.has(o.value)?' checked':''}><span title="${esc(o.label)}">${esc(o.label)}</span></label>`).join('');
@@ -645,15 +667,43 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function setMultiValues(el,values){const wanted=new Set(values);el.querySelectorAll('.multi-option input[data-value]').forEach(i=>i.checked=i.dataset.value?wanted.has(i.dataset.value):wanted.size===0);const allLabel=el===els.monthFilter?'All Months':el===els.providerFilter?'All Providers':el===els.serviceFilter?'All Services':'All POE';el.querySelector('.multi-select-trigger').textContent=multiSummary(el,wanted,allLabel)}
   function monthScopedRows(){const months=multiValues(els.monthFilter);return months.size?state.rows.filter(r=>months.has(r.monthKey)):state.rows}
   function populateFilters(reset=false){
-    const months=availableMonths(),curM=reset?new Set(months[0]?[months[0]]:[]):multiValues(els.monthFilter),curP=reset?new Set():multiValues(els.providerFilter),curS=reset?new Set():multiValues(els.serviceFilter),curO=reset?new Set():multiValues(els.poeFilter);if(reset)els.searchInput.value='';
+    const months=availableMonths(),curM=reset?new Set(months[0]?[months[0]]:[]):multiValues(els.monthFilter),curP=reset?new Set():multiValues(els.providerFilter),curS=reset?new Set():multiValues(els.serviceFilter),curO=reset?new Set():multiValues(els.poeFilter);if(reset){els.searchInput.value='';state.customFilters=[];state.openCustomFilterKey=null;closeFilterPicker()}
     setMultiOptions(els.monthFilter,months.map(v=>({value:v,label:monthLabel(v)})),curM,'All Months');const scoped=monthScopedRows();
     const providers=[...new Set(scoped.map(r=>r.provider).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),services=[...new Set(scoped.map(r=>r.service).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),poes=[...new Set(scoped.map(r=>r.poe).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
     setMultiOptions(els.providerFilter,providers.map(v=>({value:v,label:v})),curP,'All Providers');setMultiOptions(els.serviceFilter,services.map(v=>({value:v,label:v})),curS,'All Services');setMultiOptions(els.poeFilter,poes.map(v=>({value:v,label:v})),curO,'All POE');
   }
-  function baseFilteredRows(){
+  function customFieldValue(row,key){const def=CUSTOM_FILTER_DEFS[key];if(def)return cleanText(def.get(row));if(key.startsWith('extra:'))return cleanText(row.extra?.[key]);return''}
+  function availableCustomFilterFields(){
+    const fields=[];
+    for(const [key,def] of Object.entries(CUSTOM_FILTER_DEFS))if(state.rows.some(r=>customFieldValue(r,key)))fields.push({key,label:def.label});
+    const rec=selectedRecord();for(const [key,label] of Object.entries(rec?.customFields||{}))if(state.rows.some(r=>customFieldValue(r,key)))fields.push({key,label});
+    const seen=new Set();return fields.filter(f=>!seen.has(f.key)&&(seen.add(f.key),true)).sort((a,b)=>a.label.localeCompare(b.label));
+  }
+  function primaryFilteredRows(){
     const providers=multiValues(els.providerFilter),services=multiValues(els.serviceFilter),poes=multiValues(els.poeFilter),q=normalizedKey(els.searchInput.value);
     return monthScopedRows().filter(r=>{if(providers.size&&!providers.has(r.provider))return false;if(services.size&&!services.has(r.service))return false;if(poes.size&&!poes.has(r.poe))return false;if(q&&!normalizedKey(`${r.provider} ${r.service}`).includes(q))return false;return true});
   }
+  function rowsMatchingCustomFilters(rows,exceptKey=null){
+    return rows.filter(row=>state.customFilters.every(f=>{if(f.key===exceptKey||!f.values?.length)return true;return f.values.includes(customFieldValue(row,f.key))}));
+  }
+  function baseFilteredRows(){return rowsMatchingCustomFilters(primaryFilteredRows())}
+  function customOptionsFor(key){const values=new Set(rowsMatchingCustomFilters(primaryFilteredRows(),key).map(r=>customFieldValue(r,key)).filter(Boolean));const current=state.customFilters.find(f=>f.key===key);for(const v of current?.values||[])values.add(v);return[...values].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true,sensitivity:'base'})).map(v=>({value:v,label:v}))}
+  function customTriggerText(field,values){if(!values.length)return`${field.label}: All`;if(values.length===1)return`${field.label}: ${values[0]}`;return`${field.label}: ${values.length} selected`}
+  function renderCustomFilters(){
+    const available=new Map(availableCustomFilterFields().map(f=>[f.key,f]));state.customFilters=state.customFilters.filter(f=>available.has(f.key));
+    els.customFilters.hidden=!state.customFilters.length;
+    els.customFilters.innerHTML=state.customFilters.map(f=>{const field=available.get(f.key)||{label:f.label||f.key};return`<div class="custom-filter" data-filter-key="${esc(f.key)}"><div class="multi-select custom-filter-select" data-label-singular="${esc(field.label)}" data-label-plural="Values"><button class="multi-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false"></button><div class="multi-select-menu" hidden></div></div><button class="custom-filter-remove" type="button" title="Remove ${esc(field.label)} filter" aria-label="Remove ${esc(field.label)} filter">×</button></div>`}).join('');
+    for(const wrap of els.customFilters.querySelectorAll('.custom-filter')){const key=wrap.dataset.filterKey,field=available.get(key),item=state.customFilters.find(f=>f.key===key),select=wrap.querySelector('.multi-select');setMultiOptions(select,customOptionsFor(key),new Set(item?.values||[]),'All');select.querySelector('.multi-select-trigger').textContent=customTriggerText(field||{label:item?.label||key},item?.values||[]);if(key===state.openCustomFilterKey){select.classList.add('open');select.querySelector('.multi-select-menu').hidden=false;select.querySelector('.multi-select-trigger').setAttribute('aria-expanded','true')}}
+  }
+  function renderFilterPicker(){
+    const active=new Set(state.customFilters.map(f=>f.key)),q=normalizedKey(els.filterPickerSearch.value),fields=availableCustomFilterFields().filter(f=>!active.has(f.key)&&(!q||normalizedKey(f.label).includes(q)));
+    els.filterPickerList.innerHTML=fields.length?fields.map(f=>`<button class="filter-picker-item" type="button" data-filter-key="${esc(f.key)}">${esc(f.label)}</button>`).join(''):'<div class="filter-picker-empty">No matching fields</div>';
+    els.addFilterBtn.disabled=!selectedRecord()||availableCustomFilterFields().every(f=>active.has(f.key));
+  }
+  function openFilterPicker(){if(els.addFilterBtn.disabled)return;closeAllMultiSelects();els.filterPickerSearch.value='';renderFilterPicker();els.filterPicker.hidden=false;requestAnimationFrame(()=>els.filterPickerSearch.focus())}
+  function closeFilterPicker(){els.filterPicker.hidden=true;els.filterPickerSearch.value=''}
+  function addCustomFilter(key){const field=availableCustomFilterFields().find(f=>f.key===key);if(!field||state.customFilters.some(f=>f.key===key))return;state.customFilters.push({key,label:field.label,values:[]});closeFilterPicker();render()}
+
 
   function newAggregate(){return{visits:0,delivered:0,over10:0,minutes:0,invalidTimes:0,counts:new Map()}}
   function addToAggregate(a,row){
@@ -701,9 +751,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     els.emptyState.style.display=hasRows?'none':'block';els.reportTable.style.display=hasRows?'table':'none';els.exportCsvBtn.disabled=!hasRows;els.columnsBtn.disabled=!hasReport;
     const viewName=selectedRecord()?.name||'Report',timeNote=summary.invalidTimes?` • ${summary.invalidTimes} invalid time row${summary.invalidTimes===1?'':'s'} excluded`:'';els.tableMeta.textContent=summary.report.length?`${viewName} • ${summary.report.length.toLocaleString()} summary rows • ${columns.length} displayed column${columns.length===1?'':'s'}${timeNote}`:'No data loaded';
   }
-  function openColumnsModal(){if(!selectedRecord())return;state.columnDraftHidden=new Set(state.hiddenColumns);renderColumnsList();els.columnsModal.hidden=false;document.body.style.overflow='hidden'}
-  function renderColumnsList(){const hidden=state.columnDraftHidden||new Set();els.columnsList.innerHTML=state.lastTableColumns.map(c=>`<label class="column-option"><input type="checkbox" data-column-key="${esc(c.key)}"${hidden.has(c.key)?'':' checked'}><span>${esc(c.label)}</span></label>`).join('')}
-  function closeColumnsModal(save=false){if(save){const visible=state.lastTableColumns.filter(c=>!state.columnDraftHidden.has(c.key));if(!visible.length)state.columnDraftHidden.delete(state.lastTableColumns[0]?.key);state.hiddenColumns=new Set(state.columnDraftHidden);if(state.db)dbPutMeta('hiddenColumns',[...state.hiddenColumns]).catch(()=>{});render()}state.columnDraftHidden=null;els.columnsModal.hidden=true;document.body.style.overflow=''}
+  function columnModalContext(){return state.columnModalMode==='frequencies'?{columns:state.lastFrequencyColumns,hidden:state.hiddenFrequencyColumns,metaKey:'hiddenFrequencyColumns'}:{columns:state.lastTableColumns,hidden:state.hiddenColumns,metaKey:'hiddenColumns'}}
+  function openColumnsModal(mode='summary'){if(!selectedRecord())return;state.columnModalMode=mode==='frequencies'?'frequencies':'summary';const ctx=columnModalContext();state.columnDraftHidden=new Set(ctx.hidden);els.columnsModalTitle.textContent=state.columnModalMode==='frequencies'?'Frequency Columns':'Summary Columns';renderColumnsList();els.columnsModal.hidden=false;document.body.style.overflow='hidden'}
+  function renderColumnsList(){const hidden=state.columnDraftHidden||new Set(),ctx=columnModalContext();els.columnsList.innerHTML=ctx.columns.map(c=>`<label class="column-option"><input type="checkbox" data-column-key="${esc(c.key)}"${hidden.has(c.key)?'':' checked'}><span>${esc(c.label)}</span></label>`).join('')}
+  function closeColumnsModal(save=false){if(save){const ctx=columnModalContext(),visible=ctx.columns.filter(c=>!state.columnDraftHidden.has(c.key));if(!visible.length)state.columnDraftHidden.delete(ctx.columns[0]?.key);if(state.columnModalMode==='frequencies')state.hiddenFrequencyColumns=new Set(state.columnDraftHidden);else state.hiddenColumns=new Set(state.columnDraftHidden);if(state.db)dbPutMeta(ctx.metaKey,[...state.columnDraftHidden]).catch(()=>{});render()}state.columnDraftHidden=null;els.columnsModal.hidden=true;document.body.style.overflow=''}
 
   function renderKPIs(summary,globalSummary){
     els.kpiProviders.textContent=summary.providers.length.toLocaleString();els.kpiVisits.textContent=summary.allTotal.toLocaleString();
@@ -889,13 +940,18 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     try{const images=[];for(let i=0;i<configs.length;i++){const card=cards[i];if(!card?.querySelector('.chart-svg'))continue;images.push(await chartJpeg(card,configs[i]))}if(!images.length)throw new Error('There are no graph results to export.');const pdf=buildPdf(images),base=(selectedRecord()?.name||'provider-report').replace(/\.(xlsx|xlsm)$/i,'').replace(/[\\/:*?"<>|]+/g,'_'),url=URL.createObjectURL(new Blob([pdf],{type:'application/pdf'})),a=document.createElement('a');a.href=url;a.download=`${base}_graphs.pdf`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),0)}catch(err){showError(err.message||String(err))}finally{els.exportPdfBtn.disabled=!selectedRecord()||!visibleChartConfigs().length}
   }
 
+  function frequencyColumnDefs(){return[
+    {key:'childId',label:'ID',cell:r=>esc(r.childId||'')},{key:'lastName',label:'Last Name',cell:r=>esc(r.lastName||'')},{key:'firstName',label:'First Name',cell:r=>esc(r.firstName||'')},{key:'sc',label:'SC',cell:r=>esc(r.sc||'')},{key:'service',label:'Service',cell:r=>esc(r.service||'')},{key:'provider',label:'Provider',cell:r=>esc(r.provider||'')},{key:'dos',label:'SERVICE_DATE',cell:r=>esc(r.dos||'')},{key:'enteredOn',label:'Entered On',cell:r=>esc(r.enteredOn||'')},{key:'status',label:'Status',cell:r=>esc(r.status||'')},{key:'location',label:'Location',cell:r=>esc(r.location||'')},{key:'byWhom',label:'By Whom',cell:r=>esc(r.byWhom||'')}
+  ]}
+  function visibleFrequencyColumns(){const all=frequencyColumnDefs();state.lastFrequencyColumns=all;const visible=all.filter(c=>!state.hiddenFrequencyColumns.has(c.key));return visible.length?visible:[all[0]]}
   function renderFrequencies(rows){
-    const hasReport=!!selectedRecord(),hasRows=rows.length>0;
-    els.frequenciesTable.tBodies[0].innerHTML=rows.map(r=>`<tr><td>${esc(r.childId||'')}</td><td>${esc(r.lastName||'')}</td><td>${esc(r.firstName||'')}</td><td>${esc(r.sc||'')}</td><td>${esc(r.service||'')}</td><td>${esc(r.provider||'')}</td><td>${esc(r.dos||'')}</td><td>${esc(r.enteredOn||'')}</td><td>${esc(r.status||'')}</td><td>${esc(r.location||'')}</td><td>${esc(r.byWhom||'')}</td></tr>`).join('');
-    els.frequenciesTable.style.display=hasRows?'table':'none';
-    els.frequenciesEmpty.style.display=hasRows?'none':'block';
+    const hasReport=!!selectedRecord(),hasRows=rows.length>0,columns=visibleFrequencyColumns();
+    els.frequenciesTable.tHead.innerHTML='<tr>'+columns.map(c=>`<th class="text-left">${esc(c.label)}</th>`).join('')+'</tr>';
+    els.frequenciesTable.tBodies[0].innerHTML=rows.map(r=>`<tr>${columns.map(c=>`<td class="text-left">${c.cell(r)}</td>`).join('')}</tr>`).join('');
+    els.frequenciesTable.style.display=hasRows?'table':'none';els.frequenciesEmpty.style.display=hasRows?'none':'block';
     els.frequenciesEmpty.innerHTML=hasRows?'':hasReport?'<strong>No matching visits</strong><div>Adjust the current filters to show frequency rows.</div>':'<strong>No data</strong><div>Load a report to view frequencies.</div>';
-    els.frequenciesMeta.textContent=hasReport?`${selectedRecord().name} • ${rows.length.toLocaleString()} visit row${rows.length===1?'':'s'}`:'No report selected';
+    els.frequencyExportCsvBtn.disabled=!hasRows;els.frequencyColumnsBtn.disabled=!hasReport;
+    els.frequenciesMeta.textContent=hasReport?`${selectedRecord().name} • ${rows.length.toLocaleString()} visit row${rows.length===1?'':'s'} • ${columns.length} displayed column${columns.length===1?'':'s'}`:'No report selected';
   }
 
   function renderReportSelect(){
@@ -919,18 +975,19 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function setActiveTab(tab,persist=true){state.activeTab=['summary','graphs','frequencies'].includes(tab)?tab:'summary';renderTabs();if(state.activeTab==='graphs')requestAnimationFrame(renderCharts);if(state.activeTab==='frequencies')renderFrequencies(baseFilteredRows());if(persist&&state.db)dbPutMeta('activeTab',state.activeTab).catch(()=>{})}
 
   function render(){
-    const hasReport=!!selectedRecord();
-    document.body.classList.toggle('has-report',hasReport);
+    const hasReport=!!selectedRecord();document.body.classList.toggle('has-report',hasReport);
+    renderCustomFilters();renderFilterPicker();
     const rows=baseFilteredRows(),monthRows=monthScopedRows(),globalSummary=summarize(monthRows),summary=summarize(rows,globalSummary.overallCancel,globalSummary.statuses);
-    const monthSel=multiValues(els.monthFilter),providerSel=multiValues(els.providerFilter),serviceSel=multiValues(els.serviceFilter),poeSel=multiValues(els.poeFilter);els.clearFiltersBtn.disabled=!hasReport||(monthSel.size===1&&monthSel.has(latestMonth())&&!providerSel.size&&!serviceSel.size&&!poeSel.size&&!els.searchInput.value.trim());
+    const monthSel=multiValues(els.monthFilter),providerSel=multiValues(els.providerFilter),serviceSel=multiValues(els.serviceFilter),poeSel=multiValues(els.poeFilter);els.clearFiltersBtn.disabled=!hasReport||(monthSel.size===1&&monthSel.has(latestMonth())&&!providerSel.size&&!serviceSel.size&&!poeSel.size&&!state.customFilters.length&&!els.searchInput.value.trim());
     renderKPIs(summary,globalSummary);renderTable(summary);renderStatus(rows);renderReportSelect();renderTabs();if(state.activeTab==='graphs')renderCharts();if(state.activeTab==='frequencies')renderFrequencies(rows);
   }
-  function exportVisibleCsv(){
-    const rows=[...els.reportTable.querySelectorAll('tr')];if(!rows.length||els.reportTable.style.display==='none')return;
+  function exportTableCsv(table,suffix){
+    const rows=[...table.querySelectorAll('tr')];if(!rows.length||table.style.display==='none')return;
     const csv=rows.map(tr=>[...tr.querySelectorAll('th,td')].map(cell=>`"${cell.innerText.replace(/\r?\n/g,' ').trim().replace(/"/g,'""')}"`).join(',')).join('\r\n');
-    const base=(selectedRecord()?.name||'provider-report').replace(/\.(xlsx|xlsm)$/i,'').replace(/[\\/:*?"<>|]+/g,'_'),blob=new Blob(['\ufeff',csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');
-    a.href=url;a.download=`${base}_provider_summary.csv`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),0);
+    const base=(selectedRecord()?.name||'provider-report').replace(/\.(xlsx|xlsm)$/i,'').replace(/[\\/:*?"<>|]+/g,'_'),blob=new Blob(['\ufeff',csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${base}_${suffix}.csv`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),0);
   }
+  function exportVisibleCsv(){exportTableCsv(els.reportTable,'provider_summary')}
+  function exportFrequencyCsv(){exportTableCsv(els.frequenciesTable,'frequencies')}
   async function selectReport(id){
     if(!state.savedReports.some(r=>r.id===id))return;state.selectedReportId=id;syncSelectedRows();populateFilters(true);render();updateSelectedSource();if(state.db)try{await dbPutMeta('selectedReportId',id)}catch{}
   }
@@ -947,7 +1004,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
   els.addFilesBtn.addEventListener('click',addFiles);els.pasteDataBtn.addEventListener('click',openPasteModal);els.themeToggle.addEventListener('click',toggleTheme);
   els.fileInput.addEventListener('change',async e=>{try{await importFileArray(e.target.files)}catch(err){showError(err.message||String(err));setSource('bad','Could not read Excel files',err.message||String(err));els.addFilesBtn.disabled=false}});
-  els.reportSelect.addEventListener('change',e=>selectReport(e.target.value));els.removeReportBtn.addEventListener('click',()=>removeReport(state.selectedReportId));els.deleteAllReportsBtn.addEventListener('click',deleteAllReports);els.exportCsvBtn.addEventListener('click',exportVisibleCsv);els.columnsBtn.addEventListener('click',openColumnsModal);els.exportPdfBtn.addEventListener('click',exportGraphsPdf);
+  els.reportSelect.addEventListener('change',e=>selectReport(e.target.value));els.removeReportBtn.addEventListener('click',()=>removeReport(state.selectedReportId));els.deleteAllReportsBtn.addEventListener('click',deleteAllReports);els.exportCsvBtn.addEventListener('click',exportVisibleCsv);els.columnsBtn.addEventListener('click',()=>openColumnsModal('summary'));els.frequencyColumnsBtn.addEventListener('click',()=>openColumnsModal('frequencies'));els.frequencyExportCsvBtn.addEventListener('click',exportFrequencyCsv);els.exportPdfBtn.addEventListener('click',exportGraphsPdf);
   els.viewTabs.addEventListener('click',e=>{const tab=e.target.closest('.view-tab');if(tab)setActiveTab(tab.dataset.tab)});
   els.viewTabs.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=[els.summaryTab,els.graphsTab,els.frequenciesTab];let i=tabs.indexOf(document.activeElement);if(e.key==='Home')i=0;else if(e.key==='End')i=tabs.length-1;else if(e.key==='ArrowRight')i=(i+1)%tabs.length;else i=(i-1+tabs.length)%tabs.length;tabs[i].focus();setActiveTab(tabs[i].dataset.tab)});
   els.addChartBtn.addEventListener('click',()=>beginChartEdit());
@@ -958,19 +1015,24 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   els.columnsList.addEventListener('change',e=>{const input=e.target.closest('input[data-column-key]');if(!input||!state.columnDraftHidden)return;if(input.checked)state.columnDraftHidden.delete(input.dataset.columnKey);else state.columnDraftHidden.add(input.dataset.columnKey)});els.columnsShowAll.addEventListener('click',()=>{state.columnDraftHidden=new Set();renderColumnsList()});els.columnsCancel.addEventListener('click',()=>closeColumnsModal(false));els.columnsDone.addEventListener('click',()=>closeColumnsModal(true));els.columnsModal.addEventListener('click',e=>{if(e.target===els.columnsModal)closeColumnsModal(false)});
   els.pasteCancel.addEventListener('click',closePasteModal);els.pasteImport.addEventListener('click',importPastedData);els.pasteModal.addEventListener('click',e=>{if(e.target===els.pasteModal)closePasteModal()});
   els.mappingCancel.addEventListener('click',()=>closeMappingModal(null));els.mappingApply.addEventListener('click',()=>{const selects=[...els.mappingList.querySelectorAll('.mapping-field')],mapping={},used=new Set();for(const select of selects){if(select.value===''){showError(`Select a source column for ${FIELD_DEFS[select.dataset.field].label}.`);select.focus();return}const index=Number(select.value);if(used.has(index)){showError('Each required field must use a different source column.');select.focus();return}used.add(index);mapping[select.dataset.field]=index}showError('');closeMappingModal({mapping,remember:els.mappingRemember.checked})});els.mappingModal.addEventListener('click',e=>{if(e.target===els.mappingModal)closeMappingModal(null)});
-  [els.monthFilter,els.providerFilter,els.serviceFilter,els.poeFilter].forEach(el=>{el.querySelector('.multi-select-trigger').addEventListener('click',()=>{const open=!el.classList.contains('open');closeAllMultiSelects(el);el.classList.toggle('open',open);el.querySelector('.multi-select-menu').hidden=!open;el.querySelector('.multi-select-trigger').setAttribute('aria-expanded',String(open))});el.querySelector('.multi-select-menu').addEventListener('change',e=>{const input=e.target.closest('input[data-value]');if(!input)return;const all=el.querySelector('input[data-value=""]');if(input.dataset.value===''){if(input.checked)el.querySelectorAll('input[data-value]:not([data-value=""])').forEach(i=>i.checked=false);else input.checked=true}else{all.checked=false;const any=[...el.querySelectorAll('input[data-value]:not([data-value=""])')].some(i=>i.checked);if(!any)all.checked=true}const allLabel=el===els.monthFilter?'All Months':el===els.providerFilter?'All Providers':el===els.serviceFilter?'All Services':'All POE';el.querySelector('.multi-select-trigger').textContent=multiSummary(el,multiValues(el),allLabel);if(el===els.monthFilter)populateFilters(false);render()})});
-  document.addEventListener('click',e=>{if(!e.target.closest('.multi-select'))closeAllMultiSelects()});
-  document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if([els.monthFilter,els.providerFilter,els.serviceFilter,els.poeFilter].some(el=>el.classList.contains('open')))closeAllMultiSelects();else if(!els.mappingModal.hidden)closeMappingModal(null);else if(!els.pasteModal.hidden)closePasteModal();else if(!els.columnsModal.hidden)closeColumnsModal(false);else if(state.editingChartId)cancelChartEdit();else if(!els.confirmModal.hidden)closeConfirmModal(false)});
+  [els.monthFilter,els.providerFilter,els.serviceFilter,els.poeFilter].forEach(el=>{el.querySelector('.multi-select-trigger').addEventListener('click',()=>{closeFilterPicker();const open=!el.classList.contains('open');closeAllMultiSelects(el);el.classList.toggle('open',open);el.querySelector('.multi-select-menu').hidden=!open;el.querySelector('.multi-select-trigger').setAttribute('aria-expanded',String(open))});el.querySelector('.multi-select-menu').addEventListener('change',e=>{const input=e.target.closest('input[data-value]');if(!input)return;const all=el.querySelector('input[data-value=""]');if(input.dataset.value===''){if(input.checked)el.querySelectorAll('input[data-value]:not([data-value=""])').forEach(i=>i.checked=false);else input.checked=true}else{all.checked=false;const any=[...el.querySelectorAll('input[data-value]:not([data-value=""])')].some(i=>i.checked);if(!any)all.checked=true}const allLabel=el===els.monthFilter?'All Months':el===els.providerFilter?'All Providers':el===els.serviceFilter?'All Services':'All POE';el.querySelector('.multi-select-trigger').textContent=multiSummary(el,multiValues(el),allLabel);if(el===els.monthFilter)populateFilters(false);render()})});
+  els.addFilterBtn.addEventListener('click',e=>{e.stopPropagation();if(els.filterPicker.hidden)openFilterPicker();else closeFilterPicker()});
+  els.filterPickerSearch.addEventListener('input',renderFilterPicker);
+  els.filterPickerList.addEventListener('click',e=>{const item=e.target.closest('[data-filter-key]');if(item)addCustomFilter(item.dataset.filterKey)});
+  els.customFilters.addEventListener('click',e=>{const remove=e.target.closest('.custom-filter-remove');if(remove){const wrap=remove.closest('.custom-filter'),key=wrap?.dataset.filterKey;state.customFilters=state.customFilters.filter(f=>f.key!==key);if(state.openCustomFilterKey===key)state.openCustomFilterKey=null;render();return}const trigger=e.target.closest('.multi-select-trigger');if(!trigger)return;closeFilterPicker();const select=trigger.closest('.multi-select'),wrap=trigger.closest('.custom-filter'),key=wrap?.dataset.filterKey,open=!select.classList.contains('open');closeAllMultiSelects(select);state.openCustomFilterKey=open?key:null;select.classList.toggle('open',open);select.querySelector('.multi-select-menu').hidden=!open;trigger.setAttribute('aria-expanded',String(open))});
+  els.customFilters.addEventListener('change',e=>{const input=e.target.closest('input[data-value]');if(!input)return;const select=input.closest('.multi-select'),wrap=input.closest('.custom-filter'),key=wrap?.dataset.filterKey,item=state.customFilters.find(f=>f.key===key);if(!item)return;const all=select.querySelector('input[data-value=""]');if(input.dataset.value===''){if(input.checked)select.querySelectorAll('input[data-value]:not([data-value=""])').forEach(i=>i.checked=false);else input.checked=true}else{all.checked=false;const any=[...select.querySelectorAll('input[data-value]:not([data-value=""])')].some(i=>i.checked);if(!any)all.checked=true}item.values=[...multiValues(select)];state.openCustomFilterKey=key;render()});
+  document.addEventListener('click',e=>{if(!e.target.closest('.multi-select'))closeAllMultiSelects();if(!e.target.closest('.filter-add-wrap'))closeFilterPicker()});
+  document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!els.filterPicker.hidden)closeFilterPicker();else if(document.querySelector('.multi-select.open'))closeAllMultiSelects();else if(!els.mappingModal.hidden)closeMappingModal(null);else if(!els.pasteModal.hidden)closePasteModal();else if(!els.columnsModal.hidden)closeColumnsModal(false);else if(state.editingChartId)cancelChartEdit();else if(!els.confirmModal.hidden)closeConfirmModal(false)});
   els.searchInput.addEventListener('input',render);
-  els.clearFiltersBtn.addEventListener('click',()=>{setMultiValues(els.monthFilter,latestMonth()?[latestMonth()]:[]);setMultiValues(els.providerFilter,[]);setMultiValues(els.serviceFilter,[]);setMultiValues(els.poeFilter,[]);els.searchInput.value='';populateFilters(false);render()});
+  els.clearFiltersBtn.addEventListener('click',()=>{setMultiValues(els.monthFilter,latestMonth()?[latestMonth()]:[]);setMultiValues(els.providerFilter,[]);setMultiValues(els.serviceFilter,[]);setMultiValues(els.poeFilter,[]);state.customFilters=[];state.openCustomFilterKey=null;closeFilterPicker();els.searchInput.value='';populateFilters(false);render()});
   if(compactChartMedia.addEventListener)compactChartMedia.addEventListener('change',()=>{if(state.activeTab==='graphs')renderCharts()});
 
 
   async function init(){
     state.charts=defaultCharts();applyTheme(state.theme,false);render();
     try{
-      state.db=await openDatabase();const savedSelection=await dbGetMeta('selectedReportId'),savedCharts=await dbGetMeta('charts'),savedTab=await dbGetMeta('activeTab'),savedTheme=await dbGetMeta('theme'),savedHiddenColumns=await dbGetMeta('hiddenColumns'),savedHeaderAliases=await dbGetMeta('headerAliases');
-      state.selectedReportId=savedSelection?.value||null;state.charts=normalizeCharts(Array.isArray(savedCharts?.value)?savedCharts.value:defaultCharts());state.activeTab=['summary','graphs','frequencies'].includes(savedTab?.value)?savedTab.value:'summary';state.hiddenColumns=new Set(Array.isArray(savedHiddenColumns?.value)?savedHiddenColumns.value:[]);state.learnedAliases=Object.fromEntries(Object.entries(savedHeaderAliases?.value||{}).filter(([,field])=>FIELD_DEFS[field]));
+      state.db=await openDatabase();const savedSelection=await dbGetMeta('selectedReportId'),savedCharts=await dbGetMeta('charts'),savedTab=await dbGetMeta('activeTab'),savedTheme=await dbGetMeta('theme'),savedHiddenColumns=await dbGetMeta('hiddenColumns'),savedHiddenFrequencyColumns=await dbGetMeta('hiddenFrequencyColumns'),savedHeaderAliases=await dbGetMeta('headerAliases');
+      state.selectedReportId=savedSelection?.value||null;state.charts=normalizeCharts(Array.isArray(savedCharts?.value)?savedCharts.value:defaultCharts());state.activeTab=['summary','graphs','frequencies'].includes(savedTab?.value)?savedTab.value:'summary';state.hiddenColumns=new Set(Array.isArray(savedHiddenColumns?.value)?savedHiddenColumns.value:[]);state.hiddenFrequencyColumns=new Set(Array.isArray(savedHiddenFrequencyColumns?.value)?savedHiddenFrequencyColumns.value:[]);state.learnedAliases=Object.fromEntries(Object.entries(savedHeaderAliases?.value||{}).filter(([,field])=>FIELD_DEFS[field]));
       applyTheme(savedTheme?.value==='dark'?'dark':savedTheme?.value==='light'?'light':state.theme,false);await saveCharts();await reloadSavedReports();updateSelectedSource();
     }catch(err){state.persistenceAvailable=false;state.db=null;setSource('bad','Report history unavailable','Reports will work for this session, but previously loaded reports will not persist after closing the browser.');showError(`Report history could not be opened: ${err.message||String(err)}`);render()}
   }
