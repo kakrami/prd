@@ -91,6 +91,8 @@
     .columns-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;max-height:52vh;overflow:auto;padding:2px}.column-option{display:flex;align-items:center;gap:8px;padding:8px 9px;border:1px solid var(--line2);border-radius:8px;background:var(--control);cursor:pointer}.column-option:hover{background:var(--control-hover)}.column-option input{width:16px;height:16px;accent-color:var(--accent)}
     .modal.wide{width:min(680px,100%)}.form-label{display:block;color:var(--text2);font-size:12px;font-weight:700;margin:0 0 5px}.paste-name{width:100%;padding:8px 10px;margin-bottom:10px}.paste-textarea{display:block;width:100%;min-height:300px;resize:vertical;padding:10px;font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre}.modal-help{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.45}.modal-actions .spacer{flex:1}
     .mapping-context{font-size:12px;color:var(--muted);margin-bottom:12px}.mapping-list{display:grid;gap:9px}.mapping-row{display:grid;grid-template-columns:minmax(120px,.7fr) minmax(0,1.3fr);gap:10px;align-items:center}.mapping-row label{font-weight:700;color:var(--text2)}.mapping-row select{width:100%;padding:8px 30px 8px 10px}.mapping-remember{display:flex;align-items:center;gap:8px;margin-top:12px;color:var(--text2);font-size:12px}.mapping-remember input{width:16px;height:16px;accent-color:var(--accent)}
+
+    .sort-modal{width:min(820px,100%)}.sort-toolbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:12px}.sort-move{width:34px;min-width:34px;padding:0}.sort-grid-head,.sort-level-row{display:grid;grid-template-columns:28px minmax(150px,1.1fr) minmax(120px,.8fr) minmax(160px,1fr);gap:8px;align-items:center}.sort-grid-head{padding:0 7px 6px;color:var(--muted);font-size:11px;font-weight:700}.sort-levels{display:grid;gap:6px;max-height:48vh;overflow:auto}.sort-level-row{padding:7px;border:1px solid var(--line2);border-radius:9px;background:var(--control);cursor:pointer}.sort-level-row.selected{border-color:var(--accent-line);background:var(--accent-soft)}.sort-level-row input[type="radio"]{width:16px;height:16px;accent-color:var(--accent);margin:0}.sort-level-row select{width:100%;min-width:0;padding:7px 28px 7px 8px;border:1px solid var(--line);background:var(--control);color:var(--text);border-radius:7px}.sort-level-row select:disabled{opacity:.68}.sort-empty{padding:28px 12px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:9px}
     @media(max-width:1100px){
       .grid{grid-template-columns:1fr}.table-wrap{max-height:640px}.side{display:grid;grid-template-columns:1fr 1fr;gap:12px}.side .panel{height:100%}
     }
@@ -111,7 +113,7 @@
       table{font-size:12px}thead th,tbody td{padding:8px 9px}thead th:first-child,tbody td:first-child{position:sticky;left:0;min-width:118px;max-width:145px;overflow:hidden;text-overflow:ellipsis;z-index:2}thead th:first-child{z-index:5;background:var(--table-head)}tbody td:first-child{background:var(--panel)}tbody tr.total td:first-child{background:var(--total-bg)}
       .footer-note{padding:9px 11px;line-height:1.45}.status-list{padding:11px}.status-item{margin-bottom:11px}
       .charts-grid{padding:8px;gap:10px}.chart-card{flex:1 1 100%;width:100%;max-width:none;min-width:0;height:480px;border-radius:10px}.chart-card.editing{height:auto;min-height:650px}.chart-card-head{padding:10px 11px;min-height:64px;gap:8px}.chart-card-actions{gap:5px}.chart-card-actions .btn{min-height:40px;padding:7px 9px}.chart-body{padding:8px;overflow:auto;-webkit-overflow-scrolling:touch}.chart-inline-editor{grid-template-columns:1fr 1fr;gap:8px;padding:10px 11px}.chart-inline-editor .field.title-field{grid-column:1/-1}.chart-inline-editor label{font-size:10.5px}
-      .errorbox{max-height:34vh;overflow:auto;overflow-wrap:anywhere;line-height:1.45}.multi-select{min-width:0;width:100%}.multi-select-menu{position:fixed;left:10px;right:10px;top:auto;width:auto;max-width:none;max-height:46vh}.columns-list{grid-template-columns:1fr}.mapping-row{grid-template-columns:1fr;gap:4px}.mapping-row select{font-size:16px;min-height:44px}
+      .errorbox{max-height:34vh;overflow:auto;overflow-wrap:anywhere;line-height:1.45}.multi-select{min-width:0;width:100%}.multi-select-menu{position:fixed;left:10px;right:10px;top:auto;width:auto;max-width:none;max-height:46vh}.columns-list{grid-template-columns:1fr}.mapping-row{grid-template-columns:1fr;gap:4px}.mapping-row select{font-size:16px;min-height:44px}.sort-grid-head{display:none}.sort-level-row{grid-template-columns:24px 1fr;gap:6px 8px}.sort-level-row select{font-size:16px;min-height:44px}.sort-level-row .sort-on{grid-column:2}.sort-level-row .sort-order{grid-column:2}.sort-toolbar .btn{flex:1 1 auto}.sort-toolbar .sort-move{flex:0 0 44px;width:44px}
     }
     @media(max-width:520px){
       .chart-inline-editor{grid-template-columns:1fr}.chart-inline-editor .field.title-field{grid-column:auto}.chart-card.editing{min-height:760px}
@@ -134,7 +136,7 @@
   <div class="topbar">
     <div class="brand">
       <h1>Provider Visit Reporting Dashboard</h1>
-      <div class="sub">Provider and service reporting from Excel or pasted data <span class="app-version">v1.6.1</span></div>
+      <div class="sub">Provider and service reporting from Excel or pasted data <span class="app-version">v1.6.4</span></div>
     </div>
     <div class="actions">
       <button class="btn primary" id="addFilesBtn" type="button">Add Excel</button>
@@ -178,6 +180,7 @@
   <div id="viewTabs" class="view-tabs" role="tablist" aria-label="Dashboard view">
     <button id="summaryTab" class="view-tab active" type="button" role="tab" aria-selected="true" aria-controls="summaryView" tabindex="0" data-tab="summary">Summary</button>
     <button id="frequenciesTab" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="frequenciesView" tabindex="-1" data-tab="frequencies">Frequencies</button>
+    <button id="rawTab" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="rawView" tabindex="-1" data-tab="raw">Raw Data</button>
     <button id="graphsTab" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="graphsView" tabindex="-1" data-tab="graphs">Graphs</button>
   </div>
 
@@ -195,7 +198,7 @@
       <section class="panel">
         <div class="panel-head">
           <div><div class="panel-title">Provider Summary</div><div id="tableMeta" class="panel-meta">No data loaded</div></div>
-          <div class="panel-head-actions"><button id="columnsBtn" class="btn" type="button" disabled>Columns</button><button id="exportCsvBtn" class="btn" type="button" disabled>Export CSV</button></div>
+          <div class="panel-head-actions"><button id="sortBtn" class="btn" type="button" disabled>Sort</button><button id="columnsBtn" class="btn" type="button" disabled>Columns</button><button id="exportCsvBtn" class="btn" type="button" disabled>Export CSV</button></div>
         </div>
         <div class="table-wrap">
           <table id="reportTable" style="display:none"><thead></thead><tbody></tbody></table>
@@ -227,13 +230,27 @@
     <section class="panel">
       <div class="panel-head">
         <div><div class="panel-title">Frequencies Report</div><div id="frequenciesMeta" class="panel-meta">Current report and filters</div></div>
-        <div class="panel-head-actions"><button id="frequencyColumnsBtn" class="btn" type="button" disabled>Columns</button><button id="frequencyExportCsvBtn" class="btn" type="button" disabled>Export CSV</button></div>
+        <div class="panel-head-actions"><button id="frequencySortBtn" class="btn" type="button" disabled>Sort</button><button id="frequencyColumnsBtn" class="btn" type="button" disabled>Columns</button><button id="frequencyExportCsvBtn" class="btn" type="button" disabled>Export CSV</button></div>
       </div>
       <div class="table-wrap">
         <table id="frequenciesTable" class="frequency-table" style="display:none"><thead></thead><tbody></tbody></table>
         <div id="frequenciesEmpty" class="empty"><strong>No data</strong><div>Load a report to view frequencies.</div></div>
       </div>
       <div class="footer-note">One row per visit. The same report, DOS, Provider, Service, POE, search, and custom filters used elsewhere in the dashboard apply here.</div>
+    </section>
+  </section>
+
+  <section id="rawView" class="tab-panel" role="tabpanel" aria-labelledby="rawTab" hidden>
+    <section class="panel">
+      <div class="panel-head">
+        <div><div class="panel-title">Raw Data</div><div id="rawMeta" class="panel-meta">Current report and filters</div></div>
+        <div class="panel-head-actions"><button id="rawSortBtn" class="btn" type="button" disabled>Sort</button><button id="rawColumnsBtn" class="btn" type="button" disabled>Columns</button><button id="rawExportCsvBtn" class="btn" type="button" disabled>Export CSV</button></div>
+      </div>
+      <div class="table-wrap">
+        <table id="rawTable" class="frequency-table" style="display:none"><thead></thead><tbody></tbody></table>
+        <div id="rawEmpty" class="empty"><strong>No data</strong><div>Load a report to view the imported source rows.</div></div>
+      </div>
+      <div class="footer-note">Shows the imported table using its original source column names. Leading information lines and inactive rows remain excluded by the importer. The same report and dashboard filters apply here.</div>
     </section>
   </section>
 </div>
@@ -254,6 +271,25 @@
     <div class="modal-head"><div id="columnsModalTitle" class="modal-title">Displayed Columns</div></div>
     <div class="modal-body"><div id="columnsList" class="columns-list"></div></div>
     <div class="modal-actions"><button id="columnsShowAll" class="btn" type="button">Show All</button><div class="spacer"></div><button id="columnsCancel" class="btn" type="button">Cancel</button><button id="columnsDone" class="btn primary" type="button">Done</button></div>
+  </div>
+</div>
+
+<div id="sortModal" class="modal-backdrop" hidden>
+  <div class="modal sort-modal" role="dialog" aria-modal="true" aria-labelledby="sortModalTitle">
+    <div class="modal-head"><div id="sortModalTitle" class="modal-title">Custom Sort</div></div>
+    <div class="modal-body">
+      <div class="sort-toolbar">
+        <button id="sortAddLevel" class="btn" type="button">+ Add Level</button>
+        <button id="sortDeleteLevel" class="btn" type="button">Delete Level</button>
+        <button id="sortCopyLevel" class="btn" type="button">Copy Level</button>
+        <button id="sortMoveUp" class="btn sort-move" type="button" aria-label="Move level up" title="Move level up">↑</button>
+        <button id="sortMoveDown" class="btn sort-move" type="button" aria-label="Move level down" title="Move level down">↓</button>
+      </div>
+      <div class="sort-grid-head"><span></span><span>Column</span><span>Sort On</span><span>Order</span></div>
+      <div id="sortLevels" class="sort-levels"></div>
+      <div class="modal-help">Sort levels are applied from top to bottom. Summary sorting keeps each provider together and keeps its TOTAL row last.</div>
+    </div>
+    <div class="modal-actions"><button id="sortClear" class="btn" type="button">Clear Sort</button><div class="spacer"></div><button id="sortCancel" class="btn" type="button">Cancel</button><button id="sortApply" class="btn primary" type="button">Apply</button></div>
   </div>
 </div>
 
@@ -334,7 +370,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   const state = {
     rows:[], savedReports:[], selectedReportId:null,
     lastLoad:null,
-    db:null, persistenceAvailable:true, charts:[], editingChartId:null, chartDraft:null, activeTab:'summary', hiddenColumns:new Set(), hiddenFrequencyColumns:new Set(), columnDraftHidden:null, columnModalMode:'summary', lastTableColumns:[], lastFrequencyColumns:[], learnedAliases:{}, customFilters:[], openCustomFilterKey:null,
+    db:null, persistenceAvailable:true, charts:[], editingChartId:null, chartDraft:null, activeTab:'summary', hiddenColumns:new Set(), hiddenFrequencyColumns:new Set(), columnDraftHidden:null, columnModalMode:'summary', lastTableColumns:[], lastFrequencyColumns:[], lastRawColumns:[], hiddenRawColumns:new Set(), summarySort:[], frequencySort:[], rawSort:[], sortDraftLevels:null, sortModalMode:'summary', sortSelectedIndex:0, learnedAliases:{}, customFilters:[], openCustomFilterKey:null,
     theme:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'
   };
 
@@ -347,12 +383,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     kpiDeliveredFoot:$('kpiDeliveredFoot'), kpiCancellation:$('kpiCancellation'), kpiTime:$('kpiTime'), kpiTimeFoot:$('kpiTimeFoot'), kpiUnits:$('kpiUnits'),
     reportTable:$('reportTable'), emptyState:$('emptyState'), tableMeta:$('tableMeta'), statusMeta:$('statusMeta'),
     statusList:$('statusList'), fileInput:$('fileInput'),
-    reportSelect:$('reportSelect'), removeReportBtn:$('removeReportBtn'), deleteAllReportsBtn:$('deleteAllReportsBtn'), exportCsvBtn:$('exportCsvBtn'), columnsBtn:$('columnsBtn'),
+    reportSelect:$('reportSelect'), removeReportBtn:$('removeReportBtn'), deleteAllReportsBtn:$('deleteAllReportsBtn'), exportCsvBtn:$('exportCsvBtn'), columnsBtn:$('columnsBtn'), sortBtn:$('sortBtn'),
     chartsMeta:$('chartsMeta'), chartsGrid:$('chartsGrid'), addChartBtn:$('addChartBtn'), exportPdfBtn:$('exportPdfBtn'),
-    viewTabs:$('viewTabs'), summaryTab:$('summaryTab'), graphsTab:$('graphsTab'), frequenciesTab:$('frequenciesTab'), summaryView:$('summaryView'), graphsView:$('graphsView'), frequenciesView:$('frequenciesView'), frequenciesTable:$('frequenciesTable'), frequenciesMeta:$('frequenciesMeta'), frequenciesEmpty:$('frequenciesEmpty'), frequencyColumnsBtn:$('frequencyColumnsBtn'), frequencyExportCsvBtn:$('frequencyExportCsvBtn'),
+    viewTabs:$('viewTabs'), summaryTab:$('summaryTab'), graphsTab:$('graphsTab'), frequenciesTab:$('frequenciesTab'), rawTab:$('rawTab'), summaryView:$('summaryView'), graphsView:$('graphsView'), frequenciesView:$('frequenciesView'), rawView:$('rawView'), frequenciesTable:$('frequenciesTable'), frequenciesMeta:$('frequenciesMeta'), frequenciesEmpty:$('frequenciesEmpty'), frequencyColumnsBtn:$('frequencyColumnsBtn'), frequencyExportCsvBtn:$('frequencyExportCsvBtn'), frequencySortBtn:$('frequencySortBtn'), rawTable:$('rawTable'), rawMeta:$('rawMeta'), rawEmpty:$('rawEmpty'), rawColumnsBtn:$('rawColumnsBtn'), rawExportCsvBtn:$('rawExportCsvBtn'), rawSortBtn:$('rawSortBtn'),
     confirmModal:$('confirmModal'), confirmModalTitle:$('confirmModalTitle'), confirmModalBody:$('confirmModalBody'),
     confirmModalCancel:$('confirmModalCancel'), confirmModalConfirm:$('confirmModalConfirm'),
     columnsModal:$('columnsModal'), columnsModalTitle:$('columnsModalTitle'), columnsList:$('columnsList'), columnsShowAll:$('columnsShowAll'), columnsCancel:$('columnsCancel'), columnsDone:$('columnsDone'),
+    sortModal:$('sortModal'), sortModalTitle:$('sortModalTitle'), sortLevels:$('sortLevels'), sortAddLevel:$('sortAddLevel'), sortDeleteLevel:$('sortDeleteLevel'), sortCopyLevel:$('sortCopyLevel'), sortMoveUp:$('sortMoveUp'), sortMoveDown:$('sortMoveDown'), sortClear:$('sortClear'), sortCancel:$('sortCancel'), sortApply:$('sortApply'),
     pasteModal:$('pasteModal'), pasteReportName:$('pasteReportName'), pasteDataInput:$('pasteDataInput'), pasteCancel:$('pasteCancel'), pasteImport:$('pasteImport'),
     mappingModal:$('mappingModal'), mappingContext:$('mappingContext'), mappingList:$('mappingList'), mappingRemember:$('mappingRemember'), mappingCancel:$('mappingCancel'), mappingApply:$('mappingApply')
   };
@@ -571,6 +608,12 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     if(missing.length){const result=await requestColumnMapping({headers:candidate.headers,map,missing,sourceLabel});if(!result)throw new Error('Import cancelled.');const chosen=new Set();for(const [field,index] of Object.entries(result.mapping)){if(chosen.has(index)||Object.values(map).includes(index))throw new Error('Each required field must use a different source column.');chosen.add(index);map[field]=index}missing=REQUIRED.filter(k=>map[k]==null);if(missing.length)throw new Error(`Map the following required field${missing.length===1?'':'s'}: ${missing.map(k=>FIELD_DEFS[k].label).join(', ')}.`);if(result.remember){for(const [field,index] of Object.entries(result.mapping)){const alias=normHeader(candidate.headers[index]);if(alias)state.learnedAliases[alias]=field}if(state.db)try{await dbPutMeta('headerAliases',state.learnedAliases)}catch{}}}
     return{rowIndex:candidate.rowIndex,map,headers:candidate.headers};
   }
+  function rawColumnsForHeaders(headers){
+    const seen=new Map(),out=[];
+    headers.forEach((label,index)=>{label=cleanText(label);if(!label)return;const norm=normHeader(label)||`column ${index+1}`,count=(seen.get(norm)||0)+1;seen.set(norm,count);out.push({key:`raw:${norm}${count>1?`:${count}`:''}`,label,index})});
+    return out;
+  }
+  function sourceCellText(v){if(v==null)return'';if(v instanceof Date&&!Number.isNaN(v.getTime()))return dateIso(v);return String(v).replace(/\u00a0/g,' ').trim()}
   function extraColumnsForHeaders(headers,map){
     const mapped=new Set(Object.values(map)),seen=new Map(),out=[];
     headers.forEach((label,index)=>{label=cleanText(label);if(!label||mapped.has(index))return;const norm=normHeader(label);if(!norm)return;const count=(seen.get(norm)||0)+1;seen.set(norm,count);const key=`extra:${norm}${count>1?`:${count}`:''}`;out.push({key,label,index})});
@@ -578,26 +621,26 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
   async function rowsFromAoA(aoa,sourceName,rowPrefix='row',sourceLabel=sourceName){
     const hdr=await resolveHeaderMapping(aoa,sourceLabel);if(!hdr)return null;const out=[],invalidDates=[],providerNames=new Map(),serviceNames=new Map(),statusNames=new Map(),poeNames=new Map(),{map,rowIndex,headers}=hdr;let ignoredInactiveRows=0;
-    const extraColumns=extraColumnsForHeaders(headers,map),customFields=Object.fromEntries(extraColumns.map(c=>[c.key,c.label]));
+    const extraColumns=extraColumnsForHeaders(headers,map),customFields=Object.fromEntries(extraColumns.map(c=>[c.key,c.label])),rawColumns=rawColumnsForHeaders(headers),rawFields=Object.fromEntries(rawColumns.map(c=>[c.key,c.label]));
     for(let i=rowIndex+1;i<aoa.length;i++){
       const row=aoa[i]||[];if(map.activeStatus!=null&&normalizedKey(row[map.activeStatus])==='inactive'){ignoredInactiveRows++;continue}
       const providerRaw=cleanText(row[map.provider]);if(!providerRaw)continue;
       const provider=canonicalValue(providerRaw,providerNames),service=canonicalValue(row[map.service],serviceNames,'(Blank Service)'),status=canonicalValue(row[map.status],statusNames,'(Blank Status)'),poe=canonicalValue(map.poe!=null?row[map.poe]:'',poeNames,'(Blank POE)');
       const dos=parseDateValue(row[map.dos]),enteredOn=parseDateValue(row[map.enteredOn]);if(!dos||!enteredOn){invalidDates.push(`${rowPrefix} ${i+1}`);continue}
-      const start=parseTime(row[map.start]),end=parseTime(row[map.end]),minutes=durationMinutes(start,end),businessDays=businessDaysBetween(dos,enteredOn),extra={};
-      extraColumns.forEach(c=>{const value=cleanText(row[c.index]);if(value)extra[c.key]=value});
-      out.push({childId:cleanText(map.childId!=null?row[map.childId]:''),lastName:cleanText(map.lastName!=null?row[map.lastName]:''),firstName:cleanText(map.firstName!=null?row[map.firstName]:''),sc:cleanText(map.sc!=null?row[map.sc]:''),location:cleanText(map.location!=null?row[map.location]:''),byWhom:cleanText(map.byWhom!=null?row[map.byWhom]:''),startTime:cleanText(row[map.start]),endTime:cleanText(row[map.end]),provider:provider.label,providerKey:provider.key,service:service.label,serviceKey:service.key||'__blank__',poe:poe.label,poeKey:poe.key||'__blank__',status:status.label,statusKey:status.key||'__blank__',dos:dateIso(dos),enteredOn:dateIso(enteredOn),monthKey:monthKeyFromDate(dos),businessDays,over10BusinessDays:businessDays>10,minutes,extra,file:sourceName,row:i+1});
+      const start=parseTime(row[map.start]),end=parseTime(row[map.end]),minutes=durationMinutes(start,end),businessDays=businessDaysBetween(dos,enteredOn),extra={},raw={};
+      extraColumns.forEach(c=>{const value=cleanText(row[c.index]);if(value)extra[c.key]=value});rawColumns.forEach(c=>{raw[c.key]=sourceCellText(row[c.index])});
+      out.push({raw,childId:cleanText(map.childId!=null?row[map.childId]:''),lastName:cleanText(map.lastName!=null?row[map.lastName]:''),firstName:cleanText(map.firstName!=null?row[map.firstName]:''),sc:cleanText(map.sc!=null?row[map.sc]:''),location:cleanText(map.location!=null?row[map.location]:''),byWhom:cleanText(map.byWhom!=null?row[map.byWhom]:''),startTime:cleanText(row[map.start]),endTime:cleanText(row[map.end]),provider:provider.label,providerKey:provider.key,service:service.label,serviceKey:service.key||'__blank__',poe:poe.label,poeKey:poe.key||'__blank__',status:status.label,statusKey:status.key||'__blank__',dos:dateIso(dos),enteredOn:dateIso(enteredOn),monthKey:monthKeyFromDate(dos),businessDays,over10BusinessDays:businessDays>10,minutes,extra,file:sourceName,row:i+1});
     }
-    return{rows:out,invalidDates,ignoredInactiveRows,customFields};
+    return{rows:out,invalidDates,ignoredInactiveRows,customFields,rawFields};
   }
   async function workbookRows(arrayBuffer,fileName){
-    const sheets=await workbookAoAs(arrayBuffer),out=[],usedSheets=[],skippedSheets=[],invalidDates=[],customFields={};let ignoredInactiveRows=0;
-    for(const item of sheets){if(!item.aoa.length){skippedSheets.push(item.name);continue}const parsed=await rowsFromAoA(item.aoa,fileName,`${item.name} row`,`${fileName} — ${item.name}`);if(!parsed){skippedSheets.push(item.name);continue}usedSheets.push(item.name);for(const row of parsed.rows){row.sheet=item.name;out.push(row)}Object.assign(customFields,parsed.customFields||{});invalidDates.push(...parsed.invalidDates);ignoredInactiveRows+=parsed.ignoredInactiveRows||0}
-    if(!usedSheets.length)throw new Error(`No worksheet contains a recognizable report table. Expected fields include ${REQUIRED_LABELS.join(', ')}.`);if(invalidDates.length){const sample=invalidDates.slice(0,5).join(', '),more=invalidDates.length>5?` and ${invalidDates.length-5} more`:'';throw new Error(`DOS or Entered On is missing or invalid on ${invalidDates.length} visit row${invalidDates.length===1?'':'s'} (${sample}${more}). Fix the source data and import again.`)}if(!out.length)throw new Error('No visit rows were found beneath the detected headers.');return{rows:out,usedSheets,skippedSheets,invalidTimeRows:out.filter(r=>r.minutes==null).length,ignoredInactiveRows,customFields}
+    const sheets=await workbookAoAs(arrayBuffer),out=[],usedSheets=[],skippedSheets=[],invalidDates=[],customFields={},rawFields={};let ignoredInactiveRows=0;
+    for(const item of sheets){if(!item.aoa.length){skippedSheets.push(item.name);continue}const parsed=await rowsFromAoA(item.aoa,fileName,`${item.name} row`,`${fileName} — ${item.name}`);if(!parsed){skippedSheets.push(item.name);continue}usedSheets.push(item.name);for(const row of parsed.rows){row.sheet=item.name;out.push(row)}Object.assign(customFields,parsed.customFields||{});Object.assign(rawFields,parsed.rawFields||{});invalidDates.push(...parsed.invalidDates);ignoredInactiveRows+=parsed.ignoredInactiveRows||0}
+    if(!usedSheets.length)throw new Error(`No worksheet contains a recognizable report table. Expected fields include ${REQUIRED_LABELS.join(', ')}.`);if(invalidDates.length){const sample=invalidDates.slice(0,5).join(', '),more=invalidDates.length>5?` and ${invalidDates.length-5} more`:'';throw new Error(`DOS or Entered On is missing or invalid on ${invalidDates.length} visit row${invalidDates.length===1?'':'s'} (${sample}${more}). Fix the source data and import again.`)}if(!out.length)throw new Error('No visit rows were found beneath the detected headers.');return{rows:out,usedSheets,skippedSheets,invalidTimeRows:out.filter(r=>r.minutes==null).length,ignoredInactiveRows,customFields,rawFields}
   }
   async function parseFile(file){return workbookRows(await file.arrayBuffer(),file.name)}
   function parseDelimitedText(text){text=String(text||'').replace(/^\uFEFF/,'');if(!text.trim())return[];const parseWith=delimiter=>{const rows=[];let row=[],cell='',quoted=false;for(let i=0;i<text.length;i++){const ch=text[i];if(ch==='"'){if(quoted&&text[i+1]==='"'){cell+='"';i++}else quoted=!quoted;continue}if(ch===delimiter&&!quoted){row.push(cell);cell='';continue}if((ch==='\n'||ch==='\r')&&!quoted){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(cell);if(row.some(v=>cleanText(v)))rows.push(row);row=[];cell='';continue}cell+=ch}row.push(cell);if(row.some(v=>cleanText(v)))rows.push(row);return rows};const tabRows=parseWith('\t'),csvRows=parseWith(','),tabScore=findHeaderCandidate(tabRows)?.score||0,csvScore=findHeaderCandidate(csvRows)?.score||0;if(tabScore||csvScore)return tabScore>=csvScore?tabRows:csvRows;return tabRows.some(r=>r.length>1)?tabRows:csvRows}
-  async function parsePastedData(text,name){const aoa=parseDelimitedText(text),parsed=await rowsFromAoA(aoa,name,'row',name);if(!parsed)throw new Error(`Pasted data must include a recognizable report table. Expected fields include ${REQUIRED_LABELS.join(', ')}.`);if(parsed.invalidDates.length){const sample=parsed.invalidDates.slice(0,5).join(', '),more=parsed.invalidDates.length>5?` and ${parsed.invalidDates.length-5} more`:'';throw new Error(`DOS or Entered On is missing or invalid on ${parsed.invalidDates.length} visit row${parsed.invalidDates.length===1?'':'s'} (${sample}${more}). Fix the pasted data and try again.`)}if(!parsed.rows.length)throw new Error('No visit rows were found beneath the pasted header row.');return{rows:parsed.rows,usedSheets:[],skippedSheets:[],invalidTimeRows:parsed.rows.filter(r=>r.minutes==null).length,ignoredInactiveRows:parsed.ignoredInactiveRows||0,customFields:parsed.customFields||{}}}
+  async function parsePastedData(text,name){const aoa=parseDelimitedText(text),parsed=await rowsFromAoA(aoa,name,'row',name);if(!parsed)throw new Error(`Pasted data must include a recognizable report table. Expected fields include ${REQUIRED_LABELS.join(', ')}.`);if(parsed.invalidDates.length){const sample=parsed.invalidDates.slice(0,5).join(', '),more=parsed.invalidDates.length>5?` and ${parsed.invalidDates.length-5} more`:'';throw new Error(`DOS or Entered On is missing or invalid on ${parsed.invalidDates.length} visit row${parsed.invalidDates.length===1?'':'s'} (${sample}${more}). Fix the pasted data and try again.`)}if(!parsed.rows.length)throw new Error('No visit rows were found beneath the pasted header row.');return{rows:parsed.rows,usedSheets:[],skippedSheets:[],invalidTimeRows:parsed.rows.filter(r=>r.minutes==null).length,ignoredInactiveRows:parsed.ignoredInactiveRows||0,customFields:parsed.customFields||{},rawFields:parsed.rawFields||{}}}
 
   function selectedRecord(){return state.savedReports.find(r=>r.id===state.selectedReportId)||null}
   function reportLabel(rec){return`${rec.name} • ${fmtDate(rec.importedAt)}`}
@@ -632,7 +675,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         try{
           const parsed=await parseFile(file),record={
             id:newId(),name:file.name,sourceType:'excel',rows:parsed.rows,sheets:parsed.usedSheets.length,skippedSheets:parsed.skippedSheets,
-            invalidTimeRows:parsed.invalidTimeRows,ignoredInactiveRows:parsed.ignoredInactiveRows||0,customFields:parsed.customFields||{},size:file.size||0,lastModified:file.lastModified||0,importedAt:new Date().toISOString()
+            invalidTimeRows:parsed.invalidTimeRows,ignoredInactiveRows:parsed.ignoredInactiveRows||0,customFields:parsed.customFields||{},rawFields:parsed.rawFields||{},size:file.size||0,lastModified:file.lastModified||0,importedAt:new Date().toISOString()
           };
           if(state.db)await dbPutReport(record);else state.savedReports.push(record);
           imported.push(record);
@@ -650,7 +693,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   async function importPastedData(){
     const text=els.pasteDataInput.value,name=cleanText(els.pasteReportName.value)||`Pasted Report ${new Date().toLocaleDateString()}`;if(!text.trim()){showError('Paste report data before importing.');return}
     els.pasteImport.disabled=true;showError('');
-    try{const parsed=await parsePastedData(text,name),record={id:newId(),name,sourceType:'paste',rows:parsed.rows,sheets:0,skippedSheets:[],invalidTimeRows:parsed.invalidTimeRows,ignoredInactiveRows:parsed.ignoredInactiveRows||0,customFields:parsed.customFields||{},size:new Blob([text]).size,lastModified:Date.now(),importedAt:new Date().toISOString()};if(state.db)await dbPutReport(record);else state.savedReports.push(record);closePasteModal();await reloadSavedReports(record.id);state.lastLoad=new Date();updateSelectedSource()}catch(err){showError(err.message||String(err))}finally{els.pasteImport.disabled=false}
+    try{const parsed=await parsePastedData(text,name),record={id:newId(),name,sourceType:'paste',rows:parsed.rows,sheets:0,skippedSheets:[],invalidTimeRows:parsed.invalidTimeRows,ignoredInactiveRows:parsed.ignoredInactiveRows||0,customFields:parsed.customFields||{},rawFields:parsed.rawFields||{},size:new Blob([text]).size,lastModified:Date.now(),importedAt:new Date().toISOString()};if(state.db)await dbPutReport(record);else state.savedReports.push(record);closePasteModal();await reloadSavedReports(record.id);state.lastLoad=new Date();updateSelectedSource()}catch(err){showError(err.message||String(err))}finally{els.pasteImport.disabled=false}
   }
 
   function availableMonths(){return[...new Set(state.rows.map(r=>r.monthKey).filter(Boolean))].sort().reverse()}
@@ -737,24 +780,75 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     return{statuses,providers:providers.map(p=>p.provider),report,allTotal:totals.visits,allDelivered:totals.delivered,overallCancel,minutes:totals.minutes,units:totals.units,invalidTimes:totals.invalidTimes};
   }
   function tableColumnDefs(summary){
-    const cols=[{key:'provider',label:'Provider',left:true,cell:r=>esc(r.provider)},{key:'service',label:'Service',left:true,cell:r=>r.isTotal?'<b>TOTAL</b>':esc(r.service)}];
-    summary.statuses.forEach(status=>cols.push({key:`status:${normalizedKey(status)}`,label:status,cell:r=>fmtInt(r.counts[status]||0)}));
-    cols.push({key:'visits',label:'Total Visits',cell:r=>fmtInt(r.visits)},{key:'over10',label:'> 10 Business Days',cell:r=>r.over10>0?'<span class="late-yes">Yes</span>':'No'},{key:'cancel',label:'Cancellation %',cell:r=>r.isTotal?fmtPct(r.cancel):''},{key:'overallCancel',label:'Overall Cancellation %',cell:r=>r.isTotal?fmtPct(r.overallCancel):''},{key:'time',label:'Total Time',cell:r=>fmtTime(r.minutes)},{key:'units',label:'15 Min Units',cell:r=>fmtInt(r.units)});
-    TARGETS.forEach(h=>cols.push({key:`productivity:${h}`,label:`${h} Hr/Wk`,cell:r=>{if(!r.isTotal)return'';return fmtPct(r.units/(h*16))}}));return cols;
+    const cols=[
+      {key:'provider',label:'Provider',left:true,type:'text',cell:r=>esc(r.provider),sortValue:r=>r.provider},
+      {key:'service',label:'Service',left:true,type:'text',cell:r=>r.isTotal?'<b>TOTAL</b>':esc(r.service),sortValue:r=>r.service}
+    ];
+    summary.statuses.forEach(status=>cols.push({key:`status:${normalizedKey(status)}`,label:status,type:'number',cell:r=>fmtInt(r.counts[status]||0),sortValue:r=>r.counts[status]||0}));
+    cols.push(
+      {key:'visits',label:'Total Visits',type:'number',cell:r=>fmtInt(r.visits),sortValue:r=>r.visits},
+      {key:'over10',label:'> 10 Business Days',type:'text',cell:r=>r.over10>0?'<span class="late-yes">Yes</span>':'No',sortValue:r=>r.over10>0?'Yes':'No'},
+      {key:'cancel',label:'Cancellation %',type:'number',cell:r=>r.isTotal?fmtPct(r.cancel):'',sortValue:r=>r.isTotal?r.cancel:null},
+      {key:'overallCancel',label:'Overall Cancellation %',type:'number',cell:r=>r.isTotal?fmtPct(r.overallCancel):'',sortValue:r=>r.isTotal?r.overallCancel:null},
+      {key:'time',label:'Total Time',type:'number',cell:r=>fmtTime(r.minutes),sortValue:r=>r.minutes},
+      {key:'units',label:'15 Min Units',type:'number',cell:r=>fmtInt(r.units),sortValue:r=>r.units}
+    );
+    TARGETS.forEach(h=>cols.push({key:`productivity:${h}`,label:`${h} Hr/Wk`,type:'number',cell:r=>{if(!r.isTotal)return'';return fmtPct(r.units/(h*16))},sortValue:r=>r.isTotal?r.units/(h*16):null}));return cols;
   }
   function visibleTableColumns(summary){const all=tableColumnDefs(summary);state.lastTableColumns=all;const visible=all.filter(c=>!state.hiddenColumns.has(c.key));return visible.length?visible:[all[0]]}
+  function sortValueCompare(a,b,type='text'){
+    const blankA=a==null||a==='',blankB=b==null||b==='';if(blankA||blankB)return blankA===blankB?0:blankA?1:-1;
+    if(type==='number'){const na=Number(a),nb=Number(b);if(Number.isFinite(na)&&Number.isFinite(nb))return na-nb}
+    if(type==='date'){const ta=Date.parse(a),tb=Date.parse(b);if(Number.isFinite(ta)&&Number.isFinite(tb))return ta-tb}
+    return String(a).localeCompare(String(b),undefined,{numeric:true,sensitivity:'base'});
+  }
+  function compareRowsByLevels(a,b,levels,columns,skipKeys=new Set()){
+    const map=new Map(columns.map(c=>[c.key,c]));
+    for(const level of levels){if(skipKeys.has(level.key))continue;const col=map.get(level.key);if(!col)continue;const av=col.sortValue?col.sortValue(a):'',bv=col.sortValue?col.sortValue(b):'',cmp=sortValueCompare(av,bv,col.type);if(cmp)return level.order==='desc'?-cmp:cmp}
+    return 0;
+  }
+  function sortedSummaryRows(report,columns){
+    const levels=state.summarySort;if(!levels.length)return report;
+    const groups=[],byProvider=new Map();
+    report.forEach((row,index)=>{let g=byProvider.get(row.provider);if(!g){g={provider:row.provider,rows:[],total:null,index};byProvider.set(row.provider,g);groups.push(g)}if(row.isTotal)g.total=row;else g.rows.push(row)});
+    const providerSkip=new Set(['service']);
+    groups.sort((a,b)=>{const ar=a.total||a.rows[0],br=b.total||b.rows[0];const cmp=compareRowsByLevels(ar,br,levels,columns,providerSkip);return cmp||String(a.provider).localeCompare(String(b.provider),undefined,{numeric:true,sensitivity:'base'})});
+    const serviceSkip=new Set(['provider','overallCancel']);
+    const out=[];for(const g of groups){g.rows.sort((a,b)=>compareRowsByLevels(a,b,levels,columns,serviceSkip)||String(a.service).localeCompare(String(b.service),undefined,{numeric:true,sensitivity:'base'}));out.push(...g.rows);if(g.total)out.push(g.total)}return out;
+  }
   function renderTable(summary){
-    const columns=visibleTableColumns(summary);els.reportTable.tHead.innerHTML='<tr>'+columns.map(c=>`<th class="${c.left?'text-left':''}">${esc(c.label)}</th>`).join('')+'</tr>';const body=[];
-    for(const r of summary.report)body.push(`<tr class="${r.isTotal?'total':''}">${columns.map(c=>`<td class="${c.left?'text-left':''}">${c.cell(r)}</td>`).join('')}</tr>`);
+    const columns=visibleTableColumns(summary),rows=sortedSummaryRows(summary.report,state.lastTableColumns);els.reportTable.tHead.innerHTML='<tr>'+columns.map(c=>`<th class="${c.left?'text-left':''}">${esc(c.label)}</th>`).join('')+'</tr>';const body=[];
+    for(const r of rows)body.push(`<tr class="${r.isTotal?'total':''}">${columns.map(c=>`<td class="${c.left?'text-left':''}">${c.cell(r)}</td>`).join('')}</tr>`);
     els.reportTable.tBodies[0].innerHTML=body.join('');const hasRows=summary.report.length>0,hasReport=!!selectedRecord();
     els.emptyState.innerHTML=hasRows?'':hasReport?'<strong>No matching visits</strong><div>Adjust the filters or reset them to the latest DOS month.</div>':'<strong>No reports</strong><div>Use <b>Add Excel</b> or <b>Paste Data</b> to load a report.</div>';
-    els.emptyState.style.display=hasRows?'none':'block';els.reportTable.style.display=hasRows?'table':'none';els.exportCsvBtn.disabled=!hasRows;els.columnsBtn.disabled=!hasReport;
-    const viewName=selectedRecord()?.name||'Report',timeNote=summary.invalidTimes?` • ${summary.invalidTimes} invalid time row${summary.invalidTimes===1?'':'s'} excluded`:'';els.tableMeta.textContent=summary.report.length?`${viewName} • ${summary.report.length.toLocaleString()} summary rows • ${columns.length} displayed column${columns.length===1?'':'s'}${timeNote}`:'No data loaded';
+    els.emptyState.style.display=hasRows?'none':'block';els.reportTable.style.display=hasRows?'table':'none';els.exportCsvBtn.disabled=!hasRows;els.columnsBtn.disabled=!hasReport;els.sortBtn.disabled=!hasReport;
+    const viewName=selectedRecord()?.name||'Report',timeNote=summary.invalidTimes?` • ${summary.invalidTimes} invalid time row${summary.invalidTimes===1?'':'s'} excluded`:'',sortNote=state.summarySort.length?` • ${state.summarySort.length}-level sort`:'';els.tableMeta.textContent=summary.report.length?`${viewName} • ${summary.report.length.toLocaleString()} summary rows • ${columns.length} displayed column${columns.length===1?'':'s'}${sortNote}${timeNote}`:'No data loaded';
   }
-  function columnModalContext(){return state.columnModalMode==='frequencies'?{columns:state.lastFrequencyColumns,hidden:state.hiddenFrequencyColumns,metaKey:'hiddenFrequencyColumns'}:{columns:state.lastTableColumns,hidden:state.hiddenColumns,metaKey:'hiddenColumns'}}
-  function openColumnsModal(mode='summary'){if(!selectedRecord())return;state.columnModalMode=mode==='frequencies'?'frequencies':'summary';const ctx=columnModalContext();state.columnDraftHidden=new Set(ctx.hidden);els.columnsModalTitle.textContent=state.columnModalMode==='frequencies'?'Frequency Columns':'Summary Columns';renderColumnsList();els.columnsModal.hidden=false;document.body.style.overflow='hidden'}
+  function columnModalContext(){if(state.columnModalMode==='raw')return{columns:state.lastRawColumns,hidden:state.hiddenRawColumns,metaKey:'hiddenRawColumns'};if(state.columnModalMode==='frequencies')return{columns:state.lastFrequencyColumns,hidden:state.hiddenFrequencyColumns,metaKey:'hiddenFrequencyColumns'};return{columns:state.lastTableColumns,hidden:state.hiddenColumns,metaKey:'hiddenColumns'}}
+  function openColumnsModal(mode='summary'){if(!selectedRecord())return;state.columnModalMode=['frequencies','raw'].includes(mode)?mode:'summary';const ctx=columnModalContext();state.columnDraftHidden=new Set(ctx.hidden);els.columnsModalTitle.textContent=state.columnModalMode==='raw'?'Raw Data Columns':state.columnModalMode==='frequencies'?'Frequency Columns':'Summary Columns';renderColumnsList();els.columnsModal.hidden=false;document.body.style.overflow='hidden'}
   function renderColumnsList(){const hidden=state.columnDraftHidden||new Set(),ctx=columnModalContext();els.columnsList.innerHTML=ctx.columns.map(c=>`<label class="column-option"><input type="checkbox" data-column-key="${esc(c.key)}"${hidden.has(c.key)?'':' checked'}><span>${esc(c.label)}</span></label>`).join('')}
-  function closeColumnsModal(save=false){if(save){const ctx=columnModalContext(),visible=ctx.columns.filter(c=>!state.columnDraftHidden.has(c.key));if(!visible.length)state.columnDraftHidden.delete(ctx.columns[0]?.key);if(state.columnModalMode==='frequencies')state.hiddenFrequencyColumns=new Set(state.columnDraftHidden);else state.hiddenColumns=new Set(state.columnDraftHidden);if(state.db)dbPutMeta(ctx.metaKey,[...state.columnDraftHidden]).catch(()=>{});render()}state.columnDraftHidden=null;els.columnsModal.hidden=true;document.body.style.overflow=''}
+  function closeColumnsModal(save=false){if(save){const ctx=columnModalContext(),visible=ctx.columns.filter(c=>!state.columnDraftHidden.has(c.key));if(!visible.length)state.columnDraftHidden.delete(ctx.columns[0]?.key);if(state.columnModalMode==='raw')state.hiddenRawColumns=new Set(state.columnDraftHidden);else if(state.columnModalMode==='frequencies')state.hiddenFrequencyColumns=new Set(state.columnDraftHidden);else state.hiddenColumns=new Set(state.columnDraftHidden);if(state.db)dbPutMeta(ctx.metaKey,[...state.columnDraftHidden]).catch(()=>{});render()}state.columnDraftHidden=null;els.columnsModal.hidden=true;document.body.style.overflow=''}
+
+  function sortModalContext(mode=state.sortModalMode){if(mode==='raw')return{columns:state.lastRawColumns,levels:state.rawSort,metaKey:'rawSort',title:'Raw Data Custom Sort'};if(mode==='frequencies')return{columns:state.lastFrequencyColumns,levels:state.frequencySort,metaKey:'frequencySort',title:'Frequencies Custom Sort'};return{columns:state.lastTableColumns,levels:state.summarySort,metaKey:'summarySort',title:'Summary Custom Sort'}}
+  function sanitizeSortLevels(levels,columns){const keys=new Set(columns.map(c=>c.key));return(Array.isArray(levels)?levels:[]).filter(l=>l&&keys.has(l.key)).map(l=>({key:l.key,order:l.order==='desc'?'desc':'asc'})).slice(0,12)}
+  function defaultSortLevel(columns,used=[]){const usedSet=new Set(used.map(l=>l.key)),col=columns.find(c=>!usedSet.has(c.key))||columns[0];return col?{key:col.key,order:'asc'}:null}
+  function sortOrderLabels(col){if(col?.type==='number')return['Smallest to Largest','Largest to Smallest'];if(col?.type==='date')return['Oldest to Newest','Newest to Oldest'];return['A to Z','Z to A']}
+  function renderSortLevels(){
+    const ctx=sortModalContext(),levels=state.sortDraftLevels||[];els.sortModalTitle.textContent=ctx.title;
+    if(!levels.length){els.sortLevels.innerHTML='<div class="sort-empty">No custom sort is applied. Use <b>Add Level</b> to create one.</div>';state.sortSelectedIndex=-1}
+    else els.sortLevels.innerHTML=levels.map((level,i)=>{const col=ctx.columns.find(c=>c.key===level.key)||ctx.columns[0],labels=sortOrderLabels(col),opts=ctx.columns.map(c=>`<option value="${esc(c.key)}"${c.key===level.key?' selected':''}>${esc(c.label)}</option>`).join('');return`<div class="sort-level-row${i===state.sortSelectedIndex?' selected':''}" data-sort-index="${i}"><input type="radio" name="sortLevelSelected" value="${i}"${i===state.sortSelectedIndex?' checked':''} aria-label="Select sort level ${i+1}"><select class="sort-column" aria-label="Sort column">${opts}</select><select class="sort-on" aria-label="Sort on" disabled><option>Cell Values</option></select><select class="sort-order" aria-label="Sort order"><option value="asc"${level.order==='asc'?' selected':''}>${labels[0]}</option><option value="desc"${level.order==='desc'?' selected':''}>${labels[1]}</option></select></div>`}).join('');
+    const valid=state.sortSelectedIndex>=0&&state.sortSelectedIndex<levels.length;els.sortDeleteLevel.disabled=!valid;els.sortCopyLevel.disabled=!valid;els.sortMoveUp.disabled=!valid||state.sortSelectedIndex===0;els.sortMoveDown.disabled=!valid||state.sortSelectedIndex===levels.length-1;els.sortClear.disabled=!levels.length;
+  }
+  function openSortModal(mode='summary'){
+    if(!selectedRecord())return;state.sortModalMode=['frequencies','raw'].includes(mode)?mode:'summary';const ctx=sortModalContext(),existing=sanitizeSortLevels(ctx.levels,ctx.columns);state.sortDraftLevels=existing.length?existing.map(l=>({...l})):[];if(!state.sortDraftLevels.length){const first=defaultSortLevel(ctx.columns);if(first)state.sortDraftLevels.push(first)}state.sortSelectedIndex=state.sortDraftLevels.length?0:-1;renderSortLevels();els.sortModal.hidden=false;document.body.style.overflow='hidden';
+  }
+  function closeSortModal(save=false){
+    if(save){const ctx=sortModalContext(),levels=sanitizeSortLevels(state.sortDraftLevels,ctx.columns);if(state.sortModalMode==='raw')state.rawSort=levels;else if(state.sortModalMode==='frequencies')state.frequencySort=levels;else state.summarySort=levels;if(state.db)dbPutMeta(ctx.metaKey,levels).catch(()=>{});render()}
+    state.sortDraftLevels=null;state.sortSelectedIndex=0;els.sortModal.hidden=true;document.body.style.overflow='';
+  }
+  function addSortLevel(copy=false){const ctx=sortModalContext(),levels=state.sortDraftLevels||[];let level=null;if(copy&&state.sortSelectedIndex>=0&&levels[state.sortSelectedIndex])level={...levels[state.sortSelectedIndex]};else level=defaultSortLevel(ctx.columns,levels);if(!level)return;const insertAt=state.sortSelectedIndex>=0?state.sortSelectedIndex+1:levels.length;levels.splice(insertAt,0,level);state.sortSelectedIndex=insertAt;renderSortLevels()}
+  function deleteSortLevel(){const levels=state.sortDraftLevels||[];if(state.sortSelectedIndex<0||state.sortSelectedIndex>=levels.length)return;levels.splice(state.sortSelectedIndex,1);state.sortSelectedIndex=Math.min(state.sortSelectedIndex,levels.length-1);renderSortLevels()}
+  function moveSortLevel(delta){const levels=state.sortDraftLevels||[],i=state.sortSelectedIndex,j=i+delta;if(i<0||j<0||j>=levels.length)return;[levels[i],levels[j]]=[levels[j],levels[i]];state.sortSelectedIndex=j;renderSortLevels()}
 
   function renderKPIs(summary,globalSummary){
     els.kpiProviders.textContent=summary.providers.length.toLocaleString();els.kpiVisits.textContent=summary.allTotal.toLocaleString();
@@ -941,17 +1035,64 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function frequencyColumnDefs(){return[
-    {key:'childId',label:'ID',cell:r=>esc(r.childId||'')},{key:'lastName',label:'Last Name',cell:r=>esc(r.lastName||'')},{key:'firstName',label:'First Name',cell:r=>esc(r.firstName||'')},{key:'sc',label:'SC',cell:r=>esc(r.sc||'')},{key:'service',label:'Service',cell:r=>esc(r.service||'')},{key:'provider',label:'Provider',cell:r=>esc(r.provider||'')},{key:'dos',label:'SERVICE_DATE',cell:r=>esc(r.dos||'')},{key:'enteredOn',label:'Entered On',cell:r=>esc(r.enteredOn||'')},{key:'status',label:'Status',cell:r=>esc(r.status||'')},{key:'location',label:'Location',cell:r=>esc(r.location||'')},{key:'byWhom',label:'By Whom',cell:r=>esc(r.byWhom||'')}
+    {key:'childId',label:'ID',type:'text',cell:r=>esc(r.childId||''),sortValue:r=>r.childId||''},
+    {key:'lastName',label:'Last Name',type:'text',cell:r=>esc(r.lastName||''),sortValue:r=>r.lastName||''},
+    {key:'firstName',label:'First Name',type:'text',cell:r=>esc(r.firstName||''),sortValue:r=>r.firstName||''},
+    {key:'sc',label:'SC',type:'text',cell:r=>esc(r.sc||''),sortValue:r=>r.sc||''},
+    {key:'service',label:'Service',type:'text',cell:r=>esc(r.service||''),sortValue:r=>r.service||''},
+    {key:'provider',label:'Provider',type:'text',cell:r=>esc(r.provider||''),sortValue:r=>r.provider||''},
+    {key:'dos',label:'SERVICE_DATE',type:'date',cell:r=>esc(r.dos||''),sortValue:r=>r.dos||''},
+    {key:'enteredOn',label:'Entered On',type:'date',cell:r=>esc(r.enteredOn||''),sortValue:r=>r.enteredOn||''},
+    {key:'status',label:'Status',type:'text',cell:r=>esc(r.status||''),sortValue:r=>r.status||''},
+    {key:'location',label:'Location',type:'text',cell:r=>esc(r.location||''),sortValue:r=>r.location||''},
+    {key:'byWhom',label:'By Whom',type:'text',cell:r=>esc(r.byWhom||''),sortValue:r=>r.byWhom||''}
   ]}
   function visibleFrequencyColumns(){const all=frequencyColumnDefs();state.lastFrequencyColumns=all;const visible=all.filter(c=>!state.hiddenFrequencyColumns.has(c.key));return visible.length?visible:[all[0]]}
+  function sortedFrequencyRows(rows){const levels=state.frequencySort;if(!levels.length)return rows;const columns=state.lastFrequencyColumns.length?state.lastFrequencyColumns:frequencyColumnDefs();return rows.map((row,index)=>({row,index})).sort((a,b)=>compareRowsByLevels(a.row,b.row,levels,columns)||a.index-b.index).map(x=>x.row)}
   function renderFrequencies(rows){
-    const hasReport=!!selectedRecord(),hasRows=rows.length>0,columns=visibleFrequencyColumns();
+    const hasReport=!!selectedRecord(),hasRows=rows.length>0,columns=visibleFrequencyColumns(),sortedRows=sortedFrequencyRows(rows);
     els.frequenciesTable.tHead.innerHTML='<tr>'+columns.map(c=>`<th class="text-left">${esc(c.label)}</th>`).join('')+'</tr>';
-    els.frequenciesTable.tBodies[0].innerHTML=rows.map(r=>`<tr>${columns.map(c=>`<td class="text-left">${c.cell(r)}</td>`).join('')}</tr>`).join('');
+    els.frequenciesTable.tBodies[0].innerHTML=sortedRows.map(r=>`<tr>${columns.map(c=>`<td class="text-left">${c.cell(r)}</td>`).join('')}</tr>`).join('');
     els.frequenciesTable.style.display=hasRows?'table':'none';els.frequenciesEmpty.style.display=hasRows?'none':'block';
     els.frequenciesEmpty.innerHTML=hasRows?'':hasReport?'<strong>No matching visits</strong><div>Adjust the current filters to show frequency rows.</div>':'<strong>No data</strong><div>Load a report to view frequencies.</div>';
-    els.frequencyExportCsvBtn.disabled=!hasRows;els.frequencyColumnsBtn.disabled=!hasReport;
-    els.frequenciesMeta.textContent=hasReport?`${selectedRecord().name} • ${rows.length.toLocaleString()} visit row${rows.length===1?'':'s'} • ${columns.length} displayed column${columns.length===1?'':'s'}`:'No report selected';
+    els.frequencyExportCsvBtn.disabled=!hasRows;els.frequencyColumnsBtn.disabled=!hasReport;els.frequencySortBtn.disabled=!hasReport;
+    const sortNote=state.frequencySort.length?` • ${state.frequencySort.length}-level sort`:'';els.frequenciesMeta.textContent=hasReport?`${selectedRecord().name} • ${rows.length.toLocaleString()} visit row${rows.length===1?'':'s'} • ${columns.length} displayed column${columns.length===1?'':'s'}${sortNote}`:'No report selected';
+  }
+
+  function fallbackRawColumnDefs(){
+    const cols=[
+      {key:'fallback:childId',label:'ID',type:'text',cell:r=>esc(r.childId||''),sortValue:r=>r.childId||''},
+      {key:'fallback:lastName',label:'Last Name',type:'text',cell:r=>esc(r.lastName||''),sortValue:r=>r.lastName||''},
+      {key:'fallback:firstName',label:'First Name',type:'text',cell:r=>esc(r.firstName||''),sortValue:r=>r.firstName||''},
+      {key:'fallback:sc',label:'SC',type:'text',cell:r=>esc(r.sc||''),sortValue:r=>r.sc||''},
+      {key:'fallback:service',label:'Service',type:'text',cell:r=>esc(r.service||''),sortValue:r=>r.service||''},
+      {key:'fallback:provider',label:'Provider',type:'text',cell:r=>esc(r.provider||''),sortValue:r=>r.provider||''},
+      {key:'fallback:poe',label:'POE',type:'text',cell:r=>esc(r.poe||''),sortValue:r=>r.poe||''},
+      {key:'fallback:dos',label:'DOS',type:'date',cell:r=>esc(r.dos||''),sortValue:r=>r.dos||''},
+      {key:'fallback:enteredOn',label:'Entered On',type:'date',cell:r=>esc(r.enteredOn||''),sortValue:r=>r.enteredOn||''},
+      {key:'fallback:status',label:'Status',type:'text',cell:r=>esc(r.status||''),sortValue:r=>r.status||''},
+      {key:'fallback:location',label:'Location',type:'text',cell:r=>esc(r.location||''),sortValue:r=>r.location||''},
+      {key:'fallback:startTime',label:'START_TIME',type:'text',cell:r=>esc(r.startTime||''),sortValue:r=>r.startTime||''},
+      {key:'fallback:endTime',label:'END_TIME',type:'text',cell:r=>esc(r.endTime||''),sortValue:r=>r.endTime||''},
+      {key:'fallback:byWhom',label:'By Whom',type:'text',cell:r=>esc(r.byWhom||''),sortValue:r=>r.byWhom||''}
+    ];
+    for(const [key,label] of Object.entries(selectedRecord()?.customFields||{}))cols.push({key:`fallback:${key}`,label,type:'text',cell:r=>esc(r.extra?.[key]||''),sortValue:r=>r.extra?.[key]||''});
+    return cols;
+  }
+  function rawColumnDefs(){
+    const fields=selectedRecord()?.rawFields||{},entries=Object.entries(fields);if(!entries.length)return fallbackRawColumnDefs();
+    return entries.map(([key,label])=>{const values=state.rows.map(r=>r.raw?.[key]).filter(v=>v!=null&&v!=='').slice(0,200),numeric=values.length&&values.every(v=>Number.isFinite(Number(v)));return{key,label,type:numeric?'number':'text',cell:r=>esc(r.raw?.[key]??''),sortValue:r=>r.raw?.[key]??''}});
+  }
+  function visibleRawColumns(){const all=rawColumnDefs();state.lastRawColumns=all;const visible=all.filter(c=>!state.hiddenRawColumns.has(c.key));return visible.length?visible:(all.length?[all[0]]:[])}
+  function sortedRawRows(rows){const levels=state.rawSort;if(!levels.length)return rows;const columns=state.lastRawColumns.length?state.lastRawColumns:rawColumnDefs();return rows.map((row,index)=>({row,index})).sort((a,b)=>compareRowsByLevels(a.row,b.row,levels,columns)||a.index-b.index).map(x=>x.row)}
+  function renderRaw(rows){
+    const hasReport=!!selectedRecord(),columns=visibleRawColumns(),sortedRows=sortedRawRows(rows),hasRows=rows.length>0&&columns.length>0,hasSourceRaw=Object.keys(selectedRecord()?.rawFields||{}).length>0;
+    els.rawTable.tHead.innerHTML='<tr>'+columns.map(c=>`<th class="text-left">${esc(c.label)}</th>`).join('')+'</tr>';
+    els.rawTable.tBodies[0].innerHTML=hasRows?sortedRows.map(r=>`<tr>${columns.map(c=>`<td class="text-left">${c.cell(r)}</td>`).join('')}</tr>`).join(''):'';
+    els.rawTable.style.display=hasRows?'table':'none';els.rawEmpty.style.display=hasRows?'none':'block';
+    els.rawEmpty.innerHTML=hasRows?'':hasReport?'<strong>No matching rows</strong><div>Adjust the current filters to show raw data.</div>':'<strong>No data</strong><div>Load a report to view the imported source rows.</div>';
+    els.rawExportCsvBtn.disabled=!hasRows;els.rawColumnsBtn.disabled=!hasReport||!columns.length;els.rawSortBtn.disabled=!hasReport||!columns.length;
+    const sortNote=state.rawSort.length?` • ${state.rawSort.length}-level sort`:'',sourceNote=hasSourceRaw?'':' • normalized fallback; reimport for original source columns';els.rawMeta.textContent=hasReport?`${selectedRecord().name} • ${rows.length.toLocaleString()} row${rows.length===1?'':'s'} • ${columns.length} displayed column${columns.length===1?'':'s'}${sortNote}${sourceNote}`:'No report selected';
   }
 
   function renderReportSelect(){
@@ -969,17 +1110,17 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function toggleTheme(){applyTheme(state.theme==='dark'?'light':'dark')}
   function renderTabs(){
     const active=state.activeTab;
-    const tabs=[['summary',els.summaryTab,els.summaryView],['frequencies',els.frequenciesTab,els.frequenciesView],['graphs',els.graphsTab,els.graphsView]];
+    const tabs=[['summary',els.summaryTab,els.summaryView],['frequencies',els.frequenciesTab,els.frequenciesView],['raw',els.rawTab,els.rawView],['graphs',els.graphsTab,els.graphsView]];
     for(const [name,tab,view] of tabs){const isActive=active===name;tab.classList.toggle('active',isActive);tab.setAttribute('aria-selected',String(isActive));tab.tabIndex=isActive?0:-1;view.hidden=!isActive}
   }
-  function setActiveTab(tab,persist=true){state.activeTab=['summary','frequencies','graphs'].includes(tab)?tab:'summary';renderTabs();if(state.activeTab==='graphs')requestAnimationFrame(renderCharts);if(state.activeTab==='frequencies')renderFrequencies(baseFilteredRows());if(persist&&state.db)dbPutMeta('activeTab',state.activeTab).catch(()=>{})}
+  function setActiveTab(tab,persist=true){state.activeTab=['summary','frequencies','raw','graphs'].includes(tab)?tab:'summary';renderTabs();if(state.activeTab==='graphs')requestAnimationFrame(renderCharts);if(state.activeTab==='frequencies')renderFrequencies(baseFilteredRows());if(state.activeTab==='raw')renderRaw(baseFilteredRows());if(persist&&state.db)dbPutMeta('activeTab',state.activeTab).catch(()=>{})}
 
   function render(){
     const hasReport=!!selectedRecord();document.body.classList.toggle('has-report',hasReport);
     renderCustomFilters();renderFilterPicker();
     const rows=baseFilteredRows(),monthRows=monthScopedRows(),globalSummary=summarize(monthRows),summary=summarize(rows,globalSummary.overallCancel,globalSummary.statuses);
     const monthSel=multiValues(els.monthFilter),providerSel=multiValues(els.providerFilter),serviceSel=multiValues(els.serviceFilter),poeSel=multiValues(els.poeFilter);els.clearFiltersBtn.disabled=!hasReport||(monthSel.size===1&&monthSel.has(latestMonth())&&!providerSel.size&&!serviceSel.size&&!poeSel.size&&!state.customFilters.length&&!els.searchInput.value.trim());
-    renderKPIs(summary,globalSummary);renderTable(summary);renderStatus(rows);renderReportSelect();renderTabs();if(state.activeTab==='graphs')renderCharts();if(state.activeTab==='frequencies')renderFrequencies(rows);
+    renderKPIs(summary,globalSummary);renderTable(summary);renderStatus(rows);renderReportSelect();renderTabs();if(state.activeTab==='graphs')renderCharts();if(state.activeTab==='frequencies')renderFrequencies(rows);if(state.activeTab==='raw')renderRaw(rows);
   }
   function exportTableCsv(table,suffix){
     const rows=[...table.querySelectorAll('tr')];if(!rows.length||table.style.display==='none')return;
@@ -988,6 +1129,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
   function exportVisibleCsv(){exportTableCsv(els.reportTable,'provider_summary')}
   function exportFrequencyCsv(){exportTableCsv(els.frequenciesTable,'frequencies')}
+  function exportRawCsv(){exportTableCsv(els.rawTable,'raw_data')}
   async function selectReport(id){
     if(!state.savedReports.some(r=>r.id===id))return;state.selectedReportId=id;syncSelectedRows();populateFilters(true);render();updateSelectedSource();if(state.db)try{await dbPutMeta('selectedReportId',id)}catch{}
   }
@@ -1004,15 +1146,18 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
   els.addFilesBtn.addEventListener('click',addFiles);els.pasteDataBtn.addEventListener('click',openPasteModal);els.themeToggle.addEventListener('click',toggleTheme);
   els.fileInput.addEventListener('change',async e=>{try{await importFileArray(e.target.files)}catch(err){showError(err.message||String(err));setSource('bad','Could not read Excel files',err.message||String(err));els.addFilesBtn.disabled=false}});
-  els.reportSelect.addEventListener('change',e=>selectReport(e.target.value));els.removeReportBtn.addEventListener('click',()=>removeReport(state.selectedReportId));els.deleteAllReportsBtn.addEventListener('click',deleteAllReports);els.exportCsvBtn.addEventListener('click',exportVisibleCsv);els.columnsBtn.addEventListener('click',()=>openColumnsModal('summary'));els.frequencyColumnsBtn.addEventListener('click',()=>openColumnsModal('frequencies'));els.frequencyExportCsvBtn.addEventListener('click',exportFrequencyCsv);els.exportPdfBtn.addEventListener('click',exportGraphsPdf);
+  els.reportSelect.addEventListener('change',e=>selectReport(e.target.value));els.removeReportBtn.addEventListener('click',()=>removeReport(state.selectedReportId));els.deleteAllReportsBtn.addEventListener('click',deleteAllReports);els.exportCsvBtn.addEventListener('click',exportVisibleCsv);els.columnsBtn.addEventListener('click',()=>openColumnsModal('summary'));els.sortBtn.addEventListener('click',()=>openSortModal('summary'));els.frequencyColumnsBtn.addEventListener('click',()=>openColumnsModal('frequencies'));els.frequencySortBtn.addEventListener('click',()=>openSortModal('frequencies'));els.frequencyExportCsvBtn.addEventListener('click',exportFrequencyCsv);els.rawColumnsBtn.addEventListener('click',()=>openColumnsModal('raw'));els.rawSortBtn.addEventListener('click',()=>openSortModal('raw'));els.rawExportCsvBtn.addEventListener('click',exportRawCsv);els.exportPdfBtn.addEventListener('click',exportGraphsPdf);
   els.viewTabs.addEventListener('click',e=>{const tab=e.target.closest('.view-tab');if(tab)setActiveTab(tab.dataset.tab)});
-  els.viewTabs.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=[els.summaryTab,els.frequenciesTab,els.graphsTab];let i=tabs.indexOf(document.activeElement);if(e.key==='Home')i=0;else if(e.key==='End')i=tabs.length-1;else if(e.key==='ArrowRight')i=(i+1)%tabs.length;else i=(i-1+tabs.length)%tabs.length;tabs[i].focus();setActiveTab(tabs[i].dataset.tab)});
+  els.viewTabs.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=[els.summaryTab,els.frequenciesTab,els.rawTab,els.graphsTab];let i=tabs.indexOf(document.activeElement);if(e.key==='Home')i=0;else if(e.key==='End')i=tabs.length-1;else if(e.key==='ArrowRight')i=(i+1)%tabs.length;else i=(i-1+tabs.length)%tabs.length;tabs[i].focus();setActiveTab(tabs[i].dataset.tab)});
   els.addChartBtn.addEventListener('click',()=>beginChartEdit());
   els.chartsGrid.addEventListener('click',e=>{const edit=e.target.closest('.chart-edit'),remove=e.target.closest('.chart-remove'),done=e.target.closest('.chart-done'),cancel=e.target.closest('.chart-cancel');if(edit)beginChartEdit(edit.dataset.id);else if(remove)removeChart(remove.dataset.id);else if(done)finishChartEdit();else if(cancel)cancelChartEdit()});
   els.chartsGrid.addEventListener('input',e=>{const field=e.target.closest('.chart-field');if(field&&field.dataset.field==='title')updateChartDraftFromField(field.dataset.field,field.value)});
   els.chartsGrid.addEventListener('change',e=>{const field=e.target.closest('.chart-field');if(field)updateChartDraftFromField(field.dataset.field,field.value)});
   els.confirmModalCancel.addEventListener('click',()=>closeConfirmModal(false));els.confirmModalConfirm.addEventListener('click',()=>closeConfirmModal(true));els.confirmModal.addEventListener('click',e=>{if(e.target===els.confirmModal)closeConfirmModal(false)});
   els.columnsList.addEventListener('change',e=>{const input=e.target.closest('input[data-column-key]');if(!input||!state.columnDraftHidden)return;if(input.checked)state.columnDraftHidden.delete(input.dataset.columnKey);else state.columnDraftHidden.add(input.dataset.columnKey)});els.columnsShowAll.addEventListener('click',()=>{state.columnDraftHidden=new Set();renderColumnsList()});els.columnsCancel.addEventListener('click',()=>closeColumnsModal(false));els.columnsDone.addEventListener('click',()=>closeColumnsModal(true));els.columnsModal.addEventListener('click',e=>{if(e.target===els.columnsModal)closeColumnsModal(false)});
+  els.sortAddLevel.addEventListener('click',()=>addSortLevel(false));els.sortDeleteLevel.addEventListener('click',deleteSortLevel);els.sortCopyLevel.addEventListener('click',()=>addSortLevel(true));els.sortMoveUp.addEventListener('click',()=>moveSortLevel(-1));els.sortMoveDown.addEventListener('click',()=>moveSortLevel(1));els.sortClear.addEventListener('click',()=>{state.sortDraftLevels=[];state.sortSelectedIndex=-1;renderSortLevels()});els.sortCancel.addEventListener('click',()=>closeSortModal(false));els.sortApply.addEventListener('click',()=>closeSortModal(true));els.sortModal.addEventListener('click',e=>{if(e.target===els.sortModal)closeSortModal(false)});
+  els.sortLevels.addEventListener('click',e=>{if(e.target.closest('select'))return;const row=e.target.closest('.sort-level-row');if(!row)return;state.sortSelectedIndex=Number(row.dataset.sortIndex);renderSortLevels()});
+  els.sortLevels.addEventListener('change',e=>{const row=e.target.closest('.sort-level-row');if(!row||!state.sortDraftLevels)return;const i=Number(row.dataset.sortIndex),level=state.sortDraftLevels[i];if(!level)return;state.sortSelectedIndex=i;if(e.target.classList.contains('sort-column'))level.key=e.target.value;else if(e.target.classList.contains('sort-order'))level.order=e.target.value==='desc'?'desc':'asc';renderSortLevels()});
   els.pasteCancel.addEventListener('click',closePasteModal);els.pasteImport.addEventListener('click',importPastedData);els.pasteModal.addEventListener('click',e=>{if(e.target===els.pasteModal)closePasteModal()});
   els.mappingCancel.addEventListener('click',()=>closeMappingModal(null));els.mappingApply.addEventListener('click',()=>{const selects=[...els.mappingList.querySelectorAll('.mapping-field')],mapping={},used=new Set();for(const select of selects){if(select.value===''){showError(`Select a source column for ${FIELD_DEFS[select.dataset.field].label}.`);select.focus();return}const index=Number(select.value);if(used.has(index)){showError('Each required field must use a different source column.');select.focus();return}used.add(index);mapping[select.dataset.field]=index}showError('');closeMappingModal({mapping,remember:els.mappingRemember.checked})});els.mappingModal.addEventListener('click',e=>{if(e.target===els.mappingModal)closeMappingModal(null)});
   [els.monthFilter,els.providerFilter,els.serviceFilter,els.poeFilter].forEach(el=>{el.querySelector('.multi-select-trigger').addEventListener('click',()=>{closeFilterPicker();const open=!el.classList.contains('open');closeAllMultiSelects(el);el.classList.toggle('open',open);el.querySelector('.multi-select-menu').hidden=!open;el.querySelector('.multi-select-trigger').setAttribute('aria-expanded',String(open))});el.querySelector('.multi-select-menu').addEventListener('change',e=>{const input=e.target.closest('input[data-value]');if(!input)return;const all=el.querySelector('input[data-value=""]');if(input.dataset.value===''){if(input.checked)el.querySelectorAll('input[data-value]:not([data-value=""])').forEach(i=>i.checked=false);else input.checked=true}else{all.checked=false;const any=[...el.querySelectorAll('input[data-value]:not([data-value=""])')].some(i=>i.checked);if(!any)all.checked=true}const allLabel=el===els.monthFilter?'All Months':el===els.providerFilter?'All Providers':el===els.serviceFilter?'All Services':'All POE';el.querySelector('.multi-select-trigger').textContent=multiSummary(el,multiValues(el),allLabel);if(el===els.monthFilter)populateFilters(false);render()})});
@@ -1022,7 +1167,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   els.customFilters.addEventListener('click',e=>{const remove=e.target.closest('.custom-filter-remove');if(remove){const wrap=remove.closest('.custom-filter'),key=wrap?.dataset.filterKey;state.customFilters=state.customFilters.filter(f=>f.key!==key);if(state.openCustomFilterKey===key)state.openCustomFilterKey=null;render();return}const trigger=e.target.closest('.multi-select-trigger');if(!trigger)return;closeFilterPicker();const select=trigger.closest('.multi-select'),wrap=trigger.closest('.custom-filter'),key=wrap?.dataset.filterKey,open=!select.classList.contains('open');closeAllMultiSelects(select);state.openCustomFilterKey=open?key:null;select.classList.toggle('open',open);select.querySelector('.multi-select-menu').hidden=!open;trigger.setAttribute('aria-expanded',String(open))});
   els.customFilters.addEventListener('change',e=>{const input=e.target.closest('input[data-value]');if(!input)return;const select=input.closest('.multi-select'),wrap=input.closest('.custom-filter'),key=wrap?.dataset.filterKey,item=state.customFilters.find(f=>f.key===key);if(!item)return;const all=select.querySelector('input[data-value=""]');if(input.dataset.value===''){if(input.checked)select.querySelectorAll('input[data-value]:not([data-value=""])').forEach(i=>i.checked=false);else input.checked=true}else{all.checked=false;const any=[...select.querySelectorAll('input[data-value]:not([data-value=""])')].some(i=>i.checked);if(!any)all.checked=true}item.values=[...multiValues(select)];state.openCustomFilterKey=key;render()});
   document.addEventListener('click',e=>{if(!e.target.closest('.multi-select'))closeAllMultiSelects();if(!e.target.closest('.filter-add-wrap'))closeFilterPicker()});
-  document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!els.filterPicker.hidden)closeFilterPicker();else if(document.querySelector('.multi-select.open'))closeAllMultiSelects();else if(!els.mappingModal.hidden)closeMappingModal(null);else if(!els.pasteModal.hidden)closePasteModal();else if(!els.columnsModal.hidden)closeColumnsModal(false);else if(state.editingChartId)cancelChartEdit();else if(!els.confirmModal.hidden)closeConfirmModal(false)});
+  document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!els.filterPicker.hidden)closeFilterPicker();else if(document.querySelector('.multi-select.open'))closeAllMultiSelects();else if(!els.mappingModal.hidden)closeMappingModal(null);else if(!els.pasteModal.hidden)closePasteModal();else if(!els.sortModal.hidden)closeSortModal(false);else if(!els.columnsModal.hidden)closeColumnsModal(false);else if(state.editingChartId)cancelChartEdit();else if(!els.confirmModal.hidden)closeConfirmModal(false)});
   els.searchInput.addEventListener('input',render);
   els.clearFiltersBtn.addEventListener('click',()=>{setMultiValues(els.monthFilter,latestMonth()?[latestMonth()]:[]);setMultiValues(els.providerFilter,[]);setMultiValues(els.serviceFilter,[]);setMultiValues(els.poeFilter,[]);state.customFilters=[];state.openCustomFilterKey=null;closeFilterPicker();els.searchInput.value='';populateFilters(false);render()});
   if(compactChartMedia.addEventListener)compactChartMedia.addEventListener('change',()=>{if(state.activeTab==='graphs')renderCharts()});
@@ -1031,8 +1176,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   async function init(){
     state.charts=defaultCharts();applyTheme(state.theme,false);render();
     try{
-      state.db=await openDatabase();const savedSelection=await dbGetMeta('selectedReportId'),savedCharts=await dbGetMeta('charts'),savedTab=await dbGetMeta('activeTab'),savedTheme=await dbGetMeta('theme'),savedHiddenColumns=await dbGetMeta('hiddenColumns'),savedHiddenFrequencyColumns=await dbGetMeta('hiddenFrequencyColumns'),savedHeaderAliases=await dbGetMeta('headerAliases');
-      state.selectedReportId=savedSelection?.value||null;state.charts=normalizeCharts(Array.isArray(savedCharts?.value)?savedCharts.value:defaultCharts());state.activeTab=['summary','graphs','frequencies'].includes(savedTab?.value)?savedTab.value:'summary';state.hiddenColumns=new Set(Array.isArray(savedHiddenColumns?.value)?savedHiddenColumns.value:[]);state.hiddenFrequencyColumns=new Set(Array.isArray(savedHiddenFrequencyColumns?.value)?savedHiddenFrequencyColumns.value:[]);state.learnedAliases=Object.fromEntries(Object.entries(savedHeaderAliases?.value||{}).filter(([,field])=>FIELD_DEFS[field]));
+      state.db=await openDatabase();const savedSelection=await dbGetMeta('selectedReportId'),savedCharts=await dbGetMeta('charts'),savedTab=await dbGetMeta('activeTab'),savedTheme=await dbGetMeta('theme'),savedHiddenColumns=await dbGetMeta('hiddenColumns'),savedHiddenFrequencyColumns=await dbGetMeta('hiddenFrequencyColumns'),savedHiddenRawColumns=await dbGetMeta('hiddenRawColumns'),savedSummarySort=await dbGetMeta('summarySort'),savedFrequencySort=await dbGetMeta('frequencySort'),savedRawSort=await dbGetMeta('rawSort'),savedHeaderAliases=await dbGetMeta('headerAliases');
+      state.selectedReportId=savedSelection?.value||null;state.charts=normalizeCharts(Array.isArray(savedCharts?.value)?savedCharts.value:defaultCharts());state.activeTab=['summary','graphs','frequencies','raw'].includes(savedTab?.value)?savedTab.value:'summary';state.hiddenColumns=new Set(Array.isArray(savedHiddenColumns?.value)?savedHiddenColumns.value:[]);state.hiddenFrequencyColumns=new Set(Array.isArray(savedHiddenFrequencyColumns?.value)?savedHiddenFrequencyColumns.value:[]);state.hiddenRawColumns=new Set(Array.isArray(savedHiddenRawColumns?.value)?savedHiddenRawColumns.value:[]);state.summarySort=Array.isArray(savedSummarySort?.value)?savedSummarySort.value:[];state.frequencySort=Array.isArray(savedFrequencySort?.value)?savedFrequencySort.value:[];state.rawSort=Array.isArray(savedRawSort?.value)?savedRawSort.value:[];state.learnedAliases=Object.fromEntries(Object.entries(savedHeaderAliases?.value||{}).filter(([,field])=>FIELD_DEFS[field]));
       applyTheme(savedTheme?.value==='dark'?'dark':savedTheme?.value==='light'?'light':state.theme,false);await saveCharts();await reloadSavedReports();updateSelectedSource();
     }catch(err){state.persistenceAvailable=false;state.db=null;setSource('bad','Report history unavailable','Reports will work for this session, but previously loaded reports will not persist after closing the browser.');showError(`Report history could not be opened: ${err.message||String(err)}`);render()}
   }
