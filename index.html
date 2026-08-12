@@ -35,8 +35,8 @@
     html{background:var(--bg)}
     html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
     body{transition:background .18s ease,color .18s ease}
-    button,select,input{font:inherit}
-    button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+    button,select,input,textarea{font:inherit}
+    button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     .app{width:100%;max-width:none;margin:0;padding:12px 14px 14px}
     .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:10px}
     .brand h1{font-size:20px;line-height:1.2;margin:0 0 3px;font-weight:760;letter-spacing:-.025em}
@@ -51,7 +51,7 @@
     .btn.danger:hover{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 55%,var(--line))}
     .btn:disabled{opacity:.48;cursor:not-allowed;transform:none}
     .theme-btn{width:34px;min-width:34px;height:34px;min-height:34px;padding:0;border-color:transparent;background:transparent;color:var(--muted)}.theme-btn:hover{border-color:var(--line);background:var(--control-hover);color:var(--text)}.theme-icon{font-size:15px;line-height:1}
-    .select,.search,.chart-inline-editor input,.chart-inline-editor select{border:1px solid var(--line);background:var(--control);color:var(--text);border-radius:8px}
+    .select,.search,.chart-inline-editor input,.chart-inline-editor select,.multi-select-trigger,.paste-textarea,.paste-name{border:1px solid var(--line);background:var(--control);color:var(--text);border-radius:8px}
     .select{padding:8px 30px 8px 10px}.search{padding:8px 10px}
     .statusbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:8px 10px;box-shadow:none;margin-bottom:8px}
     .report-control{display:flex;align-items:center;gap:7px;min-width:0;flex:1 1 520px}.status-label{font-size:12px;color:var(--muted);font-weight:650;flex:0 0 auto}.report-select{width:min(430px,100%);min-width:220px;flex:1 1 300px}
@@ -67,7 +67,7 @@
     .panel{background:var(--panel);border:1px solid var(--line2);border-radius:10px;box-shadow:none;overflow:hidden}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line2)}.panel-title{font-weight:760;font-size:14px}.panel-meta{font-size:11.5px;color:var(--muted);margin-top:2px}
     .table-wrap{overflow:auto;max-height:calc(100vh - 305px);min-height:420px}table{width:max-content;min-width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px}
     thead th{position:sticky;top:0;z-index:3;background:var(--table-head);color:var(--text2);text-align:right;font-weight:750;border-bottom:1px solid var(--line);padding:9px 10px;white-space:nowrap}
-    thead th:first-child,thead th:nth-child(2){text-align:left}tbody td{padding:8px 10px;border-bottom:1px solid var(--line2);text-align:right;white-space:nowrap}tbody td:first-child,tbody td:nth-child(2){text-align:left}tbody tr:hover td{background:var(--row-hover)}tbody tr.total td{font-weight:750;background:var(--total-bg);border-bottom-color:var(--accent-line)}tbody tr.total:hover td{background:var(--total-hover)}
+    thead th.text-left{text-align:left}tbody td{padding:8px 10px;border-bottom:1px solid var(--line2);text-align:right;white-space:nowrap}tbody td.text-left{text-align:left}tbody tr:hover td{background:var(--row-hover)}tbody tr.total td{font-weight:750;background:var(--total-bg);border-bottom-color:var(--accent-line)}tbody tr.total:hover td{background:var(--total-hover)}
     .pct.good{color:var(--good)}.pct.warn{color:var(--warn)}.pct.bad{color:var(--bad)}
     .muted{color:var(--muted)}.status-list{padding:13px}.status-item{margin-bottom:13px}.status-item:last-child{margin-bottom:0}.status-top{display:flex;justify-content:space-between;gap:10px;font-size:12px;margin-bottom:6px}.status-name{font-weight:650;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.status-count{color:var(--muted)}.bar{height:8px;border-radius:999px;background:var(--line2);overflow:hidden}.bar>span{display:block;height:100%;background:var(--accent);border-radius:999px}
     .empty{padding:48px 18px;text-align:center;color:var(--muted)}.empty strong{display:block;color:var(--text);font-size:15px;margin-bottom:6px}.hint{margin-top:8px;font-size:12px;line-height:1.55}
@@ -82,15 +82,20 @@
     .chart-body{padding:10px 11px 11px;min-height:0;flex:1 1 auto;display:flex;align-items:center;justify-content:center;overflow:auto}.chart-svg{display:block;width:100%;height:auto;max-width:100%;overflow:visible}.chart-empty{width:100%;padding:54px 12px;text-align:center;color:var(--muted)}
     .chart-inline-editor{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:12px 13px;border-bottom:1px solid var(--line2);background:var(--panel2);flex:0 0 auto}.chart-inline-editor .field{min-width:0}.chart-inline-editor .field.title-field{grid-column:1/-1}.chart-inline-editor label{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-bottom:4px}.chart-inline-editor input,.chart-inline-editor select{width:100%;padding:7px 8px;font-size:12px}.chart-card.editing .chart-card-head{background:var(--accent-soft)}.panel-head-actions{display:flex;gap:8px;align-items:center}
     .chart-bar{transition:opacity .12s}.chart-bar:hover{opacity:1!important}.chart-point{transition:r .12s}.chart-point:hover{r:6px}
+
+    .multi-select{position:relative;min-width:150px}.multi-select-trigger{width:100%;min-height:36px;padding:8px 30px 8px 10px;text-align:left;cursor:pointer;position:relative;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.multi-select-trigger::after{content:"";position:absolute;right:11px;top:50%;width:7px;height:7px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:translateY(-68%) rotate(45deg)}.multi-select.open .multi-select-trigger{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+    .multi-select-menu{position:absolute;z-index:80;left:0;top:calc(100% + 5px);width:max(100%,230px);max-width:min(360px,calc(100vw - 24px));max-height:300px;overflow:auto;padding:5px;background:var(--panel);border:1px solid var(--line);border-radius:9px;box-shadow:var(--shadow-lg)}.multi-select-menu[hidden]{display:none}.multi-option{display:flex;align-items:center;gap:8px;padding:8px;border-radius:6px;cursor:pointer;line-height:1.25}.multi-option:hover{background:var(--control-hover)}.multi-option input{width:16px;height:16px;accent-color:var(--accent);flex:0 0 auto}.multi-option span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.multi-option.all-option{font-weight:700;border-bottom:1px solid var(--line2);border-radius:6px 6px 0 0;margin-bottom:3px}
+    .columns-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;max-height:52vh;overflow:auto;padding:2px}.column-option{display:flex;align-items:center;gap:8px;padding:8px 9px;border:1px solid var(--line2);border-radius:8px;background:var(--control);cursor:pointer}.column-option:hover{background:var(--control-hover)}.column-option input{width:16px;height:16px;accent-color:var(--accent)}
+    .modal.wide{width:min(680px,100%)}.form-label{display:block;color:var(--text2);font-size:12px;font-weight:700;margin:0 0 5px}.paste-name{width:100%;padding:8px 10px;margin-bottom:10px}.paste-textarea{display:block;width:100%;min-height:300px;resize:vertical;padding:10px;font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre}.modal-help{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.45}.modal-actions .spacer{flex:1}
     @media(max-width:1100px){
       .grid{grid-template-columns:1fr}.table-wrap{max-height:640px}.side{display:grid;grid-template-columns:1fr 1fr;gap:12px}.side .panel{height:100%}
     }
     @media(max-width:760px){
       html,body{width:100%;overflow-x:hidden}.app{padding:10px max(10px,env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left))}
       .topbar{align-items:stretch;flex-direction:column;gap:8px;margin-bottom:8px}.brand h1{font-size:19px}.brand .sub{font-size:11px}
-      .actions{display:grid;grid-template-columns:minmax(0,1fr) 44px;width:100%;gap:7px}.actions .btn{width:100%;min-width:0}
+      .actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 44px;width:100%;gap:7px}.actions .btn{width:100%;min-width:0}
       .btn{min-height:44px;padding:9px 11px;touch-action:manipulation}.theme-btn{width:44px;min-width:44px;height:44px;min-height:44px;padding:0}
-      .select,.search,.chart-inline-editor input,.chart-inline-editor select{font-size:16px;min-height:44px}
+      .select,.search,.chart-inline-editor input,.chart-inline-editor select,.multi-select-trigger,.paste-name,.paste-textarea{font-size:16px;min-height:44px}
       .statusbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:9px;align-items:end}
       .report-control{display:grid;grid-template-columns:1fr 1fr;gap:7px;width:100%;min-width:0;grid-column:1/-1}.status-label{display:none}.report-select{grid-column:1/-1;width:100%;min-width:0;max-width:none}.report-control .btn{width:100%}
       .source-line{grid-column:1;border-left:0;border-top:0;padding:0;min-width:0;width:100%}.source-detail{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.3}.pill{grid-column:2;justify-self:end;margin:0;align-self:end;white-space:nowrap}
@@ -102,7 +107,7 @@
       table{font-size:12px}thead th,tbody td{padding:8px 9px}thead th:first-child,tbody td:first-child{position:sticky;left:0;min-width:118px;max-width:145px;overflow:hidden;text-overflow:ellipsis;z-index:2}thead th:first-child{z-index:5;background:var(--table-head)}tbody td:first-child{background:var(--panel)}tbody tr.total td:first-child{background:var(--total-bg)}
       .footer-note{padding:9px 11px;line-height:1.45}.status-list{padding:11px}.status-item{margin-bottom:11px}
       .charts-grid{padding:8px;gap:10px}.chart-card{flex:1 1 100%;width:100%;max-width:none;min-width:0;height:480px;border-radius:10px}.chart-card.editing{height:auto;min-height:650px}.chart-card-head{padding:10px 11px;min-height:64px;gap:8px}.chart-card-actions{gap:5px}.chart-card-actions .btn{min-height:40px;padding:7px 9px}.chart-body{padding:8px;overflow:auto;-webkit-overflow-scrolling:touch}.chart-inline-editor{grid-template-columns:1fr 1fr;gap:8px;padding:10px 11px}.chart-inline-editor .field.title-field{grid-column:1/-1}.chart-inline-editor label{font-size:10.5px}
-      .errorbox{max-height:34vh;overflow:auto;overflow-wrap:anywhere;line-height:1.45}
+      .errorbox{max-height:34vh;overflow:auto;overflow-wrap:anywhere;line-height:1.45}.multi-select{min-width:0;width:100%}.multi-select-menu{max-height:46vh;width:min(340px,calc(100vw - 20px));max-width:calc(100vw - 20px)}#serviceFilter .multi-select-menu{left:auto;right:0}.columns-list{grid-template-columns:1fr}
     }
     @media(max-width:520px){
       .chart-inline-editor{grid-template-columns:1fr}.chart-inline-editor .field.title-field{grid-column:auto}.chart-card.editing{min-height:760px}
@@ -125,10 +130,11 @@
   <div class="topbar">
     <div class="brand">
       <h1>Provider Visit Reporting Dashboard</h1>
-      <div class="sub">Provider and service reporting from Excel files</div>
+      <div class="sub">Provider and service reporting from Excel or pasted data</div>
     </div>
     <div class="actions">
       <button class="btn primary" id="addFilesBtn" type="button">Add Excel</button>
+      <button class="btn" id="pasteDataBtn" type="button">Paste Data</button>
       <button class="btn theme-btn" id="themeToggle" type="button" aria-label="Switch to dark theme" title="Switch to dark theme"><span id="themeIcon" class="theme-icon" aria-hidden="true">☾</span></button>
     </div>
   </div>
@@ -146,7 +152,7 @@
       <span id="sourceDot" class="dot warn"></span>
       <div class="source-text">
         <div id="sourceTitle" class="source-title">No report selected</div>
-        <div id="sourceDetail" class="source-detail">Upload an Excel file to begin.</div>
+        <div id="sourceDetail" class="source-detail">Add an Excel file or paste data to begin.</div>
       </div>
     </div>
     <span id="lastRefresh" class="pill">Not loaded</span>
@@ -154,9 +160,9 @@
 
   <div class="toolbar">
     <span class="label">Filters</span>
-    <select id="monthFilter" class="select filter" aria-label="Entered on month"><option value="">All Months</option></select>
-    <select id="providerFilter" class="select filter"><option value="">All Providers</option></select>
-    <select id="serviceFilter" class="select filter"><option value="">All Services</option></select>
+    <div id="monthFilter" class="multi-select filter" data-label-singular="DOS Month" data-label-plural="DOS Months"><button class="multi-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All DOS Months</button><div class="multi-select-menu" hidden></div></div>
+    <div id="providerFilter" class="multi-select filter" data-label-singular="Provider" data-label-plural="Providers"><button class="multi-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All Providers</button><div class="multi-select-menu" hidden></div></div>
+    <div id="serviceFilter" class="multi-select filter" data-label-singular="Service" data-label-plural="Services"><button class="multi-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All Services</button><div class="multi-select-menu" hidden></div></div>
     <input id="searchInput" class="search" type="search" placeholder="Search provider or service…">
     <div class="spacer"></div>
     <button id="clearFiltersBtn" class="btn">Reset</button>
@@ -181,16 +187,16 @@
       <section class="panel">
         <div class="panel-head">
           <div><div class="panel-title">Provider Summary</div><div id="tableMeta" class="panel-meta">No data loaded</div></div>
-          <button id="exportCsvBtn" class="btn" type="button" disabled>Export CSV</button>
+          <div class="panel-head-actions"><button id="columnsBtn" class="btn" type="button" disabled>Columns</button><button id="exportCsvBtn" class="btn" type="button" disabled>Export CSV</button></div>
         </div>
         <div class="table-wrap">
           <table id="reportTable" style="display:none"><thead></thead><tbody></tbody></table>
           <div id="emptyState" class="empty">
-            <strong>No Excel reports</strong>
-            <div>Click <b>Add Excel</b> to load a report.</div>
+            <strong>No reports</strong>
+            <div>Use <b>Add Excel</b> or <b>Paste Data</b> to load a report.</div>
           </div>
         </div>
-        <div class="footer-note">Cancellation % and Overall Cancellation % appear only on provider TOTAL rows. Productivity is shown against 5–40 hr/week targets and appears only on TOTAL rows. Time metrics exclude rows with missing or invalid start/end times.</div>
+        <div class="footer-note">Cancellation % and Overall Cancellation % appear only on provider TOTAL rows. Productivity is shown against 5–40 hr/week targets and appears only on TOTAL rows. &gt; 10 Business Days is calculated from DOS to Entered On using weekdays only. Time metrics exclude rows with missing or invalid start/end times.</div>
       </section>
 
       <aside class="side">
@@ -203,7 +209,7 @@
     <section class="panel charts-panel">
       <div class="panel-head">
         <div><div class="panel-title">Graphs</div><div id="chartsMeta" class="panel-meta">Current report and filters</div></div>
-        <div class="panel-head-actions"><button id="addChartBtn" class="btn" type="button">Add Graph</button></div>
+        <div class="panel-head-actions"><button id="exportPdfBtn" class="btn" type="button" disabled>Export PDF</button><button id="addChartBtn" class="btn" type="button">Add Graph</button></div>
       </div>
       <div id="chartsGrid" class="charts-grid"></div>
     </section>
@@ -218,6 +224,26 @@
       <button id="confirmModalCancel" class="btn" type="button">Cancel</button>
       <button id="confirmModalConfirm" class="btn danger" type="button">Delete</button>
     </div>
+  </div>
+</div>
+
+<div id="columnsModal" class="modal-backdrop" hidden>
+  <div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="columnsModalTitle">
+    <div class="modal-head"><div id="columnsModalTitle" class="modal-title">Displayed Columns</div></div>
+    <div class="modal-body"><div id="columnsList" class="columns-list"></div></div>
+    <div class="modal-actions"><button id="columnsShowAll" class="btn" type="button">Show All</button><div class="spacer"></div><button id="columnsCancel" class="btn" type="button">Cancel</button><button id="columnsDone" class="btn primary" type="button">Done</button></div>
+  </div>
+</div>
+
+<div id="pasteModal" class="modal-backdrop" hidden>
+  <div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="pasteModalTitle">
+    <div class="modal-head"><div id="pasteModalTitle" class="modal-title">Paste Report Data</div></div>
+    <div class="modal-body">
+      <label class="form-label" for="pasteReportName">Report name</label><input id="pasteReportName" class="paste-name" type="text" maxlength="120" placeholder="Pasted Report">
+      <label class="form-label" for="pasteDataInput">Data</label><textarea id="pasteDataInput" class="paste-textarea" spellcheck="false" placeholder="Paste rows copied from Excel here, including the header row."></textarea>
+      <div class="modal-help">Required headers: Provider, Service, Status, DOS, Entered On, START_TIME, END_TIME. Tab-separated Excel paste and CSV are supported.</div>
+    </div>
+    <div class="modal-actions"><button id="pasteCancel" class="btn" type="button">Cancel</button><button id="pasteImport" class="btn primary" type="button">Import</button></div>
   </div>
 </div>
 <input id="fileInput" type="file" accept=".xlsx,.xlsm" multiple hidden>
@@ -242,13 +268,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 (() => {
   'use strict';
 
-  const REQUIRED = ['provider','service','status','enteredOn','start','end'];
-  const REQUIRED_LABELS = ['Provider','Service','Status','Entered on','START_TIME','END_TIME'];
+  const REQUIRED = ['provider','service','status','dos','enteredOn','start','end'];
+  const REQUIRED_LABELS = ['Provider','Service','Status','DOS','Entered On','START_TIME','END_TIME'];
   const TARGETS = [5,10,15,20,25,30,35,40];
-  const CHART_METRICS={visits:'Total Visits',delivered:'Delivered Visits',cancellations:'Cancelled Visits',cancellationPct:'Cancellation %',units:'15 Min Units',hours:'Total Hours',productivity:'Productivity %'};
-  const CHART_GROUPS={provider:'Provider',service:'Service',status:'Status',month:'Month'};
+  const CHART_METRICS={visits:'Total Visits',delivered:'Delivered Visits',cancellations:'Cancelled Visits',over10:'> 10 Business Days',cancellationPct:'Cancellation %',units:'15 Min Units',hours:'Total Hours',productivity:'Productivity %'};
+  const CHART_GROUPS={provider:'Provider',service:'Service',status:'Status',month:'DOS Month'};
   const CHART_COLORS=['var(--series-1)','var(--series-2)','var(--series-3)','var(--series-4)','var(--series-5)','var(--series-6)','var(--series-7)','var(--series-8)','var(--series-9)','var(--series-10)'];
-  const DB_NAME = 'ProviderVisitReportingDashboardV2';
+  const DB_NAME = 'ProviderVisitReportingDashboardV3';
   const DB_VERSION = 1;
   const REPORT_STORE = 'reports';
   const META_STORE = 'meta';
@@ -256,24 +282,26 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   const state = {
     rows:[], savedReports:[], selectedReportId:null,
     lastLoad:null,
-    db:null, persistenceAvailable:true, charts:[], editingChartId:null, chartDraft:null, activeTab:'summary',
+    db:null, persistenceAvailable:true, charts:[], editingChartId:null, chartDraft:null, activeTab:'summary', hiddenColumns:new Set(), columnDraftHidden:null, lastTableColumns:[],
     theme:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'
   };
 
   const $ = id => document.getElementById(id);
   const els = {
     sourceDot:$('sourceDot'), sourceTitle:$('sourceTitle'), sourceDetail:$('sourceDetail'), lastRefresh:$('lastRefresh'),
-    errorBox:$('errorBox'), addFilesBtn:$('addFilesBtn'), themeToggle:$('themeToggle'), themeIcon:$('themeIcon'),
+    errorBox:$('errorBox'), addFilesBtn:$('addFilesBtn'), pasteDataBtn:$('pasteDataBtn'), themeToggle:$('themeToggle'), themeIcon:$('themeIcon'),
     monthFilter:$('monthFilter'), providerFilter:$('providerFilter'), serviceFilter:$('serviceFilter'), searchInput:$('searchInput'), clearFiltersBtn:$('clearFiltersBtn'),
     kpiProviders:$('kpiProviders'), kpiVisits:$('kpiVisits'), kpiVisitsFoot:$('kpiVisitsFoot'), kpiDelivered:$('kpiDelivered'),
     kpiDeliveredFoot:$('kpiDeliveredFoot'), kpiCancellation:$('kpiCancellation'), kpiTime:$('kpiTime'), kpiTimeFoot:$('kpiTimeFoot'), kpiUnits:$('kpiUnits'),
     reportTable:$('reportTable'), emptyState:$('emptyState'), tableMeta:$('tableMeta'), statusMeta:$('statusMeta'),
     statusList:$('statusList'), fileInput:$('fileInput'),
-    reportSelect:$('reportSelect'), removeReportBtn:$('removeReportBtn'), deleteAllReportsBtn:$('deleteAllReportsBtn'), exportCsvBtn:$('exportCsvBtn'),
-    chartsMeta:$('chartsMeta'), chartsGrid:$('chartsGrid'), addChartBtn:$('addChartBtn'),
+    reportSelect:$('reportSelect'), removeReportBtn:$('removeReportBtn'), deleteAllReportsBtn:$('deleteAllReportsBtn'), exportCsvBtn:$('exportCsvBtn'), columnsBtn:$('columnsBtn'),
+    chartsMeta:$('chartsMeta'), chartsGrid:$('chartsGrid'), addChartBtn:$('addChartBtn'), exportPdfBtn:$('exportPdfBtn'),
     viewTabs:$('viewTabs'), summaryTab:$('summaryTab'), graphsTab:$('graphsTab'), summaryView:$('summaryView'), graphsView:$('graphsView'),
     confirmModal:$('confirmModal'), confirmModalTitle:$('confirmModalTitle'), confirmModalBody:$('confirmModalBody'),
-    confirmModalCancel:$('confirmModalCancel'), confirmModalConfirm:$('confirmModalConfirm')
+    confirmModalCancel:$('confirmModalCancel'), confirmModalConfirm:$('confirmModalConfirm'),
+    columnsModal:$('columnsModal'), columnsList:$('columnsList'), columnsShowAll:$('columnsShowAll'), columnsCancel:$('columnsCancel'), columnsDone:$('columnsDone'),
+    pasteModal:$('pasteModal'), pasteReportName:$('pasteReportName'), pasteDataInput:$('pasteDataInput'), pasteCancel:$('pasteCancel'), pasteImport:$('pasteImport')
   };
 
   function cleanText(v){return String(v??'').replace(/\u00a0/g,' ').replace(/\s+/g,' ').trim()}
@@ -284,6 +312,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     if(n==='provider')return'provider';
     if(n==='service')return'service';
     if(n==='status')return'status';
+    if(n==='dos'||n==='date of service'||n==='dateofservice')return'dos';
     if(['entered on','enteredon'].includes(n))return'enteredOn';
     if(['start time','starttime','start'].includes(n))return'start';
     if(['end time','endtime','end'].includes(n))return'end';
@@ -315,7 +344,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const out=new Date(y,m-1,d);
     return out.getFullYear()===y&&out.getMonth()===m-1&&out.getDate()===d?out:null;
   }
-  function parseEnteredDate(v){
+  function parseDateValue(v){
     if(v===''||v==null)return null;
     if(v instanceof Date&&!Number.isNaN(v.getTime()))return dateFromParts(v.getFullYear(),v.getMonth()+1,v.getDate());
     if(typeof v==='number'&&Number.isFinite(v)){
@@ -333,6 +362,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
   function dateIso(d){return d?`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`:''}
   function monthKeyFromDate(d){return d?`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`:''}
+  function businessDaysBetween(start,end){
+    if(!start||!end||end<=start)return 0;let count=0,d=new Date(start.getFullYear(),start.getMonth(),start.getDate());
+    while(d<end){d.setDate(d.getDate()+1);const day=d.getDay();if(day!==0&&day!==6)count++}
+    return count;
+  }
   function monthLabel(key){
     const m=String(key||'').match(/^(\d{4})-(\d{2})$/);if(!m)return'';
     return new Date(Number(m[1]),Number(m[2])-1,1).toLocaleDateString([],{month:'long',year:'numeric'});
@@ -451,43 +485,44 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     }
     return null;
   }
+  function rowsFromAoA(aoa,sourceName,rowPrefix='row'){
+    const hdr=detectHeader(aoa);if(!hdr)return null;
+    const out=[],invalidDates=[],providerNames=new Map(),serviceNames=new Map(),statusNames=new Map(),{map,rowIndex}=hdr;
+    for(let i=rowIndex+1;i<aoa.length;i++){
+      const row=aoa[i]||[],providerRaw=cleanText(row[map.provider]);if(!providerRaw)continue;
+      const provider=canonicalValue(providerRaw,providerNames),service=canonicalValue(row[map.service],serviceNames,'(Blank Service)'),status=canonicalValue(row[map.status],statusNames,'(Blank Status)');
+      const dos=parseDateValue(row[map.dos]),enteredOn=parseDateValue(row[map.enteredOn]);
+      if(!dos||!enteredOn){invalidDates.push(`${rowPrefix} ${i+1}`);continue}
+      const start=parseTime(row[map.start]),end=parseTime(row[map.end]),minutes=durationMinutes(start,end),businessDays=businessDaysBetween(dos,enteredOn);
+      out.push({provider:provider.label,providerKey:provider.key,service:service.label,serviceKey:service.key||'__blank__',status:status.label,statusKey:status.key||'__blank__',dos:dateIso(dos),enteredOn:dateIso(enteredOn),monthKey:monthKeyFromDate(dos),businessDays,over10BusinessDays:businessDays>10,minutes,file:sourceName,row:i+1});
+    }
+    return{rows:out,invalidDates};
+  }
   async function workbookRows(arrayBuffer,fileName){
     const sheets=await workbookAoAs(arrayBuffer),out=[],usedSheets=[],skippedSheets=[],invalidDates=[];
-    const providerNames=new Map(),serviceNames=new Map(),statusNames=new Map();
     for(const item of sheets){
-      const aoa=item.aoa;
-      if(!aoa.length){skippedSheets.push(item.name);continue}
-      const hdr=detectHeader(aoa);
-      if(!hdr){skippedSheets.push(item.name);continue}
-      usedSheets.push(item.name);
-      const{map,rowIndex}=hdr;
-      for(let i=rowIndex+1;i<aoa.length;i++){
-        const row=aoa[i]||[],providerRaw=cleanText(row[map.provider]);
-        if(!providerRaw)continue;
-        const provider=canonicalValue(providerRaw,providerNames);
-        const service=canonicalValue(row[map.service],serviceNames,'(Blank Service)');
-        const status=canonicalValue(row[map.status],statusNames,'(Blank Status)');
-        const enteredOn=parseEnteredDate(row[map.enteredOn]);
-        if(!enteredOn){invalidDates.push(`${item.name} row ${i+1}`);continue}
-        const start=parseTime(row[map.start]),end=parseTime(row[map.end]),minutes=durationMinutes(start,end);
-        out.push({
-          provider:provider.label,providerKey:provider.key,
-          service:service.label,serviceKey:service.key||'__blank__',
-          status:status.label,statusKey:status.key||'__blank__',
-          enteredOn:dateIso(enteredOn),monthKey:monthKeyFromDate(enteredOn),minutes,
-          file:fileName,sheet:item.name,row:i+1
-        });
-      }
+      if(!item.aoa.length){skippedSheets.push(item.name);continue}
+      const parsed=rowsFromAoA(item.aoa,fileName,`${item.name} row`);if(!parsed){skippedSheets.push(item.name);continue}
+      usedSheets.push(item.name);for(const row of parsed.rows){row.sheet=item.name;out.push(row)}invalidDates.push(...parsed.invalidDates);
     }
     if(!usedSheets.length)throw new Error(`No worksheet contains all required columns: ${REQUIRED_LABELS.join(', ')}.`);
-    if(invalidDates.length){
-      const sample=invalidDates.slice(0,5).join(', '),more=invalidDates.length>5?` and ${invalidDates.length-5} more`:'';
-      throw new Error(`Entered on is missing or invalid on ${invalidDates.length} visit row${invalidDates.length===1?'':'s'} (${sample}${more}). Fix the source data and import again.`);
-    }
+    if(invalidDates.length){const sample=invalidDates.slice(0,5).join(', '),more=invalidDates.length>5?` and ${invalidDates.length-5} more`:'';throw new Error(`DOS or Entered On is missing or invalid on ${invalidDates.length} visit row${invalidDates.length===1?'':'s'} (${sample}${more}). Fix the source data and import again.`)}
     if(!out.length)throw new Error('No visit rows were found beneath the detected headers.');
     return{rows:out,usedSheets,skippedSheets,invalidTimeRows:out.filter(r=>r.minutes==null).length};
   }
   async function parseFile(file){return workbookRows(await file.arrayBuffer(),file.name)}
+  function parseDelimitedText(text){
+    text=String(text||'').replace(/^\uFEFF/,'');if(!text.trim())return[];
+    const first=(text.split(/\r?\n/).find(line=>line.trim())||''),delimiter=first.includes('\t')?'\t':',';const rows=[];let row=[],cell='',quoted=false;
+    for(let i=0;i<text.length;i++){const ch=text[i];if(ch==='"'){if(quoted&&text[i+1]==='"'){cell+='"';i++}else quoted=!quoted;continue}if(ch===delimiter&&!quoted){row.push(cell);cell='';continue}if((ch==='\n'||ch==='\r')&&!quoted){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(cell);if(row.some(v=>cleanText(v)))rows.push(row);row=[];cell='';continue}cell+=ch}
+    row.push(cell);if(row.some(v=>cleanText(v)))rows.push(row);return rows;
+  }
+  function parsePastedData(text,name){
+    const aoa=parseDelimitedText(text),parsed=rowsFromAoA(aoa,name,'row');if(!parsed)throw new Error(`Pasted data must include all required columns: ${REQUIRED_LABELS.join(', ')}.`);
+    if(parsed.invalidDates.length){const sample=parsed.invalidDates.slice(0,5).join(', '),more=parsed.invalidDates.length>5?` and ${parsed.invalidDates.length-5} more`:'';throw new Error(`DOS or Entered On is missing or invalid on ${parsed.invalidDates.length} visit row${parsed.invalidDates.length===1?'':'s'} (${sample}${more}). Fix the pasted data and try again.`)}
+    if(!parsed.rows.length)throw new Error('No visit rows were found beneath the pasted header row.');
+    return{rows:parsed.rows,usedSheets:[],skippedSheets:[],invalidTimeRows:parsed.rows.filter(r=>r.minutes==null).length};
+  }
 
   function selectedRecord(){return state.savedReports.find(r=>r.id===state.selectedReportId)||null}
   function reportLabel(rec){return`${rec.name} • ${fmtDate(rec.importedAt)}`}
@@ -495,11 +530,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function syncSelectedRows(){state.rows=selectedRecord()?.rows||[]}
   function updateSelectedSource(){
     if(!state.savedReports.length){
-      setSource(state.persistenceAvailable?'warn':'bad','No report selected','Add an Excel file to begin.');
+      setSource(state.persistenceAvailable?'warn':'bad','No report selected','Add an Excel file or paste data to begin.');
       els.lastRefresh.textContent='Not loaded';return;
     }
     const rec=selectedRecord();if(!rec)return;
-    const details=[`${rec.rows.length.toLocaleString()} visit rows`,`${rec.sheets} worksheet${rec.sheets===1?'':'s'}`];
+    const details=[`${rec.rows.length.toLocaleString()} visit rows`,rec.sourceType==='paste'?'Pasted data':`${rec.sheets} worksheet${rec.sheets===1?'':'s'}`];
     if(rec.skippedSheets?.length)details.push(`${rec.skippedSheets.length} skipped sheet${rec.skippedSheets.length===1?'':'s'}`);
     if(rec.invalidTimeRows)details.push(`${rec.invalidTimeRows} invalid time row${rec.invalidTimeRows===1?'':'s'} excluded from time metrics`);
     setSource(rec.invalidTimeRows?'warn':'good',rec.name,details.join(' • '));
@@ -521,7 +556,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       for(const file of good){
         try{
           const parsed=await parseFile(file),record={
-            id:newId(),name:file.name,rows:parsed.rows,sheets:parsed.usedSheets.length,skippedSheets:parsed.skippedSheets,
+            id:newId(),name:file.name,sourceType:'excel',rows:parsed.rows,sheets:parsed.usedSheets.length,skippedSheets:parsed.skippedSheets,
             invalidTimeRows:parsed.invalidTimeRows,size:file.size||0,lastModified:file.lastModified||0,importedAt:new Date().toISOString()
           };
           if(state.db)await dbPutReport(record);else state.savedReports.push(record);
@@ -535,36 +570,47 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     }finally{els.addFilesBtn.disabled=false}
   }
   function addFiles(){showError('');els.fileInput.value='';els.fileInput.click()}
+  function openPasteModal(){showError('');els.pasteReportName.value=`Pasted Report ${new Date().toLocaleDateString()}`;els.pasteDataInput.value='';els.pasteModal.hidden=false;document.body.style.overflow='hidden';requestAnimationFrame(()=>els.pasteDataInput.focus())}
+  function closePasteModal(){els.pasteModal.hidden=true;document.body.style.overflow=''}
+  async function importPastedData(){
+    const text=els.pasteDataInput.value,name=cleanText(els.pasteReportName.value)||`Pasted Report ${new Date().toLocaleDateString()}`;if(!text.trim()){showError('Paste report data before importing.');return}
+    els.pasteImport.disabled=true;showError('');
+    try{const parsed=parsePastedData(text,name),record={id:newId(),name,sourceType:'paste',rows:parsed.rows,sheets:0,skippedSheets:[],invalidTimeRows:parsed.invalidTimeRows,size:new Blob([text]).size,lastModified:Date.now(),importedAt:new Date().toISOString()};if(state.db)await dbPutReport(record);else state.savedReports.push(record);closePasteModal();await reloadSavedReports(record.id);state.lastLoad=new Date();updateSelectedSource()}catch(err){showError(err.message||String(err))}finally{els.pasteImport.disabled=false}
+  }
 
   function availableMonths(){return[...new Set(state.rows.map(r=>r.monthKey).filter(Boolean))].sort().reverse()}
   function latestMonth(){return availableMonths()[0]||''}
-  function monthScopedRows(){const m=els.monthFilter.value;return m?state.rows.filter(r=>r.monthKey===m):state.rows}
+  function multiValues(el){return new Set([...el.querySelectorAll('.multi-option input[data-value]:checked')].map(i=>i.dataset.value).filter(Boolean))}
+  function closeMultiSelect(el){el.classList.remove('open');el.querySelector('.multi-select-menu').hidden=true;el.querySelector('.multi-select-trigger').setAttribute('aria-expanded','false')}
+  function closeAllMultiSelects(except=null){[els.monthFilter,els.providerFilter,els.serviceFilter].forEach(el=>{if(el!==except)closeMultiSelect(el)})}
+  function multiSummary(el,selected,allLabel){const plural=el.dataset.labelPlural;if(!selected.size)return allLabel;if(selected.size===1){const value=[...selected][0];return el===els.monthFilter?monthLabel(value):value}return`${selected.size} ${plural}`}
+  function setMultiOptions(el,options,selectedValues,allLabel){
+    const selected=new Set([...selectedValues].filter(v=>options.some(o=>o.value===v))),menu=el.querySelector('.multi-select-menu');
+    menu.innerHTML=`<label class="multi-option all-option"><input type="checkbox" data-value=""${selected.size?'':' checked'}><span>${esc(allLabel)}</span></label>`+options.map(o=>`<label class="multi-option"><input type="checkbox" data-value="${esc(o.value)}"${selected.has(o.value)?' checked':''}><span title="${esc(o.label)}">${esc(o.label)}</span></label>`).join('');
+    el.querySelector('.multi-select-trigger').textContent=multiSummary(el,selected,allLabel);el.classList.toggle('disabled',!options.length);el.querySelector('.multi-select-trigger').disabled=!options.length;
+  }
+  function setMultiValues(el,values){const wanted=new Set(values);el.querySelectorAll('.multi-option input[data-value]').forEach(i=>i.checked=i.dataset.value?wanted.has(i.dataset.value):wanted.size===0);const allLabel=el===els.monthFilter?'All DOS Months':el===els.providerFilter?'All Providers':'All Services';el.querySelector('.multi-select-trigger').textContent=multiSummary(el,wanted,allLabel)}
+  function monthScopedRows(){const months=multiValues(els.monthFilter);return months.size?state.rows.filter(r=>months.has(r.monthKey)):state.rows}
   function populateFilters(reset=false){
-    const months=availableMonths(),curM=reset?(months[0]||''):els.monthFilter.value,curP=reset?'':els.providerFilter.value,curS=reset?'':els.serviceFilter.value;
-    if(reset)els.searchInput.value='';
-    els.monthFilter.innerHTML='<option value="">All Months</option>'+months.map(v=>`<option value="${esc(v)}">${esc(monthLabel(v))}</option>`).join('');
-    els.monthFilter.disabled=!months.length;els.monthFilter.value=months.includes(curM)?curM:'';
-    const scoped=monthScopedRows();
-    const providers=[...new Set(scoped.map(r=>r.provider).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
-    const services=[...new Set(scoped.map(r=>r.service).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
-    els.providerFilter.innerHTML='<option value="">All Providers</option>'+providers.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');
-    els.serviceFilter.innerHTML='<option value="">All Services</option>'+services.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');
-    if(providers.includes(curP))els.providerFilter.value=curP;if(services.includes(curS))els.serviceFilter.value=curS;
+    const months=availableMonths(),curM=reset?new Set(months[0]?[months[0]]:[]):multiValues(els.monthFilter),curP=reset?new Set():multiValues(els.providerFilter),curS=reset?new Set():multiValues(els.serviceFilter);if(reset)els.searchInput.value='';
+    setMultiOptions(els.monthFilter,months.map(v=>({value:v,label:monthLabel(v)})),curM,'All DOS Months');const scoped=monthScopedRows();
+    const providers=[...new Set(scoped.map(r=>r.provider).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),services=[...new Set(scoped.map(r=>r.service).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+    setMultiOptions(els.providerFilter,providers.map(v=>({value:v,label:v})),curP,'All Providers');setMultiOptions(els.serviceFilter,services.map(v=>({value:v,label:v})),curS,'All Services');
   }
   function baseFilteredRows(){
-    const p=els.providerFilter.value,s=els.serviceFilter.value,q=normalizedKey(els.searchInput.value);
-    return monthScopedRows().filter(r=>{if(p&&r.provider!==p)return false;if(s&&r.service!==s)return false;if(q&&!normalizedKey(`${r.provider} ${r.service}`).includes(q))return false;return true});
+    const providers=multiValues(els.providerFilter),services=multiValues(els.serviceFilter),q=normalizedKey(els.searchInput.value);
+    return monthScopedRows().filter(r=>{if(providers.size&&!providers.has(r.provider))return false;if(services.size&&!services.has(r.service))return false;if(q&&!normalizedKey(`${r.provider} ${r.service}`).includes(q))return false;return true});
   }
 
-  function newAggregate(){return{visits:0,delivered:0,minutes:0,invalidTimes:0,counts:new Map()}}
+  function newAggregate(){return{visits:0,delivered:0,over10:0,minutes:0,invalidTimes:0,counts:new Map()}}
   function addToAggregate(a,row){
-    a.visits++;if(row.statusKey==='delivered')a.delivered++;
+    a.visits++;if(row.statusKey==='delivered')a.delivered++;if(row.over10BusinessDays)a.over10++;
     if(row.minutes==null)a.invalidTimes++;else a.minutes+=row.minutes;
     a.counts.set(row.status,(a.counts.get(row.status)||0)+1);
   }
   function finalizeAggregate(a,statuses){
     const counts={};for(const status of statuses)counts[status]=a.counts.get(status)||0;
-    return{visits:a.visits,delivered:a.delivered,minutes:a.minutes,invalidTimes:a.invalidTimes,units:Math.round(a.minutes/15),counts,cancel:pct(a.visits-a.delivered,a.visits)};
+    return{visits:a.visits,delivered:a.delivered,over10:a.over10,minutes:a.minutes,invalidTimes:a.invalidTimes,units:Math.round(a.minutes/15),counts,cancel:pct(a.visits-a.delivered,a.visits)};
   }
   function summarize(rows,overallCancelOverride=null,statusesOverride=null){
     const statuses=statusesOverride||[...new Set(rows.map(r=>r.status).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
@@ -588,25 +634,25 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     return{statuses,providers:providers.map(p=>p.provider),report,allTotal:totals.visits,allDelivered:totals.delivered,overallCancel,minutes:totals.minutes,units:totals.units,invalidTimes:totals.invalidTimes};
   }
   function productivityClass(v){if(v>=1)return'good';if(v>=.8)return'warn';return'bad'}
-  function renderTable(summary){
-    const head=['Provider','Service',...summary.statuses,'Total Visits','Cancellation %','Overall Cancellation %','Total Time','15 Min Units',...TARGETS.map(h=>`${h} Hr/Wk`)];
-    els.reportTable.tHead.innerHTML='<tr>'+head.map(h=>`<th>${esc(h)}</th>`).join('')+'</tr>';
-    const body=[];
-    for(const r of summary.report){
-      const cells=[];cells.push(`<td>${esc(r.provider)}</td>`);cells.push(`<td>${r.isTotal?'<b>TOTAL</b>':esc(r.service)}</td>`);
-      summary.statuses.forEach(s=>cells.push(`<td>${fmtInt(r.counts[s]||0)}</td>`));
-      cells.push(`<td>${fmtInt(r.visits)}</td>`);cells.push(`<td>${r.isTotal?fmtPct(r.cancel):''}</td>`);cells.push(`<td>${r.isTotal?fmtPct(r.overallCancel):''}</td>`);
-      cells.push(`<td>${fmtTime(r.minutes)}</td>`);cells.push(`<td>${fmtInt(r.units)}</td>`);
-      for(const h of TARGETS){if(!r.isTotal){cells.push('<td></td>');continue}const v=r.units/(h*16);cells.push(`<td class="pct ${productivityClass(v)}">${fmtPct(v)}</td>`)}
-      body.push(`<tr class="${r.isTotal?'total':''}">${cells.join('')}</tr>`);
-    }
-    els.reportTable.tBodies[0].innerHTML=body.join('');
-    const hasRows=summary.report.length>0,hasReport=!!selectedRecord();
-    els.emptyState.innerHTML=hasRows?'':hasReport?'<strong>No matching visits</strong><div>Adjust the filters or reset them to the latest month.</div>':'<strong>No Excel reports</strong><div>Use <b>Add Excel</b> to load a report.</div>';
-    els.emptyState.style.display=hasRows?'none':'block';els.reportTable.style.display=hasRows?'table':'none';els.exportCsvBtn.disabled=!hasRows;
-    const viewName=selectedRecord()?.name||'Report',timeNote=summary.invalidTimes?` • ${summary.invalidTimes} invalid time row${summary.invalidTimes===1?'':'s'} excluded`:'';
-    els.tableMeta.textContent=summary.report.length?`${viewName} • ${summary.report.length.toLocaleString()} summary rows • ${summary.statuses.length} status column${summary.statuses.length===1?'':'s'}${timeNote}`:'No data loaded';
+  function tableColumnDefs(summary){
+    const cols=[{key:'provider',label:'Provider',left:true,cell:r=>esc(r.provider)},{key:'service',label:'Service',left:true,cell:r=>r.isTotal?'<b>TOTAL</b>':esc(r.service)}];
+    summary.statuses.forEach(status=>cols.push({key:`status:${normalizedKey(status)}`,label:status,cell:r=>fmtInt(r.counts[status]||0)}));
+    cols.push({key:'visits',label:'Total Visits',cell:r=>fmtInt(r.visits)},{key:'over10',label:'> 10 Business Days',cell:r=>fmtInt(r.over10)},{key:'cancel',label:'Cancellation %',cell:r=>r.isTotal?fmtPct(r.cancel):''},{key:'overallCancel',label:'Overall Cancellation %',cell:r=>r.isTotal?fmtPct(r.overallCancel):''},{key:'time',label:'Total Time',cell:r=>fmtTime(r.minutes)},{key:'units',label:'15 Min Units',cell:r=>fmtInt(r.units)});
+    TARGETS.forEach(h=>cols.push({key:`productivity:${h}`,label:`${h} Hr/Wk`,cell:r=>{if(!r.isTotal)return'';const v=r.units/(h*16);return`<span class="pct ${productivityClass(v)}">${fmtPct(v)}</span>`}}));return cols;
   }
+  function visibleTableColumns(summary){const all=tableColumnDefs(summary);state.lastTableColumns=all;const visible=all.filter(c=>!state.hiddenColumns.has(c.key));return visible.length?visible:[all[0]]}
+  function renderTable(summary){
+    const columns=visibleTableColumns(summary);els.reportTable.tHead.innerHTML='<tr>'+columns.map(c=>`<th class="${c.left?'text-left':''}">${esc(c.label)}</th>`).join('')+'</tr>';const body=[];
+    for(const r of summary.report)body.push(`<tr class="${r.isTotal?'total':''}">${columns.map(c=>`<td class="${c.left?'text-left':''}">${c.cell(r)}</td>`).join('')}</tr>`);
+    els.reportTable.tBodies[0].innerHTML=body.join('');const hasRows=summary.report.length>0,hasReport=!!selectedRecord();
+    els.emptyState.innerHTML=hasRows?'':hasReport?'<strong>No matching visits</strong><div>Adjust the filters or reset them to the latest DOS month.</div>':'<strong>No reports</strong><div>Use <b>Add Excel</b> or <b>Paste Data</b> to load a report.</div>';
+    els.emptyState.style.display=hasRows?'none':'block';els.reportTable.style.display=hasRows?'table':'none';els.exportCsvBtn.disabled=!hasRows;els.columnsBtn.disabled=!hasReport;
+    const viewName=selectedRecord()?.name||'Report',timeNote=summary.invalidTimes?` • ${summary.invalidTimes} invalid time row${summary.invalidTimes===1?'':'s'} excluded`:'';els.tableMeta.textContent=summary.report.length?`${viewName} • ${summary.report.length.toLocaleString()} summary rows • ${columns.length} displayed column${columns.length===1?'':'s'}${timeNote}`:'No data loaded';
+  }
+  function openColumnsModal(){if(!selectedRecord())return;state.columnDraftHidden=new Set(state.hiddenColumns);renderColumnsList();els.columnsModal.hidden=false;document.body.style.overflow='hidden'}
+  function renderColumnsList(){const hidden=state.columnDraftHidden||new Set();els.columnsList.innerHTML=state.lastTableColumns.map(c=>`<label class="column-option"><input type="checkbox" data-column-key="${esc(c.key)}"${hidden.has(c.key)?'':' checked'}><span>${esc(c.label)}</span></label>`).join('')}
+  function closeColumnsModal(save=false){if(save){const visible=state.lastTableColumns.filter(c=>!state.columnDraftHidden.has(c.key));if(!visible.length)state.columnDraftHidden.delete(state.lastTableColumns[0]?.key);state.hiddenColumns=new Set(state.columnDraftHidden);if(state.db)dbPutMeta('hiddenColumns',[...state.hiddenColumns]).catch(()=>{});render()}state.columnDraftHidden=null;els.columnsModal.hidden=true;document.body.style.overflow=''}
+
   function renderKPIs(summary,globalSummary){
     els.kpiProviders.textContent=summary.providers.length.toLocaleString();els.kpiVisits.textContent=summary.allTotal.toLocaleString();
     els.kpiVisitsFoot.textContent=selectedRecord()?.name||'Current report';
@@ -621,21 +667,22 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function defaultCharts(){return[
-    {id:'visits-provider',title:'',type:'bar',group:'provider',metric:'visits',target:20,top:'10',sort:'desc'},
-    {id:'status-mix',title:'',type:'pie',group:'status',metric:'visits',target:20,top:'10',sort:'desc'}
+    {id:'visits-provider',title:'',type:'bar',group:'provider',metric:'visits',target:20,top:'10',rank:'top',sort:'desc'},
+    {id:'status-mix',title:'',type:'pie',group:'status',metric:'visits',target:20,top:'10',rank:'top',sort:'desc'}
   ]}
   function sanitizeChartConfig(input){
-    const cfg={id:input.id||`chart-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,title:String(input.title||''),type:input.type||'bar',group:input.group||'provider',metric:input.metric||'visits',target:Number(input.target)||20,top:String(input.top||'10'),sort:input.sort||'desc'};
+    const cfg={id:input.id||`chart-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,title:String(input.title||''),type:input.type||'bar',group:input.group||'provider',metric:input.metric||'visits',target:Number(input.target)||20,top:String(input.top||'10'),rank:input.rank||'top',sort:input.sort||'desc'};
     if(!['bar','line','pie'].includes(cfg.type))cfg.type='bar';
     if(!Object.hasOwn(CHART_GROUPS,cfg.group))cfg.group='provider';
     if(!Object.hasOwn(CHART_METRICS,cfg.metric))cfg.metric='visits';
     if(!TARGETS.includes(cfg.target))cfg.target=20;
     if(!['5','10','15','20','all'].includes(cfg.top))cfg.top='10';
+    if(!['top','bottom','all'].includes(cfg.rank))cfg.rank='top';
     if(!['desc','asc','name'].includes(cfg.sort))cfg.sort='desc';
     if(cfg.metric==='productivity'){cfg.type='bar';cfg.group='provider'}
     if(cfg.metric==='cancellationPct'&&cfg.group==='status')cfg.group='provider';
     if(cfg.type==='pie'&&(cfg.metric==='cancellationPct'||cfg.metric==='productivity'))cfg.metric='visits';
-    if(cfg.type==='line'){cfg.group='month';cfg.top='all';cfg.sort='name';if(cfg.metric==='productivity')cfg.metric='visits'}
+    if(cfg.type==='line'){cfg.group='month';cfg.top='all';cfg.rank='all';cfg.sort='name';if(cfg.metric==='productivity')cfg.metric='visits'}
     return cfg;
   }
   function normalizeCharts(charts){return charts.map(sanitizeChartConfig)}
@@ -650,20 +697,19 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const groups=new Map();
     for(const row of rows){
       const info=chartGroupInfo(row,cfg.group);let g=groups.get(info.key);
-      if(!g){g={label:info.label,sortKey:info.sortKey,visits:0,delivered:0,minutes:0};groups.set(info.key,g)}
-      g.visits++;if(row.statusKey==='delivered')g.delivered++;if(row.minutes!=null)g.minutes+=row.minutes;
+      if(!g){g={label:info.label,sortKey:info.sortKey,visits:0,delivered:0,over10:0,minutes:0};groups.set(info.key,g)}
+      g.visits++;if(row.statusKey==='delivered')g.delivered++;if(row.over10BusinessDays)g.over10++;if(row.minutes!=null)g.minutes+=row.minutes;
     }
     let data=[...groups.values()].map(g=>{
       const cancellations=g.visits-g.delivered,units=Math.round(g.minutes/15);let value=0;
       if(cfg.metric==='visits')value=g.visits;else if(cfg.metric==='delivered')value=g.delivered;else if(cfg.metric==='cancellations')value=cancellations;
-      else if(cfg.metric==='cancellationPct')value=g.visits?cancellations/g.visits*100:0;else if(cfg.metric==='units')value=units;else if(cfg.metric==='hours')value=g.minutes/60;
+      else if(cfg.metric==='over10')value=g.over10;else if(cfg.metric==='cancellationPct')value=g.visits?cancellations/g.visits*100:0;else if(cfg.metric==='units')value=units;else if(cfg.metric==='hours')value=g.minutes/60;
       else if(cfg.metric==='productivity'){const target=cfg.target*16;value=target?units/target*100:0}
       return{...g,cancellations,units,value};
     });
-    if(cfg.type==='line'&&cfg.group==='month')data.sort((a,b)=>a.sortKey.localeCompare(b.sortKey));
-    else if(cfg.sort==='name')data.sort((a,b)=>cfg.group==='month'?a.sortKey.localeCompare(b.sortKey):a.label.localeCompare(b.label));
-    else data.sort((a,b)=>cfg.sort==='asc'?a.value-b.value:b.value-a.value);
-    const limit=cfg.top==='all'?Infinity:Number(cfg.top)||10;return data.slice(0,limit);
+    if(cfg.type==='line'&&cfg.group==='month')return data.sort((a,b)=>a.sortKey.localeCompare(b.sortKey));
+    const limit=cfg.top==='all'?Infinity:Number(cfg.top)||10;if(cfg.rank!=='all'){data.sort((a,b)=>cfg.rank==='bottom'?a.value-b.value:b.value-a.value);data=data.slice(0,limit)}
+    if(cfg.sort==='name')data.sort((a,b)=>cfg.group==='month'?a.sortKey.localeCompare(b.sortKey):a.label.localeCompare(b.label));else data.sort((a,b)=>cfg.sort==='asc'?a.value-b.value:b.value-a.value);return data;
   }
   function chartValueText(metric,v){if(metric==='cancellationPct'||metric==='productivity')return`${v.toFixed(1)}%`;if(metric==='hours')return`${v.toFixed(1)} h`;return Math.round(v).toLocaleString()}
   function autoChartTitle(cfg){return`${CHART_METRICS[cfg.metric]||'Metric'} by ${CHART_GROUPS[cfg.group]||'Group'}`}
@@ -705,11 +751,12 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     return`<div class="chart-inline-editor" data-editor-id="${esc(cfg.id)}">
       <div class="field title-field"><label>Title</label><input class="chart-field" data-field="title" type="text" maxlength="80" value="${esc(cfg.title||'')}" placeholder="${esc(autoChartTitle(cfg))}"></div>
       <div class="field"><label>Chart type</label><select class="chart-field" data-field="type">${option('bar','Bar',cfg.type)}${option('line','Line',cfg.type,isProductivity)}${option('pie','Pie',cfg.type,isPercentage)}</select></div>
-      <div class="field"><label>Group by</label><select class="chart-field" data-field="group">${option('provider','Provider',cfg.group)}${option('service','Service',cfg.group,isProductivity)}${option('status','Status',cfg.group,isProductivity||cfg.metric==='cancellationPct')}${option('month','Month',cfg.group,isProductivity)}</select></div>
-      <div class="field"><label>Metric</label><select class="chart-field" data-field="metric">${option('visits','Total Visits',cfg.metric)}${option('delivered','Delivered Visits',cfg.metric)}${option('cancellations','Cancelled Visits',cfg.metric)}${option('cancellationPct','Cancellation %',cfg.metric,isPie||cfg.group==='status')}${option('units','15 Min Units',cfg.metric)}${option('hours','Total Hours',cfg.metric)}${option('productivity','Productivity %',cfg.metric,isPie||isLine||cfg.group!=='provider')}</select></div>
+      <div class="field"><label>Group by</label><select class="chart-field" data-field="group">${option('provider','Provider',cfg.group)}${option('service','Service',cfg.group,isProductivity)}${option('status','Status',cfg.group,isProductivity||cfg.metric==='cancellationPct')}${option('month','DOS Month',cfg.group,isProductivity)}</select></div>
+      <div class="field"><label>Metric</label><select class="chart-field" data-field="metric">${option('visits','Total Visits',cfg.metric)}${option('delivered','Delivered Visits',cfg.metric)}${option('cancellations','Cancelled Visits',cfg.metric)}${option('over10','> 10 Business Days',cfg.metric)}${option('cancellationPct','Cancellation %',cfg.metric,isPie||cfg.group==='status')}${option('units','15 Min Units',cfg.metric)}${option('hours','Total Hours',cfg.metric)}${option('productivity','Productivity %',cfg.metric,isPie||isLine||cfg.group!=='provider')}</select></div>
       <div class="field chart-target-field"${targetStyle}><label>Productivity target</label><select class="chart-field" data-field="target">${TARGETS.map(v=>option(String(v),`${v} Hr/Wk`,String(cfg.target))).join('')}</select></div>
-      <div class="field"><label>Items</label><select class="chart-field" data-field="top"${isLine?' disabled':''}>${option('5','Top 5',cfg.top)}${option('10','Top 10',cfg.top)}${option('15','Top 15',cfg.top)}${option('20','Top 20',cfg.top)}${option('all','All',cfg.top)}</select></div>
-      <div class="field"><label>Sort</label><select class="chart-field" data-field="sort"${isLine?' disabled':''}>${option('desc','Largest first',cfg.sort)}${option('asc','Smallest first',cfg.sort)}${option('name',sortName,cfg.sort)}</select></div>
+      <div class="field"><label>Performers</label><select class="chart-field" data-field="rank"${isLine?' disabled':''}>${option('top','Top performers',cfg.rank)}${option('bottom','Bottom performers',cfg.rank)}${option('all','All performers',cfg.rank)}</select></div>
+      <div class="field"><label>Items</label><select class="chart-field" data-field="top"${isLine||cfg.rank==='all'?' disabled':''}>${option('5','5',cfg.top)}${option('10','10',cfg.top)}${option('15','15',cfg.top)}${option('20','20',cfg.top)}${option('all','All',cfg.top)}</select></div>
+      <div class="field"><label>Display order</label><select class="chart-field" data-field="sort"${isLine?' disabled':''}>${option('desc','Highest first',cfg.sort)}${option('asc','Lowest first',cfg.sort)}${option('name',sortName,cfg.sort)}</select></div>
     </div>`;
   }
   function visibleChartConfigs(){if(!state.editingChartId||!state.chartDraft)return state.charts;const exists=state.charts.some(c=>c.id===state.editingChartId);return exists?state.charts.map(c=>c.id===state.editingChartId?state.chartDraft:c):[...state.charts,state.chartDraft]}
@@ -717,7 +764,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const rows=baseFilteredRows(),rec=selectedRecord();
     els.chartsMeta.textContent=rec?`${rec.name} • ${rows.length.toLocaleString()} visible visit${rows.length===1?'':'s'}`:'No report selected';
     els.addChartBtn.disabled=!rec||!!state.editingChartId;
-    const configs=visibleChartConfigs();if(!configs.length){els.chartsGrid.innerHTML='<div class="chart-empty">No graphs yet. Use <b>Add Graph</b> to create one.</div>';return}
+    const configs=visibleChartConfigs();els.exportPdfBtn.disabled=!rec||!configs.length;if(!configs.length){els.chartsGrid.innerHTML='<div class="chart-empty">No graphs yet. Use <b>Add Graph</b> to create one.</div>';return}
     els.chartsGrid.innerHTML=configs.map(cfg=>{
       const editing=cfg.id===state.editingChartId,title=cfg.title.trim()||autoChartTitle(cfg),targetNote=cfg.metric==='productivity'?` • ${cfg.target} Hr/Wk target`:'';
       const actions=editing?`<button class="btn chart-cancel" type="button" data-id="${esc(cfg.id)}">Cancel</button><button class="btn primary chart-done" type="button" data-id="${esc(cfg.id)}">Done</button>`:`<button class="btn chart-edit" type="button" data-id="${esc(cfg.id)}">Edit</button><button class="btn chart-remove" type="button" data-id="${esc(cfg.id)}">Remove</button>`;
@@ -727,7 +774,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function beginChartEdit(id=null){
     if(!selectedRecord())return;
     if(id){const cfg=state.charts.find(c=>c.id===id);if(!cfg)return;state.editingChartId=id;state.chartDraft={...cfg}}
-    else{state.chartDraft=sanitizeChartConfig({id:`chart-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,title:'',type:'bar',group:'provider',metric:'visits',target:20,top:'10',sort:'desc'});state.editingChartId=state.chartDraft.id}
+    else{state.chartDraft=sanitizeChartConfig({id:`chart-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,title:'',type:'bar',group:'provider',metric:'visits',target:20,top:'10',rank:'top',sort:'desc'});state.editingChartId=state.chartDraft.id}
     renderCharts();requestAnimationFrame(()=>els.chartsGrid.querySelector(`[data-chart-id="${CSS.escape(state.editingChartId)}"] input[data-field="title"]`)?.focus());
   }
   function cancelChartEdit(){state.editingChartId=null;state.chartDraft=null;renderCharts()}
@@ -744,6 +791,25 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const next={...state.chartDraft,[field]:field==='target'?Number(value):value};state.chartDraft=sanitizeChartConfig(next);renderCharts();
   }
   async function removeChart(id){state.charts=state.charts.filter(c=>c.id!==id);await saveCharts();renderCharts()}
+
+  const PDF_EXPORT_COLORS={'--text':'#182230','--text2':'#344054','--muted':'#667085','--panel':'#ffffff','--chart-grid':'#e6eaf0','--chart-text':'#475467','--accent':'#315efb','--series-1':'#315efb','--series-2':'#0e9384','--series-3':'#f79009','--series-4':'#7a5af8','--series-5':'#06aed4','--series-6':'#ee46bc','--series-7':'#6172f3','--series-8':'#667085','--series-9':'#12b76a','--series-10':'#d444f1'};
+  function exportSvgText(svg){let s=new XMLSerializer().serializeToString(svg.cloneNode(true));s=s.replace(/var\((--[a-z0-9-]+)\)/gi,(m,k)=>PDF_EXPORT_COLORS[k]||'#344054');return s}
+  function imageFromUrl(url){return new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('A graph could not be rendered for PDF export.'));img.src=url})}
+  function base64Bytes(dataUrl){const b64=dataUrl.split(',')[1]||'',bin=atob(b64),out=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)out[i]=bin.charCodeAt(i);return out}
+  async function chartJpeg(card,cfg){
+    const svg=card.querySelector('.chart-svg');if(!svg)throw new Error('A graph has no chart data to export.');const xml=exportSvgText(svg),blob=new Blob([xml],{type:'image/svg+xml;charset=utf-8'}),url=URL.createObjectURL(blob);
+    try{const img=await imageFromUrl(url),canvas=document.createElement('canvas');canvas.width=1400;canvas.height=1082;const ctx=canvas.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#182230';ctx.font='700 36px system-ui, sans-serif';ctx.fillText((cfg.title||'').trim()||autoChartTitle(cfg),60,60);ctx.fillStyle='#667085';ctx.font='20px system-ui, sans-serif';ctx.fillText(`${CHART_GROUPS[cfg.group]} • ${CHART_METRICS[cfg.metric]}`,60,94);const maxW=1280,maxH=900,scale=Math.min(maxW/img.width,maxH/img.height),w=img.width*scale,h=img.height*scale,x=(canvas.width-w)/2,y=130+(900-h)/2;ctx.drawImage(img,x,y,w,h);return{bytes:base64Bytes(canvas.toDataURL('image/jpeg',0.92)),width:canvas.width,height:canvas.height}}finally{URL.revokeObjectURL(url)}
+  }
+  function buildPdf(images){
+    const encoder=new TextEncoder(),chunks=[],offsets=[],pageIds=images.map((_,i)=>3+i*3),maxObj=2+images.length*3;let length=0;const push=b=>{chunks.push(b);length+=b.length},txt=s=>push(encoder.encode(s)),obj=(id,body)=>{offsets[id]=length;txt(`${id} 0 obj\n${body}\nendobj\n`)};
+    txt('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n');obj(1,'<< /Type /Catalog /Pages 2 0 R >>');obj(2,`<< /Type /Pages /Kids [${pageIds.map(id=>`${id} 0 R`).join(' ')}] /Count ${images.length} >>`);
+    images.forEach((im,i)=>{const pageId=3+i*3,imgId=pageId+1,contentId=pageId+2;obj(pageId,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 792 612] /Resources << /XObject << /Im0 ${imgId} 0 R >> >> /Contents ${contentId} 0 R >>`);offsets[imgId]=length;txt(`${imgId} 0 obj\n<< /Type /XObject /Subtype /Image /Width ${im.width} /Height ${im.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${im.bytes.length} >>\nstream\n`);push(im.bytes);txt('\nendstream\nendobj\n');const stream='q\n792 0 0 612 0 0 cm\n/Im0 Do\nQ\n';obj(contentId,`<< /Length ${encoder.encode(stream).length} >>\nstream\n${stream}endstream`)});
+    const xref=length;txt(`xref\n0 ${maxObj+1}\n0000000000 65535 f \n`);for(let i=1;i<=maxObj;i++)txt(`${String(offsets[i]||0).padStart(10,'0')} 00000 n \n`);txt(`trailer\n<< /Size ${maxObj+1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`);const out=new Uint8Array(length);let p=0;for(const c of chunks){out.set(c,p);p+=c.length}return out;
+  }
+  async function exportGraphsPdf(){
+    const configs=visibleChartConfigs(),cards=[...els.chartsGrid.querySelectorAll('.chart-card')];if(!configs.length||!cards.length)return;els.exportPdfBtn.disabled=true;showError('');
+    try{const images=[];for(let i=0;i<configs.length;i++){const card=cards[i];if(!card?.querySelector('.chart-svg'))continue;images.push(await chartJpeg(card,configs[i]))}if(!images.length)throw new Error('There are no graph results to export.');const pdf=buildPdf(images),base=(selectedRecord()?.name||'provider-report').replace(/\.(xlsx|xlsm)$/i,'').replace(/[\\/:*?"<>|]+/g,'_'),url=URL.createObjectURL(new Blob([pdf],{type:'application/pdf'})),a=document.createElement('a');a.href=url;a.download=`${base}_graphs.pdf`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),0)}catch(err){showError(err.message||String(err))}finally{els.exportPdfBtn.disabled=!selectedRecord()||!visibleChartConfigs().length}
+  }
 
   function renderReportSelect(){
     const current=state.selectedReportId||'';els.reportSelect.innerHTML='';
@@ -768,7 +834,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const hasReport=!!selectedRecord();
     document.body.classList.toggle('has-report',hasReport);
     const rows=baseFilteredRows(),monthRows=monthScopedRows(),globalSummary=summarize(monthRows),summary=summarize(rows,globalSummary.overallCancel,globalSummary.statuses);
-    els.clearFiltersBtn.disabled=!hasReport||(els.monthFilter.value===latestMonth()&&!els.providerFilter.value&&!els.serviceFilter.value&&!els.searchInput.value.trim());
+    const monthSel=multiValues(els.monthFilter),providerSel=multiValues(els.providerFilter),serviceSel=multiValues(els.serviceFilter);els.clearFiltersBtn.disabled=!hasReport||(monthSel.size===1&&monthSel.has(latestMonth())&&!providerSel.size&&!serviceSel.size&&!els.searchInput.value.trim());
     renderKPIs(summary,globalSummary);renderTable(summary);renderStatus(rows);renderReportSelect();renderTabs();if(state.activeTab==='graphs')renderCharts();
   }
   function exportVisibleCsv(){
@@ -791,9 +857,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     try{if(state.db){await dbClearReports();await dbPutMeta('selectedReportId',null)}else state.savedReports=[];state.selectedReportId=null;state.rows=[];await reloadSavedReports()}catch(err){showError(err.message||String(err))}
   }
 
-  els.addFilesBtn.addEventListener('click',addFiles);els.themeToggle.addEventListener('click',toggleTheme);
+  els.addFilesBtn.addEventListener('click',addFiles);els.pasteDataBtn.addEventListener('click',openPasteModal);els.themeToggle.addEventListener('click',toggleTheme);
   els.fileInput.addEventListener('change',async e=>{try{await importFileArray(e.target.files)}catch(err){showError(err.message||String(err));setSource('bad','Could not read Excel files',err.message||String(err));els.addFilesBtn.disabled=false}});
-  els.reportSelect.addEventListener('change',e=>selectReport(e.target.value));els.removeReportBtn.addEventListener('click',()=>removeReport(state.selectedReportId));els.deleteAllReportsBtn.addEventListener('click',deleteAllReports);els.exportCsvBtn.addEventListener('click',exportVisibleCsv);
+  els.reportSelect.addEventListener('change',e=>selectReport(e.target.value));els.removeReportBtn.addEventListener('click',()=>removeReport(state.selectedReportId));els.deleteAllReportsBtn.addEventListener('click',deleteAllReports);els.exportCsvBtn.addEventListener('click',exportVisibleCsv);els.columnsBtn.addEventListener('click',openColumnsModal);els.exportPdfBtn.addEventListener('click',exportGraphsPdf);
   els.viewTabs.addEventListener('click',e=>{const tab=e.target.closest('.view-tab');if(tab)setActiveTab(tab.dataset.tab)});
   els.viewTabs.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=[els.summaryTab,els.graphsTab];let i=tabs.indexOf(document.activeElement);if(e.key==='Home')i=0;else if(e.key==='End')i=tabs.length-1;else if(e.key==='ArrowRight')i=(i+1)%tabs.length;else i=(i-1+tabs.length)%tabs.length;tabs[i].focus();setActiveTab(tabs[i].dataset.tab)});
   els.addChartBtn.addEventListener('click',()=>beginChartEdit());
@@ -801,17 +867,21 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   els.chartsGrid.addEventListener('input',e=>{const field=e.target.closest('.chart-field');if(field&&field.dataset.field==='title')updateChartDraftFromField(field.dataset.field,field.value)});
   els.chartsGrid.addEventListener('change',e=>{const field=e.target.closest('.chart-field');if(field)updateChartDraftFromField(field.dataset.field,field.value)});
   els.confirmModalCancel.addEventListener('click',()=>closeConfirmModal(false));els.confirmModalConfirm.addEventListener('click',()=>closeConfirmModal(true));els.confirmModal.addEventListener('click',e=>{if(e.target===els.confirmModal)closeConfirmModal(false)});
-  document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(state.editingChartId)cancelChartEdit();else if(!els.confirmModal.hidden)closeConfirmModal(false)});
-  els.monthFilter.addEventListener('change',()=>{populateFilters(false);render()});[els.providerFilter,els.serviceFilter].forEach(el=>el.addEventListener('change',render));els.searchInput.addEventListener('input',render);
-  els.clearFiltersBtn.addEventListener('click',()=>{els.monthFilter.value=latestMonth();els.providerFilter.value='';els.serviceFilter.value='';els.searchInput.value='';populateFilters(false);render()});
+  els.columnsList.addEventListener('change',e=>{const input=e.target.closest('input[data-column-key]');if(!input||!state.columnDraftHidden)return;if(input.checked)state.columnDraftHidden.delete(input.dataset.columnKey);else state.columnDraftHidden.add(input.dataset.columnKey)});els.columnsShowAll.addEventListener('click',()=>{state.columnDraftHidden=new Set();renderColumnsList()});els.columnsCancel.addEventListener('click',()=>closeColumnsModal(false));els.columnsDone.addEventListener('click',()=>closeColumnsModal(true));els.columnsModal.addEventListener('click',e=>{if(e.target===els.columnsModal)closeColumnsModal(false)});
+  els.pasteCancel.addEventListener('click',closePasteModal);els.pasteImport.addEventListener('click',importPastedData);els.pasteModal.addEventListener('click',e=>{if(e.target===els.pasteModal)closePasteModal()});
+  [els.monthFilter,els.providerFilter,els.serviceFilter].forEach(el=>{el.querySelector('.multi-select-trigger').addEventListener('click',()=>{const open=!el.classList.contains('open');closeAllMultiSelects(el);el.classList.toggle('open',open);el.querySelector('.multi-select-menu').hidden=!open;el.querySelector('.multi-select-trigger').setAttribute('aria-expanded',String(open))});el.querySelector('.multi-select-menu').addEventListener('change',e=>{const input=e.target.closest('input[data-value]');if(!input)return;const all=el.querySelector('input[data-value=""]');if(input.dataset.value===''){if(input.checked)el.querySelectorAll('input[data-value]:not([data-value=""])').forEach(i=>i.checked=false);else input.checked=true}else{all.checked=false;const any=[...el.querySelectorAll('input[data-value]:not([data-value=""])')].some(i=>i.checked);if(!any)all.checked=true}const allLabel=el===els.monthFilter?'All DOS Months':el===els.providerFilter?'All Providers':'All Services';el.querySelector('.multi-select-trigger').textContent=multiSummary(el,multiValues(el),allLabel);if(el===els.monthFilter)populateFilters(false);render()})});
+  document.addEventListener('click',e=>{if(!e.target.closest('.multi-select'))closeAllMultiSelects()});
+  document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if([els.monthFilter,els.providerFilter,els.serviceFilter].some(el=>el.classList.contains('open')))closeAllMultiSelects();else if(!els.pasteModal.hidden)closePasteModal();else if(!els.columnsModal.hidden)closeColumnsModal(false);else if(state.editingChartId)cancelChartEdit();else if(!els.confirmModal.hidden)closeConfirmModal(false)});
+  els.searchInput.addEventListener('input',render);
+  els.clearFiltersBtn.addEventListener('click',()=>{setMultiValues(els.monthFilter,latestMonth()?[latestMonth()]:[]);setMultiValues(els.providerFilter,[]);setMultiValues(els.serviceFilter,[]);els.searchInput.value='';populateFilters(false);render()});
   if(compactChartMedia.addEventListener)compactChartMedia.addEventListener('change',()=>{if(state.activeTab==='graphs')renderCharts()});
 
 
   async function init(){
     state.charts=defaultCharts();applyTheme(state.theme,false);render();
     try{
-      state.db=await openDatabase();const savedSelection=await dbGetMeta('selectedReportId'),savedCharts=await dbGetMeta('charts'),savedTab=await dbGetMeta('activeTab'),savedTheme=await dbGetMeta('theme');
-      state.selectedReportId=savedSelection?.value||null;state.charts=normalizeCharts(Array.isArray(savedCharts?.value)?savedCharts.value:defaultCharts());state.activeTab=savedTab?.value==='graphs'?'graphs':'summary';
+      state.db=await openDatabase();const savedSelection=await dbGetMeta('selectedReportId'),savedCharts=await dbGetMeta('charts'),savedTab=await dbGetMeta('activeTab'),savedTheme=await dbGetMeta('theme'),savedHiddenColumns=await dbGetMeta('hiddenColumns');
+      state.selectedReportId=savedSelection?.value||null;state.charts=normalizeCharts(Array.isArray(savedCharts?.value)?savedCharts.value:defaultCharts());state.activeTab=savedTab?.value==='graphs'?'graphs':'summary';state.hiddenColumns=new Set(Array.isArray(savedHiddenColumns?.value)?savedHiddenColumns.value:[]);
       applyTheme(savedTheme?.value==='dark'?'dark':savedTheme?.value==='light'?'light':state.theme,false);await saveCharts();await reloadSavedReports();updateSelectedSource();
     }catch(err){state.persistenceAvailable=false;state.db=null;setSource('bad','Report history unavailable','Reports will work for this session, but previously loaded reports will not persist after closing the browser.');showError(`Report history could not be opened: ${err.message||String(err)}`);render()}
   }
