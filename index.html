@@ -130,7 +130,7 @@
   <div class="topbar">
     <div class="brand">
       <h1>Provider Visit Reporting Dashboard</h1>
-      <div class="sub">Provider and service reporting from Excel or pasted data <span class="app-version">v1.1</span></div>
+      <div class="sub">Provider and service reporting from Excel or pasted data <span class="app-version">v1.2</span></div>
     </div>
     <div class="actions">
       <button class="btn primary" id="addFilesBtn" type="button">Add Excel</button>
@@ -271,7 +271,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   const REQUIRED = ['provider','service','status','dos','enteredOn','start','end'];
   const REQUIRED_LABELS = ['Provider','Service','Status','DOS','Entered On','START_TIME','END_TIME'];
   const TARGETS = [5,10,15,20,25,30,35,40];
-  const CHART_METRICS={visits:'Total Visits',delivered:'Delivered Visits',cancellations:'Cancelled Visits',over10:'Visits > 10 Business Days',cancellationPct:'Cancellation %',units:'15 Min Units',hours:'Total Hours',productivity:'Productivity %'};
+  const CHART_METRICS={visits:'Scheduled Visits',delivered:'Delivered Visits',deliveryPct:'Delivery Rate',cancellations:'Cancelled Visits',cancellationPct:'Cancellation Rate',hours:'Total Hours',avgHours:'Avg Hours / Visit',units:'15 Min Units',productivity:'Productivity %',over10:'Visits > 10 Business Days',over10Pct:'Late Entry Rate (>10 Business Days)'};
   const CHART_GROUPS={provider:'Provider',service:'Service',status:'Status',month:'Month'};
   const CHART_COLORS=['var(--series-1)','var(--series-2)','var(--series-3)','var(--series-4)','var(--series-5)','var(--series-6)','var(--series-7)','var(--series-8)','var(--series-9)','var(--series-10)'];
   const DB_NAME = 'ProviderVisitReportingDashboardV3';
@@ -667,22 +667,27 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function defaultCharts(){return[
-    {id:'visits-provider',title:'',type:'bar',group:'provider',metric:'visits',target:20,top:'10',rank:'top',sort:'desc'},
-    {id:'status-mix',title:'',type:'pie',group:'status',metric:'visits',target:20,top:'10',rank:'top',sort:'desc'}
+    {id:'productive-provider',title:'',type:'bar',group:'provider',metric:'productivity',service:'all',target:20,top:'10',rank:'top',sort:'desc'},
+    {id:'delivered-provider',title:'',type:'bar',group:'provider',metric:'delivered',service:'all',target:20,top:'10',rank:'top',sort:'desc'},
+    {id:'scheduled-provider',title:'',type:'bar',group:'provider',metric:'visits',service:'all',target:20,top:'10',rank:'top',sort:'desc'},
+    {id:'hours-provider',title:'',type:'bar',group:'provider',metric:'hours',service:'all',target:20,top:'10',rank:'top',sort:'desc'},
+    {id:'status-mix',title:'Status Mix',type:'pie',group:'status',metric:'visits',service:'all',target:20,top:'all',rank:'all',sort:'desc'},
+    {id:'cancellation-rate-provider',title:'',type:'bar',group:'provider',metric:'cancellationPct',service:'all',target:20,top:'10',rank:'top',sort:'desc'},
+    {id:'late-entry-rate-provider',title:'',type:'bar',group:'provider',metric:'over10Pct',service:'all',target:20,top:'10',rank:'top',sort:'desc'}
   ]}
   function sanitizeChartConfig(input){
-    const cfg={id:input.id||`chart-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,title:String(input.title||''),type:input.type||'bar',group:input.group||'provider',metric:input.metric||'visits',target:Number(input.target)||20,top:String(input.top||'10'),rank:input.rank||'top',sort:input.sort||'desc'};
-    if(!['bar','line','pie'].includes(cfg.type))cfg.type='bar';
+    const cfg={id:input.id||`chart-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,title:String(input.title||''),type:input.type||'bar',group:input.group||'provider',metric:input.metric||'visits',service:String(input.service||'all'),target:Number(input.target)||20,top:String(input.top||'10'),rank:input.rank||'top',sort:input.sort||'desc'};
+    if(!['bar','pie'].includes(cfg.type))cfg.type='bar';
     if(!Object.hasOwn(CHART_GROUPS,cfg.group))cfg.group='provider';
     if(!Object.hasOwn(CHART_METRICS,cfg.metric))cfg.metric='visits';
+    if(!cfg.service)cfg.service='all';
     if(!TARGETS.includes(cfg.target))cfg.target=20;
     if(!['5','10','15','20','all'].includes(cfg.top))cfg.top='10';
     if(!['top','bottom','all'].includes(cfg.rank))cfg.rank='top';
     if(!['desc','asc','name'].includes(cfg.sort))cfg.sort='desc';
     if(cfg.metric==='productivity'){cfg.type='bar';cfg.group='provider'}
-    if(cfg.metric==='cancellationPct'&&cfg.group==='status')cfg.group='provider';
-    if(cfg.type==='pie'&&(cfg.metric==='cancellationPct'||cfg.metric==='productivity'))cfg.metric='visits';
-    if(cfg.type==='line'){cfg.group='month';cfg.top='all';cfg.rank='all';cfg.sort='name';if(cfg.metric==='productivity')cfg.metric='visits'}
+    if(['cancellationPct','deliveryPct','over10Pct','avgHours'].includes(cfg.metric)&&cfg.group==='status')cfg.group='provider';
+    if(cfg.type==='pie'&&['cancellationPct','deliveryPct','over10Pct','avgHours','productivity'].includes(cfg.metric))cfg.metric='visits';
     return cfg;
   }
   function normalizeCharts(charts){return charts.map(sanitizeChartConfig)}
@@ -693,26 +698,50 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     if(group==='status')return{key:row.statusKey,label:row.status,sortKey:row.status};
     return{key:row.monthKey,label:monthLabel(row.monthKey),sortKey:row.monthKey};
   }
+  function chartServices(){
+    const rec=selectedRecord(),m=new Map();for(const row of rec?.rows||[])if(row.serviceKey&&!m.has(row.serviceKey))m.set(row.serviceKey,row.service);
+    return[...m.entries()].map(([key,label])=>({key,label})).sort((a,b)=>a.label.localeCompare(b.label));
+  }
+  function chartServiceLabel(cfg){if(!cfg.service||cfg.service==='all')return'All Services';return chartServices().find(s=>s.key===cfg.service)?.label||'Selected Service'}
+  function chartScopedRows(rows,cfg){return!cfg.service||cfg.service==='all'?rows:rows.filter(r=>r.serviceKey===cfg.service)}
   function chartData(rows,cfg){
-    const groups=new Map();
+    rows=chartScopedRows(rows,cfg);const groups=new Map();
     for(const row of rows){
       const info=chartGroupInfo(row,cfg.group);let g=groups.get(info.key);
-      if(!g){g={label:info.label,sortKey:info.sortKey,visits:0,delivered:0,over10:0,minutes:0};groups.set(info.key,g)}
-      g.visits++;if(row.statusKey==='delivered')g.delivered++;if(row.over10BusinessDays)g.over10++;if(row.minutes!=null)g.minutes+=row.minutes;
+      if(!g){g={label:info.label,sortKey:info.sortKey,visits:0,delivered:0,over10:0,minutes:0,validTimes:0};groups.set(info.key,g)}
+      g.visits++;if(row.statusKey==='delivered')g.delivered++;if(row.over10BusinessDays)g.over10++;if(row.minutes!=null){g.minutes+=row.minutes;g.validTimes++}
     }
     let data=[...groups.values()].map(g=>{
       const cancellations=g.visits-g.delivered,units=Math.round(g.minutes/15);let value=0;
-      if(cfg.metric==='visits')value=g.visits;else if(cfg.metric==='delivered')value=g.delivered;else if(cfg.metric==='cancellations')value=cancellations;
-      else if(cfg.metric==='over10')value=g.over10;else if(cfg.metric==='cancellationPct')value=g.visits?cancellations/g.visits*100:0;else if(cfg.metric==='units')value=units;else if(cfg.metric==='hours')value=g.minutes/60;
-      else if(cfg.metric==='productivity'){const target=cfg.target*16;value=target?units/target*100:0}
+      if(cfg.metric==='visits')value=g.visits;else if(cfg.metric==='delivered')value=g.delivered;else if(cfg.metric==='deliveryPct')value=g.visits?g.delivered/g.visits*100:0;else if(cfg.metric==='cancellations')value=cancellations;
+      else if(cfg.metric==='cancellationPct')value=g.visits?cancellations/g.visits*100:0;else if(cfg.metric==='hours')value=g.minutes/60;else if(cfg.metric==='avgHours')value=g.validTimes?g.minutes/g.validTimes/60:0;
+      else if(cfg.metric==='units')value=units;else if(cfg.metric==='productivity'){const target=cfg.target*16;value=target?units/target*100:0}
+      else if(cfg.metric==='over10')value=g.over10;else if(cfg.metric==='over10Pct')value=g.visits?g.over10/g.visits*100:0;
       return{...g,cancellations,units,value};
     });
-    if(cfg.type==='line'&&cfg.group==='month')return data.sort((a,b)=>a.sortKey.localeCompare(b.sortKey));
     const limit=cfg.top==='all'?Infinity:Number(cfg.top)||10;if(cfg.rank!=='all'){data.sort((a,b)=>cfg.rank==='bottom'?a.value-b.value:b.value-a.value);data=data.slice(0,limit)}
     if(cfg.sort==='name')data.sort((a,b)=>cfg.group==='month'?a.sortKey.localeCompare(b.sortKey):a.label.localeCompare(b.label));else data.sort((a,b)=>cfg.sort==='asc'?a.value-b.value:b.value-a.value);return data;
   }
-  function chartValueText(metric,v){if(metric==='cancellationPct'||metric==='productivity')return`${v.toFixed(1)}%`;if(metric==='hours')return`${v.toFixed(1)} h`;return Math.round(v).toLocaleString()}
-  function autoChartTitle(cfg){return`${CHART_METRICS[cfg.metric]||'Metric'} by ${CHART_GROUPS[cfg.group]||'Group'}`}
+  function chartValueText(metric,v){if(['cancellationPct','deliveryPct','over10Pct','productivity'].includes(metric))return`${v.toFixed(1)}%`;if(metric==='hours'||metric==='avgHours')return`${v.toFixed(1)} h`;return Math.round(v).toLocaleString()}
+  function autoChartTitle(cfg){
+    const service=cfg.service&&cfg.service!=='all'?` — ${chartServiceLabel(cfg)}`:'';
+    if(cfg.group==='provider'&&cfg.rank!=='all'){
+      const most=cfg.rank==='top';let title='';
+      if(cfg.metric==='productivity')title=`${most?'Most':'Least'} Productive Providers`;
+      else if(cfg.metric==='delivered')title=`${most?'Most':'Least'} Delivered Providers`;
+      else if(cfg.metric==='visits')title=`${most?'Most':'Least'} Scheduled Providers`;
+      else if(cfg.metric==='hours')title=`Providers with ${most?'Most':'Least'} Hours`;
+      else if(cfg.metric==='deliveryPct')title=`${most?'Highest':'Lowest'} Delivery Rate`;
+      else if(cfg.metric==='cancellationPct')title=`${most?'Highest':'Lowest'} Cancellation Rate`;
+      else if(cfg.metric==='over10Pct')title=`${most?'Highest':'Lowest'} Late Entry Rate`;
+      else if(cfg.metric==='cancellations')title=`${most?'Most':'Least'} Cancelled Visits`;
+      else if(cfg.metric==='over10')title=`${most?'Most':'Least'} Late Entries`;
+      else if(cfg.metric==='avgHours')title=`${most?'Highest':'Lowest'} Avg Hours per Visit`;
+      else if(cfg.metric==='units')title=`${most?'Most':'Least'} 15 Min Units`;
+      if(title)return title+service;
+    }
+    return`${CHART_METRICS[cfg.metric]||'Metric'} by ${CHART_GROUPS[cfg.group]||'Group'}${service}`;
+  }
   function shortenLabel(v,n=24){v=String(v??'');return v.length>n?v.slice(0,n-1)+'…':v}
   const compactChartMedia=window.matchMedia('(max-width:640px)');
   function compactCharts(){return compactChartMedia.matches}
@@ -721,15 +750,6 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     let svg=`<svg class="chart-svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(autoChartTitle(cfg))}">`;
     for(let i=0;i<=4;i++){const x=left+plotW*i/4,val=max*i/4;svg+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${h-bottom}" stroke="var(--chart-grid)" stroke-width="1"/><text x="${x}" y="${h-10}" text-anchor="middle" font-size="11" fill="var(--chart-text)">${esc(chartValueText(cfg.metric,val))}</text>`}
     data.forEach((d,i)=>{const y=top+i*rowH+5,bw=Math.max(2,plotW*(d.value/max));svg+=`<text x="${left-9}" y="${y+15}" text-anchor="end" font-size="12" font-weight="600" fill="var(--text2)"><title>${esc(d.label)}</title>${esc(shortenLabel(d.label,labelChars))}</text><rect class="chart-bar" x="${left}" y="${y}" width="${bw}" height="20" rx="5" fill="var(--accent)" opacity=".9"><title>${esc(d.label)}: ${esc(chartValueText(cfg.metric,d.value))}</title></rect><text x="${Math.min(left+bw+7,w-5)}" y="${y+15}" font-size="12" font-weight="650" fill="var(--text2)">${esc(chartValueText(cfg.metric,d.value))}</text>`});
-    return svg+'</svg>';
-  }
-  function lineChartSvg(data,cfg){
-    const compact=compactCharts(),w=compact?460:620,h=340,left=compact?58:64,right=compact?18:24,top=34,bottom=compact?74:66,plotW=w-left-right,plotH=h-top-bottom,max=Math.max(1,...data.map(d=>d.value)),labelChars=compact?9:11;
-    let svg=`<svg class="chart-svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(autoChartTitle(cfg))}">`;
-    for(let i=0;i<=4;i++){const y=top+plotH-(plotH*i/4),val=max*i/4;svg+=`<line x1="${left}" y1="${y}" x2="${w-right}" y2="${y}" stroke="var(--chart-grid)" stroke-width="1"/><text x="${left-9}" y="${y+4}" text-anchor="end" font-size="11" fill="var(--chart-text)">${esc(chartValueText(cfg.metric,val))}</text>`}
-    const pts=data.map((d,i)=>{const x=data.length===1?left+plotW/2:left+plotW*i/(data.length-1),y=top+plotH-(d.value/max)*plotH;return{x,y,d}});
-    if(pts.length)svg+=`<polyline points="${pts.map(p=>`${p.x},${p.y}`).join(' ')}" fill="none" stroke="var(--accent)" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>`;
-    pts.forEach((p,i)=>{svg+=`<circle class="chart-point" cx="${p.x}" cy="${p.y}" r="4.5" fill="var(--panel)" stroke="var(--accent)" stroke-width="3"><title>${esc(p.d.label)}: ${esc(chartValueText(cfg.metric,p.d.value))}</title></circle>`;if(data.length<=8)svg+=`<text x="${p.x}" y="${Math.max(15,p.y-10)}" text-anchor="middle" font-size="10.5" font-weight="650" fill="var(--text2)">${esc(chartValueText(cfg.metric,p.d.value))}</text>`;const maxLabels=compact?6:9,show=data.length<=maxLabels+1||i%Math.ceil(data.length/maxLabels)===0||i===data.length-1;if(show)svg+=`<text x="${p.x}" y="${h-31}" text-anchor="middle" font-size="11" fill="var(--chart-text)">${esc(shortenLabel(p.d.label,labelChars))}</text>`});
     return svg+'</svg>';
   }
   function polar(cx,cy,r,a){const rad=(a-90)*Math.PI/180;return{x:cx+r*Math.cos(rad),y:cy+r*Math.sin(rad)}}
@@ -743,20 +763,26 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     plotData.forEach((d,i)=>{const p=Math.max(0,d.value)/total*100;if(compact){const y=286+i*28;svg+=`<rect x="22" y="${y-10}" width="11" height="11" rx="3" fill="${CHART_COLORS[i%CHART_COLORS.length]}"/><text x="42" y="${y}" font-size="12" font-weight="600" fill="var(--text2)">${esc(shortenLabel(d.label,22))}</text><text x="438" y="${y}" text-anchor="end" font-size="11.5" fill="var(--chart-text)">${esc(chartValueText(cfg.metric,d.value))} · ${p.toFixed(1)}%</text>`}else{const y=49+i*34;svg+=`<rect x="320" y="${y-11}" width="11" height="11" rx="3" fill="${CHART_COLORS[i%CHART_COLORS.length]}"/><text x="340" y="${y}" font-size="12" font-weight="600" fill="var(--text2)">${esc(shortenLabel(d.label,20))}</text><text x="598" y="${y}" text-anchor="end" font-size="11.5" fill="var(--chart-text)">${esc(chartValueText(cfg.metric,d.value))} · ${p.toFixed(1)}%</text>`}});
     return svg+'</svg>';
   }
-  function chartBodyFor(rows,cfg){const data=chartData(rows,cfg);if(!data.length)return'<div class="chart-empty">No data for the current report and filters.</div>';if(cfg.type==='line')return lineChartSvg(data,cfg);if(cfg.type==='pie')return pieChartSvg(data,cfg);return barChartSvg(data,cfg)}
+  function chartBodyFor(rows,cfg){const data=chartData(rows,cfg);if(!data.length)return'<div class="chart-empty">No data for the current report, filters, and chart service.</div>';if(cfg.type==='pie')return pieChartSvg(data,cfg);return barChartSvg(data,cfg)}
   function option(value,label,current,disabled=false){return`<option value="${value}"${current===value?' selected':''}${disabled?' disabled':''}>${label}</option>`}
+  function chartServiceOptionsHtml(cfg){
+    const services=chartServices(),known=cfg.service==='all'||services.some(s=>s.key===cfg.service);let html=option('all','All Services',cfg.service);
+    if(!known&&cfg.service!=='all')html+=option(cfg.service,'Unavailable service',cfg.service);
+    return html+services.map(s=>option(s.key,s.label,cfg.service)).join('');
+  }
   function chartEditorHtml(cfg){
-    const isProductivity=cfg.metric==='productivity',isPercentage=cfg.metric==='cancellationPct'||isProductivity,isLine=cfg.type==='line',isPie=cfg.type==='pie';
+    const isProductivity=cfg.metric==='productivity',isPie=cfg.type==='pie',rateMetric=['cancellationPct','deliveryPct','over10Pct','avgHours'].includes(cfg.metric);
     const targetStyle=isProductivity?'':' style="display:none"',sortName=cfg.group==='month'?'Chronological':'Name A-Z';
     return`<div class="chart-inline-editor" data-editor-id="${esc(cfg.id)}">
       <div class="field title-field"><label>Title</label><input class="chart-field" data-field="title" type="text" maxlength="80" value="${esc(cfg.title||'')}" placeholder="${esc(autoChartTitle(cfg))}"></div>
-      <div class="field"><label>Chart type</label><select class="chart-field" data-field="type">${option('bar','Bar',cfg.type)}${option('line','Line',cfg.type,isProductivity)}${option('pie','Pie',cfg.type,isPercentage)}</select></div>
-      <div class="field"><label>Group by</label><select class="chart-field" data-field="group">${option('provider','Provider',cfg.group)}${option('service','Service',cfg.group,isProductivity)}${option('status','Status',cfg.group,isProductivity||cfg.metric==='cancellationPct')}${option('month','Month',cfg.group,isProductivity)}</select></div>
-      <div class="field"><label>Metric</label><select class="chart-field" data-field="metric">${option('visits','Total Visits',cfg.metric)}${option('delivered','Delivered Visits',cfg.metric)}${option('cancellations','Cancelled Visits',cfg.metric)}${option('over10','Visits > 10 Business Days',cfg.metric)}${option('cancellationPct','Cancellation %',cfg.metric,isPie||cfg.group==='status')}${option('units','15 Min Units',cfg.metric)}${option('hours','Total Hours',cfg.metric)}${option('productivity','Productivity %',cfg.metric,isPie||isLine||cfg.group!=='provider')}</select></div>
+      <div class="field"><label>Chart type</label><select class="chart-field" data-field="type">${option('bar','Bar',cfg.type)}${option('pie','Pie',cfg.type,isProductivity||rateMetric)}</select></div>
+      <div class="field"><label>Service</label><select class="chart-field" data-field="service">${chartServiceOptionsHtml(cfg)}</select></div>
+      <div class="field"><label>Group by</label><select class="chart-field" data-field="group">${option('provider','Provider',cfg.group)}${option('service','Service',cfg.group,isProductivity)}${option('status','Status',cfg.group,isProductivity||rateMetric)}${option('month','DOS Month',cfg.group,isProductivity)}</select></div>
+      <div class="field"><label>Metric</label><select class="chart-field" data-field="metric">${option('visits','Scheduled Visits',cfg.metric)}${option('delivered','Delivered Visits',cfg.metric)}${option('deliveryPct','Delivery Rate',cfg.metric,isPie||cfg.group==='status')}${option('cancellations','Cancelled Visits',cfg.metric)}${option('cancellationPct','Cancellation Rate',cfg.metric,isPie||cfg.group==='status')}${option('hours','Total Hours',cfg.metric)}${option('avgHours','Avg Hours / Visit',cfg.metric,isPie||cfg.group==='status')}${option('units','15 Min Units',cfg.metric)}${option('productivity','Productivity %',cfg.metric,isPie||cfg.group!=='provider')}${option('over10','Visits > 10 Business Days',cfg.metric)}${option('over10Pct','Late Entry Rate (>10 Business Days)',cfg.metric,isPie||cfg.group==='status')}</select></div>
       <div class="field chart-target-field"${targetStyle}><label>Productivity target</label><select class="chart-field" data-field="target">${TARGETS.map(v=>option(String(v),`${v} Hr/Wk`,String(cfg.target))).join('')}</select></div>
-      <div class="field"><label>Performers</label><select class="chart-field" data-field="rank"${isLine?' disabled':''}>${option('top','Top performers',cfg.rank)}${option('bottom','Bottom performers',cfg.rank)}${option('all','All performers',cfg.rank)}</select></div>
-      <div class="field"><label>Items</label><select class="chart-field" data-field="top"${isLine||cfg.rank==='all'?' disabled':''}>${option('5','5',cfg.top)}${option('10','10',cfg.top)}${option('15','15',cfg.top)}${option('20','20',cfg.top)}${option('all','All',cfg.top)}</select></div>
-      <div class="field"><label>Display order</label><select class="chart-field" data-field="sort"${isLine?' disabled':''}>${option('desc','Highest first',cfg.sort)}${option('asc','Lowest first',cfg.sort)}${option('name',sortName,cfg.sort)}</select></div>
+      <div class="field"><label>Ranking</label><select class="chart-field" data-field="rank">${option('top','Most',cfg.rank)}${option('bottom','Least',cfg.rank)}${option('all','All',cfg.rank)}</select></div>
+      <div class="field"><label>Items</label><select class="chart-field" data-field="top"${cfg.rank==='all'?' disabled':''}>${option('5','5',cfg.top)}${option('10','10',cfg.top)}${option('15','15',cfg.top)}${option('20','20',cfg.top)}${option('all','All',cfg.top)}</select></div>
+      <div class="field"><label>Display order</label><select class="chart-field" data-field="sort">${option('desc','Highest first',cfg.sort)}${option('asc','Lowest first',cfg.sort)}${option('name',sortName,cfg.sort)}</select></div>
     </div>`;
   }
   function visibleChartConfigs(){if(!state.editingChartId||!state.chartDraft)return state.charts;const exists=state.charts.some(c=>c.id===state.editingChartId);return exists?state.charts.map(c=>c.id===state.editingChartId?state.chartDraft:c):[...state.charts,state.chartDraft]}
@@ -766,15 +792,15 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     els.addChartBtn.disabled=!rec||!!state.editingChartId;
     const configs=visibleChartConfigs();els.exportPdfBtn.disabled=!rec||!configs.length;if(!configs.length){els.chartsGrid.innerHTML='<div class="chart-empty">No graphs yet. Use <b>Add Graph</b> to create one.</div>';return}
     els.chartsGrid.innerHTML=configs.map(cfg=>{
-      const editing=cfg.id===state.editingChartId,title=cfg.title.trim()||autoChartTitle(cfg),targetNote=cfg.metric==='productivity'?` • ${cfg.target} Hr/Wk target`:'';
+      const editing=cfg.id===state.editingChartId,title=cfg.title.trim()||autoChartTitle(cfg),targetNote=cfg.metric==='productivity'?` • ${cfg.target} Hr/Wk target`:'',serviceNote=cfg.service&&cfg.service!=='all'?` • ${chartServiceLabel(cfg)}`:'';
       const actions=editing?`<button class="btn chart-cancel" type="button" data-id="${esc(cfg.id)}">Cancel</button><button class="btn primary chart-done" type="button" data-id="${esc(cfg.id)}">Done</button>`:`<button class="btn chart-edit" type="button" data-id="${esc(cfg.id)}">Edit</button><button class="btn chart-remove" type="button" data-id="${esc(cfg.id)}">Remove</button>`;
-      return`<article class="chart-card${editing?' editing':''}" data-chart-id="${esc(cfg.id)}"><div class="chart-card-head"><div style="min-width:0"><div class="chart-card-title" title="${esc(title)}">${esc(title)}</div><div class="chart-card-meta">${esc(CHART_GROUPS[cfg.group])} • ${esc(CHART_METRICS[cfg.metric])}${esc(targetNote)}</div></div><div class="chart-card-actions">${actions}</div></div>${editing?chartEditorHtml(cfg):''}<div class="chart-body">${chartBodyFor(rows,cfg)}</div></article>`;
+      return`<article class="chart-card${editing?' editing':''}" data-chart-id="${esc(cfg.id)}"><div class="chart-card-head"><div style="min-width:0"><div class="chart-card-title" title="${esc(title)}">${esc(title)}</div><div class="chart-card-meta">${esc(CHART_GROUPS[cfg.group])} • ${esc(CHART_METRICS[cfg.metric])}${esc(serviceNote)}${esc(targetNote)}</div></div><div class="chart-card-actions">${actions}</div></div>${editing?chartEditorHtml(cfg):''}<div class="chart-body">${chartBodyFor(rows,cfg)}</div></article>`;
     }).join('');
   }
   function beginChartEdit(id=null){
     if(!selectedRecord())return;
     if(id){const cfg=state.charts.find(c=>c.id===id);if(!cfg)return;state.editingChartId=id;state.chartDraft={...cfg}}
-    else{state.chartDraft=sanitizeChartConfig({id:`chart-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,title:'',type:'bar',group:'provider',metric:'visits',target:20,top:'10',rank:'top',sort:'desc'});state.editingChartId=state.chartDraft.id}
+    else{state.chartDraft=sanitizeChartConfig({id:`chart-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,title:'',type:'bar',group:'provider',metric:'productivity',service:'all',target:20,top:'10',rank:'top',sort:'desc'});state.editingChartId=state.chartDraft.id}
     renderCharts();requestAnimationFrame(()=>els.chartsGrid.querySelector(`[data-chart-id="${CSS.escape(state.editingChartId)}"] input[data-field="title"]`)?.focus());
   }
   function cancelChartEdit(){state.editingChartId=null;state.chartDraft=null;renderCharts()}
@@ -798,7 +824,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function base64Bytes(dataUrl){const b64=dataUrl.split(',')[1]||'',bin=atob(b64),out=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)out[i]=bin.charCodeAt(i);return out}
   async function chartJpeg(card,cfg){
     const svg=card.querySelector('.chart-svg');if(!svg)throw new Error('A graph has no chart data to export.');const xml=exportSvgText(svg),blob=new Blob([xml],{type:'image/svg+xml;charset=utf-8'}),url=URL.createObjectURL(blob);
-    try{const img=await imageFromUrl(url),canvas=document.createElement('canvas');canvas.width=1400;canvas.height=1082;const ctx=canvas.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#182230';ctx.font='700 36px system-ui, sans-serif';ctx.fillText((cfg.title||'').trim()||autoChartTitle(cfg),60,60);ctx.fillStyle='#667085';ctx.font='20px system-ui, sans-serif';ctx.fillText(`${CHART_GROUPS[cfg.group]} • ${CHART_METRICS[cfg.metric]}`,60,94);const maxW=1280,maxH=900,scale=Math.min(maxW/img.width,maxH/img.height),w=img.width*scale,h=img.height*scale,x=(canvas.width-w)/2,y=130+(900-h)/2;ctx.drawImage(img,x,y,w,h);return{bytes:base64Bytes(canvas.toDataURL('image/jpeg',0.92)),width:canvas.width,height:canvas.height}}finally{URL.revokeObjectURL(url)}
+    try{const img=await imageFromUrl(url),canvas=document.createElement('canvas');canvas.width=1400;canvas.height=1082;const ctx=canvas.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#182230';ctx.font='700 36px system-ui, sans-serif';ctx.fillText((cfg.title||'').trim()||autoChartTitle(cfg),60,60);ctx.fillStyle='#667085';ctx.font='20px system-ui, sans-serif';ctx.fillText(`${CHART_GROUPS[cfg.group]} • ${CHART_METRICS[cfg.metric]}${cfg.service&&cfg.service!=='all'?` • ${chartServiceLabel(cfg)}`:''}`,60,94);const maxW=1280,maxH=900,scale=Math.min(maxW/img.width,maxH/img.height),w=img.width*scale,h=img.height*scale,x=(canvas.width-w)/2,y=130+(900-h)/2;ctx.drawImage(img,x,y,w,h);return{bytes:base64Bytes(canvas.toDataURL('image/jpeg',0.92)),width:canvas.width,height:canvas.height}}finally{URL.revokeObjectURL(url)}
   }
   function buildPdf(images){
     const encoder=new TextEncoder(),chunks=[],offsets=[],pageIds=images.map((_,i)=>3+i*3),maxObj=2+images.length*3;let length=0;const push=b=>{chunks.push(b);length+=b.length},txt=s=>push(encoder.encode(s)),obj=(id,body)=>{offsets[id]=length;txt(`${id} 0 obj\n${body}\nendobj\n`)};
