@@ -68,7 +68,7 @@
     .table-wrap{overflow:auto;max-height:calc(100vh - 305px);min-height:420px}table{width:max-content;min-width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px}
     thead th{position:sticky;top:0;z-index:3;background:var(--table-head);color:var(--text2);text-align:right;font-weight:750;border-bottom:1px solid var(--line);padding:9px 10px;white-space:nowrap}
     thead th.text-left{text-align:left}tbody td{padding:8px 10px;border-bottom:1px solid var(--line2);text-align:right;white-space:nowrap}tbody td.text-left{text-align:left}tbody tr:hover td{background:var(--row-hover)}tbody tr.total td{font-weight:750;background:var(--total-bg);border-bottom-color:var(--accent-line)}tbody tr.total:hover td{background:var(--total-hover)}
-    .pct.good{color:var(--good)}.pct.warn{color:var(--warn)}.pct.bad{color:var(--bad)}
+    .late-yes{color:var(--bad);font-weight:750}
     .muted{color:var(--muted)}.status-list{padding:13px}.status-item{margin-bottom:13px}.status-item:last-child{margin-bottom:0}.status-top{display:flex;justify-content:space-between;gap:10px;font-size:12px;margin-bottom:6px}.status-name{font-weight:650;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.status-count{color:var(--muted)}.bar{height:8px;border-radius:999px;background:var(--line2);overflow:hidden}.bar>span{display:block;height:100%;background:var(--accent);border-radius:999px}
     .empty{padding:48px 18px;text-align:center;color:var(--muted)}.empty strong{display:block;color:var(--text);font-size:15px;margin-bottom:6px}.hint{margin-top:8px;font-size:12px;line-height:1.55}
     .errorbox{display:none;margin:0 0 10px;border:1px solid color-mix(in srgb,var(--bad) 40%,var(--line));background:var(--bad-soft);color:var(--bad);border-radius:10px;padding:10px 12px;font-size:12px}.errorbox.show{display:block}
@@ -82,11 +82,13 @@
     .chart-body{padding:10px 11px 11px;min-height:0;flex:1 1 auto;display:flex;align-items:center;justify-content:center;overflow:auto}.chart-svg{display:block;width:100%;height:auto;max-width:100%;overflow:visible}.chart-empty{width:100%;padding:54px 12px;text-align:center;color:var(--muted)}
     .chart-inline-editor{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:12px 13px;border-bottom:1px solid var(--line2);background:var(--panel2);flex:0 0 auto}.chart-inline-editor .field{min-width:0}.chart-inline-editor .field.title-field{grid-column:1/-1}.chart-inline-editor label{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-bottom:4px}.chart-inline-editor input,.chart-inline-editor select{width:100%;padding:7px 8px;font-size:12px}.chart-card.editing .chart-card-head{background:var(--accent-soft)}.panel-head-actions{display:flex;gap:8px;align-items:center}
     .chart-bar{transition:opacity .12s}.chart-bar:hover{opacity:1!important}.chart-point{transition:r .12s}.chart-point:hover{r:6px}
+    .frequency-table th,.frequency-table td{text-align:left}.frequency-table td{font-variant-numeric:tabular-nums}
 
     .multi-select{position:relative;min-width:150px}.multi-select-trigger{width:100%;min-height:36px;padding:8px 30px 8px 10px;text-align:left;cursor:pointer;position:relative;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.multi-select-trigger::after{content:"";position:absolute;right:11px;top:50%;width:7px;height:7px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:translateY(-68%) rotate(45deg)}.multi-select.open .multi-select-trigger{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
     .multi-select-menu{position:absolute;z-index:80;left:0;top:calc(100% + 5px);width:max(100%,230px);max-width:min(360px,calc(100vw - 24px));max-height:300px;overflow:auto;padding:5px;background:var(--panel);border:1px solid var(--line);border-radius:9px;box-shadow:var(--shadow-lg)}.multi-select-menu[hidden]{display:none}.multi-option{display:flex;align-items:center;gap:8px;padding:8px;border-radius:6px;cursor:pointer;line-height:1.25}.multi-option:hover{background:var(--control-hover)}.multi-option input{width:16px;height:16px;accent-color:var(--accent);flex:0 0 auto}.multi-option span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.multi-option.all-option{font-weight:700;border-bottom:1px solid var(--line2);border-radius:6px 6px 0 0;margin-bottom:3px}
     .columns-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;max-height:52vh;overflow:auto;padding:2px}.column-option{display:flex;align-items:center;gap:8px;padding:8px 9px;border:1px solid var(--line2);border-radius:8px;background:var(--control);cursor:pointer}.column-option:hover{background:var(--control-hover)}.column-option input{width:16px;height:16px;accent-color:var(--accent)}
     .modal.wide{width:min(680px,100%)}.form-label{display:block;color:var(--text2);font-size:12px;font-weight:700;margin:0 0 5px}.paste-name{width:100%;padding:8px 10px;margin-bottom:10px}.paste-textarea{display:block;width:100%;min-height:300px;resize:vertical;padding:10px;font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre}.modal-help{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.45}.modal-actions .spacer{flex:1}
+    .mapping-context{font-size:12px;color:var(--muted);margin-bottom:12px}.mapping-list{display:grid;gap:9px}.mapping-row{display:grid;grid-template-columns:minmax(120px,.7fr) minmax(0,1.3fr);gap:10px;align-items:center}.mapping-row label{font-weight:700;color:var(--text2)}.mapping-row select{width:100%;padding:8px 30px 8px 10px}.mapping-remember{display:flex;align-items:center;gap:8px;margin-top:12px;color:var(--text2);font-size:12px}.mapping-remember input{width:16px;height:16px;accent-color:var(--accent)}
     @media(max-width:1100px){
       .grid{grid-template-columns:1fr}.table-wrap{max-height:640px}.side{display:grid;grid-template-columns:1fr 1fr;gap:12px}.side .panel{height:100%}
     }
@@ -99,7 +101,7 @@
       .statusbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:9px;align-items:end}
       .report-control{display:grid;grid-template-columns:1fr 1fr;gap:7px;width:100%;min-width:0;grid-column:1/-1}.status-label{display:none}.report-select{grid-column:1/-1;width:100%;min-width:0;max-width:none}.report-control .btn{width:100%}
       .source-line{grid-column:1;border-left:0;border-top:0;padding:0;min-width:0;width:100%}.source-detail{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.3}.pill{grid-column:2;justify-self:end;margin:0;align-self:end;white-space:nowrap}
-      .toolbar{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:9px}.toolbar .label{display:none}.toolbar #monthFilter,.toolbar .search{grid-column:1/-1}.filter,.search{width:100%;min-width:0;max-width:none}.spacer{display:none}.toolbar #clearFiltersBtn{grid-column:1/-1;width:auto;min-width:72px;justify-self:end}
+      .toolbar{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:9px}.toolbar .label{display:none}.toolbar #monthFilter,.toolbar #poeFilter,.toolbar .search{grid-column:1/-1}.filter,.search{width:100%;min-width:0;max-width:none}.spacer{display:none}.toolbar #clearFiltersBtn{grid-column:1/-1;width:auto;min-width:72px;justify-self:end}
       .view-tabs{width:100%;gap:0;margin-bottom:8px}.view-tab{flex:1;min-height:42px;padding:8px 12px;touch-action:manipulation}.view-tab.active::after{left:50%;right:auto;width:34px;transform:translateX(-50%)}
       .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-bottom:8px}.kpi{padding:10px 11px}.kpi .label{font-size:10px;margin-bottom:4px}.kpi .value{font-size:20px}.kpi .foot{font-size:10px;white-space:normal;line-height:1.25;min-height:24px}
       .grid{gap:10px}.side{grid-template-columns:1fr;gap:10px}.panel{border-radius:10px}.panel-head{padding:10px 11px;gap:8px}.panel-meta{font-size:11px;line-height:1.3}.panel-head>.btn,.panel-head-actions .btn{min-height:40px}
@@ -107,7 +109,7 @@
       table{font-size:12px}thead th,tbody td{padding:8px 9px}thead th:first-child,tbody td:first-child{position:sticky;left:0;min-width:118px;max-width:145px;overflow:hidden;text-overflow:ellipsis;z-index:2}thead th:first-child{z-index:5;background:var(--table-head)}tbody td:first-child{background:var(--panel)}tbody tr.total td:first-child{background:var(--total-bg)}
       .footer-note{padding:9px 11px;line-height:1.45}.status-list{padding:11px}.status-item{margin-bottom:11px}
       .charts-grid{padding:8px;gap:10px}.chart-card{flex:1 1 100%;width:100%;max-width:none;min-width:0;height:480px;border-radius:10px}.chart-card.editing{height:auto;min-height:650px}.chart-card-head{padding:10px 11px;min-height:64px;gap:8px}.chart-card-actions{gap:5px}.chart-card-actions .btn{min-height:40px;padding:7px 9px}.chart-body{padding:8px;overflow:auto;-webkit-overflow-scrolling:touch}.chart-inline-editor{grid-template-columns:1fr 1fr;gap:8px;padding:10px 11px}.chart-inline-editor .field.title-field{grid-column:1/-1}.chart-inline-editor label{font-size:10.5px}
-      .errorbox{max-height:34vh;overflow:auto;overflow-wrap:anywhere;line-height:1.45}.multi-select{min-width:0;width:100%}.multi-select-menu{position:fixed;left:10px;right:10px;top:auto;width:auto;max-width:none;max-height:46vh}.columns-list{grid-template-columns:1fr}
+      .errorbox{max-height:34vh;overflow:auto;overflow-wrap:anywhere;line-height:1.45}.multi-select{min-width:0;width:100%}.multi-select-menu{position:fixed;left:10px;right:10px;top:auto;width:auto;max-width:none;max-height:46vh}.columns-list{grid-template-columns:1fr}.mapping-row{grid-template-columns:1fr;gap:4px}.mapping-row select{font-size:16px;min-height:44px}
     }
     @media(max-width:520px){
       .chart-inline-editor{grid-template-columns:1fr}.chart-inline-editor .field.title-field{grid-column:auto}.chart-card.editing{min-height:760px}
@@ -130,7 +132,7 @@
   <div class="topbar">
     <div class="brand">
       <h1>Provider Visit Reporting Dashboard</h1>
-      <div class="sub">Provider and service reporting from Excel or pasted data <span class="app-version">v1.2</span></div>
+      <div class="sub">Provider and service reporting from Excel or pasted data <span class="app-version">v1.5</span></div>
     </div>
     <div class="actions">
       <button class="btn primary" id="addFilesBtn" type="button">Add Excel</button>
@@ -163,6 +165,7 @@
     <div id="monthFilter" class="multi-select filter" data-label-singular="Month" data-label-plural="Months"><button class="multi-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All Months</button><div class="multi-select-menu" hidden></div></div>
     <div id="providerFilter" class="multi-select filter" data-label-singular="Provider" data-label-plural="Providers"><button class="multi-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All Providers</button><div class="multi-select-menu" hidden></div></div>
     <div id="serviceFilter" class="multi-select filter" data-label-singular="Service" data-label-plural="Services"><button class="multi-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All Services</button><div class="multi-select-menu" hidden></div></div>
+    <div id="poeFilter" class="multi-select filter" data-label-singular="POE" data-label-plural="POE Values"><button class="multi-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All POE</button><div class="multi-select-menu" hidden></div></div>
     <input id="searchInput" class="search" type="search" placeholder="Search provider or service…">
     <div class="spacer"></div>
     <button id="clearFiltersBtn" class="btn">Reset</button>
@@ -171,6 +174,7 @@
   <div id="viewTabs" class="view-tabs" role="tablist" aria-label="Dashboard view">
     <button id="summaryTab" class="view-tab active" type="button" role="tab" aria-selected="true" aria-controls="summaryView" tabindex="0" data-tab="summary">Summary</button>
     <button id="graphsTab" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="graphsView" tabindex="-1" data-tab="graphs">Graphs</button>
+    <button id="frequenciesTab" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="frequenciesView" tabindex="-1" data-tab="frequencies">Frequencies</button>
   </div>
 
   <section id="summaryView" class="tab-panel" role="tabpanel" aria-labelledby="summaryTab">
@@ -214,6 +218,21 @@
       <div id="chartsGrid" class="charts-grid"></div>
     </section>
   </section>
+
+  <section id="frequenciesView" class="tab-panel" role="tabpanel" aria-labelledby="frequenciesTab" hidden>
+    <section class="panel">
+      <div class="panel-head">
+        <div><div class="panel-title">Frequencies Report</div><div id="frequenciesMeta" class="panel-meta">Current report and filters</div></div>
+      </div>
+      <div class="table-wrap">
+        <table id="frequenciesTable" class="frequency-table" style="display:none">
+          <thead><tr><th>ID</th><th>Last Name</th><th>First Name</th><th>SC</th><th>Service</th><th>Provider</th><th>SERVICE_DATE</th><th>Entered On</th><th>Status</th><th>Location</th><th>By Whom</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div id="frequenciesEmpty" class="empty"><strong>No data</strong><div>Load a report to view frequencies.</div></div>
+      </div>
+    </section>
+  </section>
 </div>
 
 <div id="confirmModal" class="modal-backdrop" hidden>
@@ -241,9 +260,21 @@
     <div class="modal-body">
       <label class="form-label" for="pasteReportName">Report name</label><input id="pasteReportName" class="paste-name" type="text" maxlength="120" placeholder="Pasted Report">
       <label class="form-label" for="pasteDataInput">Data</label><textarea id="pasteDataInput" class="paste-textarea" spellcheck="false" placeholder="Paste rows copied from Excel here, including the header row."></textarea>
-      <div class="modal-help">Required headers: Provider, Service, Status, DOS, Entered On, START_TIME, END_TIME. Tab-separated Excel paste and CSV are supported.</div>
+      <div class="modal-help">The importer recognizes common header variations automatically (for example SP_NAME, SERVICE_TYPE_NAME, SERVICE_DATE, and SERVICE_LOG_ENTER_DATE). If a required field cannot be identified confidently, you will be asked to map it. Tab-separated Excel paste and CSV are supported. Leading single-cell information rows are ignored, and rows marked Inactive in ACTIVE_STATUS are excluded.</div>
     </div>
     <div class="modal-actions"><button id="pasteCancel" class="btn" type="button">Cancel</button><button id="pasteImport" class="btn primary" type="button">Import</button></div>
+  </div>
+</div>
+
+<div id="mappingModal" class="modal-backdrop" hidden>
+  <div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="mappingModalTitle">
+    <div class="modal-head"><div id="mappingModalTitle" class="modal-title">Map Report Columns</div></div>
+    <div class="modal-body">
+      <div id="mappingContext" class="mapping-context"></div>
+      <div id="mappingList" class="mapping-list"></div>
+      <label class="mapping-remember"><input id="mappingRemember" type="checkbox" checked><span>Remember these header mappings for future imports</span></label>
+    </div>
+    <div class="modal-actions"><button id="mappingCancel" class="btn" type="button">Cancel</button><button id="mappingApply" class="btn primary" type="button">Use Mapping</button></div>
   </div>
 </div>
 <input id="fileInput" type="file" accept=".xlsx,.xlsm" multiple hidden>
@@ -268,21 +299,38 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 (() => {
   'use strict';
 
-  const REQUIRED = ['provider','service','status','dos','enteredOn','start','end'];
-  const REQUIRED_LABELS = ['Provider','Service','Status','DOS','Entered On','START_TIME','END_TIME'];
+  const FIELD_DEFS = {
+    childId:{label:'ID',required:false,aliases:['id','child id','childid']},
+    lastName:{label:'Last Name',required:false,aliases:['last','last name','lastname']},
+    firstName:{label:'First Name',required:false,aliases:['first','first name','firstname']},
+    sc:{label:'SC',required:false,aliases:['sc','sc name','service coordinator','service coordinator name']},
+    location:{label:'Location',required:false,aliases:['location','setting','setting name','place of service','place of service code','placeofservicecode']},
+    byWhom:{label:'By Whom',required:false,aliases:['by whom','bywhom','entered by','enteredby']},
+    provider:{label:'Provider',required:true,aliases:['provider','provider name','sp name','service provider','service provider name']},
+    service:{label:'Service',required:true,aliases:['service','service name','service type','service type name']},
+    status:{label:'Status',required:true,aliases:['status','visit status','service status']},
+    dos:{label:'DOS',required:true,aliases:['dos','date of service','service date']},
+    enteredOn:{label:'Entered On',required:true,aliases:['entered on','entered date','service log enter date','service log entered date','service log entry date']},
+    start:{label:'START_TIME',required:true,aliases:['start time','starttime','start']},
+    end:{label:'END_TIME',required:true,aliases:['end time','endtime','end']},
+    poe:{label:'POE',required:false,aliases:['poe','point of entry','pointofentry']},
+    activeStatus:{label:'ACTIVE_STATUS',required:false,aliases:['active status','activestatus']}
+  };
+  const REQUIRED = Object.keys(FIELD_DEFS).filter(k=>FIELD_DEFS[k].required);
+  const REQUIRED_LABELS = REQUIRED.map(k=>FIELD_DEFS[k].label);
   const TARGETS = [5,10,15,20,25,30,35,40];
   const CHART_METRICS={visits:'Scheduled Visits',delivered:'Delivered Visits',deliveryPct:'Delivery Rate',cancellations:'Cancelled Visits',cancellationPct:'Cancellation Rate',hours:'Total Hours',avgHours:'Avg Hours / Visit',units:'15 Min Units',productivity:'Productivity %',over10:'Visits > 10 Business Days',over10Pct:'Late Entry Rate (>10 Business Days)'};
   const CHART_GROUPS={provider:'Provider',service:'Service',status:'Status',month:'Month'};
   const CHART_COLORS=['var(--series-1)','var(--series-2)','var(--series-3)','var(--series-4)','var(--series-5)','var(--series-6)','var(--series-7)','var(--series-8)','var(--series-9)','var(--series-10)'];
   const DB_NAME = 'ProviderVisitReportingDashboardV3';
-  const DB_VERSION = 1;
+  const DB_VERSION = 3;
   const REPORT_STORE = 'reports';
   const META_STORE = 'meta';
 
   const state = {
     rows:[], savedReports:[], selectedReportId:null,
     lastLoad:null,
-    db:null, persistenceAvailable:true, charts:[], editingChartId:null, chartDraft:null, activeTab:'summary', hiddenColumns:new Set(), columnDraftHidden:null, lastTableColumns:[],
+    db:null, persistenceAvailable:true, charts:[], editingChartId:null, chartDraft:null, activeTab:'summary', hiddenColumns:new Set(), columnDraftHidden:null, lastTableColumns:[], learnedAliases:{},
     theme:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'
   };
 
@@ -290,33 +338,34 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   const els = {
     sourceDot:$('sourceDot'), sourceTitle:$('sourceTitle'), sourceDetail:$('sourceDetail'), lastRefresh:$('lastRefresh'),
     errorBox:$('errorBox'), addFilesBtn:$('addFilesBtn'), pasteDataBtn:$('pasteDataBtn'), themeToggle:$('themeToggle'), themeIcon:$('themeIcon'),
-    monthFilter:$('monthFilter'), providerFilter:$('providerFilter'), serviceFilter:$('serviceFilter'), searchInput:$('searchInput'), clearFiltersBtn:$('clearFiltersBtn'),
+    monthFilter:$('monthFilter'), providerFilter:$('providerFilter'), serviceFilter:$('serviceFilter'), poeFilter:$('poeFilter'), searchInput:$('searchInput'), clearFiltersBtn:$('clearFiltersBtn'),
     kpiProviders:$('kpiProviders'), kpiVisits:$('kpiVisits'), kpiVisitsFoot:$('kpiVisitsFoot'), kpiDelivered:$('kpiDelivered'),
     kpiDeliveredFoot:$('kpiDeliveredFoot'), kpiCancellation:$('kpiCancellation'), kpiTime:$('kpiTime'), kpiTimeFoot:$('kpiTimeFoot'), kpiUnits:$('kpiUnits'),
     reportTable:$('reportTable'), emptyState:$('emptyState'), tableMeta:$('tableMeta'), statusMeta:$('statusMeta'),
     statusList:$('statusList'), fileInput:$('fileInput'),
     reportSelect:$('reportSelect'), removeReportBtn:$('removeReportBtn'), deleteAllReportsBtn:$('deleteAllReportsBtn'), exportCsvBtn:$('exportCsvBtn'), columnsBtn:$('columnsBtn'),
     chartsMeta:$('chartsMeta'), chartsGrid:$('chartsGrid'), addChartBtn:$('addChartBtn'), exportPdfBtn:$('exportPdfBtn'),
-    viewTabs:$('viewTabs'), summaryTab:$('summaryTab'), graphsTab:$('graphsTab'), summaryView:$('summaryView'), graphsView:$('graphsView'),
+    viewTabs:$('viewTabs'), summaryTab:$('summaryTab'), graphsTab:$('graphsTab'), frequenciesTab:$('frequenciesTab'), summaryView:$('summaryView'), graphsView:$('graphsView'), frequenciesView:$('frequenciesView'), frequenciesTable:$('frequenciesTable'), frequenciesMeta:$('frequenciesMeta'), frequenciesEmpty:$('frequenciesEmpty'),
     confirmModal:$('confirmModal'), confirmModalTitle:$('confirmModalTitle'), confirmModalBody:$('confirmModalBody'),
     confirmModalCancel:$('confirmModalCancel'), confirmModalConfirm:$('confirmModalConfirm'),
     columnsModal:$('columnsModal'), columnsList:$('columnsList'), columnsShowAll:$('columnsShowAll'), columnsCancel:$('columnsCancel'), columnsDone:$('columnsDone'),
-    pasteModal:$('pasteModal'), pasteReportName:$('pasteReportName'), pasteDataInput:$('pasteDataInput'), pasteCancel:$('pasteCancel'), pasteImport:$('pasteImport')
+    pasteModal:$('pasteModal'), pasteReportName:$('pasteReportName'), pasteDataInput:$('pasteDataInput'), pasteCancel:$('pasteCancel'), pasteImport:$('pasteImport'),
+    mappingModal:$('mappingModal'), mappingContext:$('mappingContext'), mappingList:$('mappingList'), mappingRemember:$('mappingRemember'), mappingCancel:$('mappingCancel'), mappingApply:$('mappingApply')
   };
 
   function cleanText(v){return String(v??'').replace(/\u00a0/g,' ').replace(/\s+/g,' ').trim()}
   function normalizedKey(v){return cleanText(v).toLocaleLowerCase()}
   function normHeader(v){return cleanText(v).toLowerCase().replace(/[\s_\-]+/g,' ').replace(/[^a-z0-9 ]/g,'').trim()}
+  const BUILTIN_HEADER_ALIASES = (()=>{
+    const out={};
+    for(const [field,def] of Object.entries(FIELD_DEFS))for(const alias of def.aliases)out[normHeader(alias)]=field;
+    return out;
+  })();
   function headerKey(v){
-    const n=normHeader(v);
-    if(n==='provider')return'provider';
-    if(n==='service')return'service';
-    if(n==='status')return'status';
-    if(n==='dos'||n==='date of service'||n==='dateofservice')return'dos';
-    if(['entered on','enteredon'].includes(n))return'enteredOn';
-    if(['start time','starttime','start'].includes(n))return'start';
-    if(['end time','endtime','end'].includes(n))return'end';
-    return null;
+    const n=normHeader(v);if(!n)return null;
+    const learned=state.learnedAliases[n];
+    if(learned&&FIELD_DEFS[learned])return learned;
+    return BUILTIN_HEADER_ALIASES[n]||null;
   }
   function canonicalValue(v,map,blankLabel=''){
     const raw=cleanText(v);
@@ -400,10 +449,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     return new Promise((resolve,reject)=>{
       if(!('indexedDB'in window)){reject(new Error('IndexedDB is unavailable in this browser.'));return}
       const req=indexedDB.open(DB_NAME,DB_VERSION);
-      req.onupgradeneeded=()=>{
+      req.onupgradeneeded=e=>{
         const db=req.result;
         if(!db.objectStoreNames.contains(REPORT_STORE))db.createObjectStore(REPORT_STORE,{keyPath:'id'});
         if(!db.objectStoreNames.contains(META_STORE))db.createObjectStore(META_STORE,{keyPath:'key'});
+        if(e.oldVersion>0&&e.oldVersion<3){
+          req.transaction.objectStore(REPORT_STORE).clear();
+          req.transaction.objectStore(META_STORE).put({key:'selectedReportId',value:null});
+        }
       };
       req.onsuccess=()=>resolve(req.result);
       req.onerror=()=>reject(req.error||new Error('Could not open browser storage.'));
@@ -476,53 +529,53 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     }
     return sheets;
   }
-  function detectHeader(aoa){
-    const limit=Math.min(20,aoa.length);
-    for(let r=0;r<limit;r++){
-      const row=aoa[r]||[],map={};
-      row.forEach((v,i)=>{const k=headerKey(v);if(k&&map[k]==null)map[k]=i});
-      if(REQUIRED.every(k=>map[k]!=null))return{rowIndex:r,map};
+  function findHeaderCandidate(aoa){
+    let best=null;
+    for(let r=0;r<aoa.length;r++){
+      const row=aoa[r]||[],nonEmpty=row.reduce((n,v)=>n+(cleanText(v)?1:0),0);if(nonEmpty<=1)continue;
+      const map={};let recognized=0;
+      row.forEach((v,i)=>{const k=headerKey(v);if(k&&map[k]==null){map[k]=i;recognized++}});
+      const requiredMatched=REQUIRED.reduce((n,k)=>n+(map[k]!=null?1:0),0);
+      if(requiredMatched<3)continue;
+      const score=requiredMatched*100+recognized*10+Math.min(nonEmpty,50);
+      if(!best||score>best.score)best={rowIndex:r,map,headers:row.map(cleanText),requiredMatched,recognized,score};
+      if(requiredMatched===REQUIRED.length)return best;
     }
-    return null;
+    return best;
   }
-  function rowsFromAoA(aoa,sourceName,rowPrefix='row'){
-    const hdr=detectHeader(aoa);if(!hdr)return null;
-    const out=[],invalidDates=[],providerNames=new Map(),serviceNames=new Map(),statusNames=new Map(),{map,rowIndex}=hdr;
-    for(let i=rowIndex+1;i<aoa.length;i++){
-      const row=aoa[i]||[],providerRaw=cleanText(row[map.provider]);if(!providerRaw)continue;
-      const provider=canonicalValue(providerRaw,providerNames),service=canonicalValue(row[map.service],serviceNames,'(Blank Service)'),status=canonicalValue(row[map.status],statusNames,'(Blank Status)');
-      const dos=parseDateValue(row[map.dos]),enteredOn=parseDateValue(row[map.enteredOn]);
-      if(!dos||!enteredOn){invalidDates.push(`${rowPrefix} ${i+1}`);continue}
-      const start=parseTime(row[map.start]),end=parseTime(row[map.end]),minutes=durationMinutes(start,end),businessDays=businessDaysBetween(dos,enteredOn);
-      out.push({provider:provider.label,providerKey:provider.key,service:service.label,serviceKey:service.key||'__blank__',status:status.label,statusKey:status.key||'__blank__',dos:dateIso(dos),enteredOn:dateIso(enteredOn),monthKey:monthKeyFromDate(dos),businessDays,over10BusinessDays:businessDays>10,minutes,file:sourceName,row:i+1});
-    }
-    return{rows:out,invalidDates};
+  function statusLikeScore(values,header){
+    const vals=values.map(normalizedKey).filter(Boolean),distinct=new Set(vals);if(!vals.length)return 0;
+    const delivered=vals.filter(v=>v==='delivered'||v==='delivery'||v==='completed'||v==='complete').length;if(!delivered)return 0;
+    const statusWords=['cancelled','canceled','no show','noshow','scheduled','rescheduled','declined','refused','missed','attempted','not delivered'];
+    const other=vals.filter(v=>statusWords.includes(v)||statusWords.some(w=>v.includes(w))).length;
+    let score=delivered*5+other*2+Math.min(distinct.size,8)*.25;const h=normHeader(header);if(h.includes('reason'))score+=2;if(h.includes('status'))score+=5;return score;
   }
-  async function workbookRows(arrayBuffer,fileName){
-    const sheets=await workbookAoAs(arrayBuffer),out=[],usedSheets=[],skippedSheets=[],invalidDates=[];
-    for(const item of sheets){
-      if(!item.aoa.length){skippedSheets.push(item.name);continue}
-      const parsed=rowsFromAoA(item.aoa,fileName,`${item.name} row`);if(!parsed){skippedSheets.push(item.name);continue}
-      usedSheets.push(item.name);for(const row of parsed.rows){row.sheet=item.name;out.push(row)}invalidDates.push(...parsed.invalidDates);
-    }
-    if(!usedSheets.length)throw new Error(`No worksheet contains all required columns: ${REQUIRED_LABELS.join(', ')}.`);
-    if(invalidDates.length){const sample=invalidDates.slice(0,5).join(', '),more=invalidDates.length>5?` and ${invalidDates.length-5} more`:'';throw new Error(`DOS or Entered On is missing or invalid on ${invalidDates.length} visit row${invalidDates.length===1?'':'s'} (${sample}${more}). Fix the source data and import again.`)}
-    if(!out.length)throw new Error('No visit rows were found beneath the detected headers.');
-    return{rows:out,usedSheets,skippedSheets,invalidTimeRows:out.filter(r=>r.minutes==null).length};
+  function inferStatusColumn(aoa,candidate){
+    if(candidate.map.status!=null)return null;const used=new Set(Object.values(candidate.map)),rowIndex=candidate.rowIndex,headers=candidate.headers,candidates=[];
+    for(let c=0;c<headers.length;c++){if(used.has(c)||!headers[c])continue;const values=[];for(let r=rowIndex+1;r<Math.min(aoa.length,rowIndex+101);r++)values.push((aoa[r]||[])[c]);const score=statusLikeScore(values,headers[c]);if(score>0)candidates.push({index:c,score})}
+    candidates.sort((a,b)=>b.score-a.score);if(!candidates.length||candidates[0].score<5)return null;if(candidates[1]&&candidates[0].score-candidates[1].score<2)return null;return candidates[0].index;
   }
+  let mappingResolver=null;
+  function closeMappingModal(result=null){if(els.mappingModal.hidden)return;els.mappingModal.hidden=true;document.body.style.overflow=els.pasteModal.hidden?'':'hidden';const resolve=mappingResolver;mappingResolver=null;if(resolve)resolve(result)}
+  function requestColumnMapping({headers,map,missing,sourceLabel}){
+    if(mappingResolver)closeMappingModal(null);const used=new Set(Object.values(map));els.mappingContext.textContent=`${sourceLabel} uses column names this dashboard does not recognize confidently. Map the required field${missing.length===1?'':'s'} below.`;
+    els.mappingList.innerHTML=missing.map(field=>{const options=headers.map((h,i)=>({h,i})).filter(x=>x.h&&!used.has(x.i)).map(x=>`<option value="${x.i}">${esc(x.h)}</option>`).join('');return`<div class="mapping-row"><label for="map-${esc(field)}">${esc(FIELD_DEFS[field].label)}</label><select id="map-${esc(field)}" class="select mapping-field" data-field="${esc(field)}"><option value="">Select source column…</option>${options}</select></div>`}).join('');
+    els.mappingRemember.checked=true;els.mappingModal.hidden=false;document.body.style.overflow='hidden';requestAnimationFrame(()=>els.mappingList.querySelector('select')?.focus());return new Promise(resolve=>{mappingResolver=resolve});
+  }
+  async function resolveHeaderMapping(aoa,sourceLabel){
+    const candidate=findHeaderCandidate(aoa);if(!candidate)return null;const map={...candidate.map};if(map.status==null){const inferred=inferStatusColumn(aoa,candidate);if(inferred!=null)map.status=inferred}let missing=REQUIRED.filter(k=>map[k]==null);
+    if(missing.length){const result=await requestColumnMapping({headers:candidate.headers,map,missing,sourceLabel});if(!result)throw new Error('Import cancelled.');const chosen=new Set();for(const [field,index] of Object.entries(result.mapping)){if(chosen.has(index)||Object.values(map).includes(index))throw new Error('Each required field must use a different source column.');chosen.add(index);map[field]=index}missing=REQUIRED.filter(k=>map[k]==null);if(missing.length)throw new Error(`Map the following required field${missing.length===1?'':'s'}: ${missing.map(k=>FIELD_DEFS[k].label).join(', ')}.`);if(result.remember){for(const [field,index] of Object.entries(result.mapping)){const alias=normHeader(candidate.headers[index]);if(alias)state.learnedAliases[alias]=field}if(state.db)try{await dbPutMeta('headerAliases',state.learnedAliases)}catch{}}}
+    return{rowIndex:candidate.rowIndex,map};
+  }
+  async function rowsFromAoA(aoa,sourceName,rowPrefix='row',sourceLabel=sourceName){
+    const hdr=await resolveHeaderMapping(aoa,sourceLabel);if(!hdr)return null;const out=[],invalidDates=[],providerNames=new Map(),serviceNames=new Map(),statusNames=new Map(),poeNames=new Map(),{map,rowIndex}=hdr;let ignoredInactiveRows=0;
+    for(let i=rowIndex+1;i<aoa.length;i++){const row=aoa[i]||[];if(map.activeStatus!=null&&normalizedKey(row[map.activeStatus])==='inactive'){ignoredInactiveRows++;continue}const providerRaw=cleanText(row[map.provider]);if(!providerRaw)continue;const provider=canonicalValue(providerRaw,providerNames),service=canonicalValue(row[map.service],serviceNames,'(Blank Service)'),status=canonicalValue(row[map.status],statusNames,'(Blank Status)'),poe=canonicalValue(map.poe!=null?row[map.poe]:'',poeNames,'(Blank POE)');const dos=parseDateValue(row[map.dos]),enteredOn=parseDateValue(row[map.enteredOn]);if(!dos||!enteredOn){invalidDates.push(`${rowPrefix} ${i+1}`);continue}const start=parseTime(row[map.start]),end=parseTime(row[map.end]),minutes=durationMinutes(start,end),businessDays=businessDaysBetween(dos,enteredOn);out.push({childId:cleanText(map.childId!=null?row[map.childId]:''),lastName:cleanText(map.lastName!=null?row[map.lastName]:''),firstName:cleanText(map.firstName!=null?row[map.firstName]:''),sc:cleanText(map.sc!=null?row[map.sc]:''),location:cleanText(map.location!=null?row[map.location]:''),byWhom:cleanText(map.byWhom!=null?row[map.byWhom]:''),provider:provider.label,providerKey:provider.key,service:service.label,serviceKey:service.key||'__blank__',poe:poe.label,poeKey:poe.key||'__blank__',status:status.label,statusKey:status.key||'__blank__',dos:dateIso(dos),enteredOn:dateIso(enteredOn),monthKey:monthKeyFromDate(dos),businessDays,over10BusinessDays:businessDays>10,minutes,file:sourceName,row:i+1})}
+    return{rows:out,invalidDates,ignoredInactiveRows};
+  }
+  async function workbookRows(arrayBuffer,fileName){const sheets=await workbookAoAs(arrayBuffer),out=[],usedSheets=[],skippedSheets=[],invalidDates=[];let ignoredInactiveRows=0;for(const item of sheets){if(!item.aoa.length){skippedSheets.push(item.name);continue}const parsed=await rowsFromAoA(item.aoa,fileName,`${item.name} row`,`${fileName} — ${item.name}`);if(!parsed){skippedSheets.push(item.name);continue}usedSheets.push(item.name);for(const row of parsed.rows){row.sheet=item.name;out.push(row)}invalidDates.push(...parsed.invalidDates);ignoredInactiveRows+=parsed.ignoredInactiveRows||0}if(!usedSheets.length)throw new Error(`No worksheet contains a recognizable report table. Expected fields include ${REQUIRED_LABELS.join(', ')}.`);if(invalidDates.length){const sample=invalidDates.slice(0,5).join(', '),more=invalidDates.length>5?` and ${invalidDates.length-5} more`:'';throw new Error(`DOS or Entered On is missing or invalid on ${invalidDates.length} visit row${invalidDates.length===1?'':'s'} (${sample}${more}). Fix the source data and import again.`)}if(!out.length)throw new Error('No visit rows were found beneath the detected headers.');return{rows:out,usedSheets,skippedSheets,invalidTimeRows:out.filter(r=>r.minutes==null).length,ignoredInactiveRows}}
   async function parseFile(file){return workbookRows(await file.arrayBuffer(),file.name)}
-  function parseDelimitedText(text){
-    text=String(text||'').replace(/^\uFEFF/,'');if(!text.trim())return[];
-    const first=(text.split(/\r?\n/).find(line=>line.trim())||''),delimiter=first.includes('\t')?'\t':',';const rows=[];let row=[],cell='',quoted=false;
-    for(let i=0;i<text.length;i++){const ch=text[i];if(ch==='"'){if(quoted&&text[i+1]==='"'){cell+='"';i++}else quoted=!quoted;continue}if(ch===delimiter&&!quoted){row.push(cell);cell='';continue}if((ch==='\n'||ch==='\r')&&!quoted){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(cell);if(row.some(v=>cleanText(v)))rows.push(row);row=[];cell='';continue}cell+=ch}
-    row.push(cell);if(row.some(v=>cleanText(v)))rows.push(row);return rows;
-  }
-  function parsePastedData(text,name){
-    const aoa=parseDelimitedText(text),parsed=rowsFromAoA(aoa,name,'row');if(!parsed)throw new Error(`Pasted data must include all required columns: ${REQUIRED_LABELS.join(', ')}.`);
-    if(parsed.invalidDates.length){const sample=parsed.invalidDates.slice(0,5).join(', '),more=parsed.invalidDates.length>5?` and ${parsed.invalidDates.length-5} more`:'';throw new Error(`DOS or Entered On is missing or invalid on ${parsed.invalidDates.length} visit row${parsed.invalidDates.length===1?'':'s'} (${sample}${more}). Fix the pasted data and try again.`)}
-    if(!parsed.rows.length)throw new Error('No visit rows were found beneath the pasted header row.');
-    return{rows:parsed.rows,usedSheets:[],skippedSheets:[],invalidTimeRows:parsed.rows.filter(r=>r.minutes==null).length};
-  }
+  function parseDelimitedText(text){text=String(text||'').replace(/^\uFEFF/,'');if(!text.trim())return[];const parseWith=delimiter=>{const rows=[];let row=[],cell='',quoted=false;for(let i=0;i<text.length;i++){const ch=text[i];if(ch==='"'){if(quoted&&text[i+1]==='"'){cell+='"';i++}else quoted=!quoted;continue}if(ch===delimiter&&!quoted){row.push(cell);cell='';continue}if((ch==='\n'||ch==='\r')&&!quoted){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(cell);if(row.some(v=>cleanText(v)))rows.push(row);row=[];cell='';continue}cell+=ch}row.push(cell);if(row.some(v=>cleanText(v)))rows.push(row);return rows};const tabRows=parseWith('\t'),csvRows=parseWith(','),tabScore=findHeaderCandidate(tabRows)?.score||0,csvScore=findHeaderCandidate(csvRows)?.score||0;if(tabScore||csvScore)return tabScore>=csvScore?tabRows:csvRows;return tabRows.some(r=>r.length>1)?tabRows:csvRows}
+  async function parsePastedData(text,name){const aoa=parseDelimitedText(text),parsed=await rowsFromAoA(aoa,name,'row',name);if(!parsed)throw new Error(`Pasted data must include a recognizable report table. Expected fields include ${REQUIRED_LABELS.join(', ')}.`);if(parsed.invalidDates.length){const sample=parsed.invalidDates.slice(0,5).join(', '),more=parsed.invalidDates.length>5?` and ${parsed.invalidDates.length-5} more`:'';throw new Error(`DOS or Entered On is missing or invalid on ${parsed.invalidDates.length} visit row${parsed.invalidDates.length===1?'':'s'} (${sample}${more}). Fix the pasted data and try again.`)}if(!parsed.rows.length)throw new Error('No visit rows were found beneath the pasted header row.');return{rows:parsed.rows,usedSheets:[],skippedSheets:[],invalidTimeRows:parsed.rows.filter(r=>r.minutes==null).length,ignoredInactiveRows:parsed.ignoredInactiveRows||0}}
 
   function selectedRecord(){return state.savedReports.find(r=>r.id===state.selectedReportId)||null}
   function reportLabel(rec){return`${rec.name} • ${fmtDate(rec.importedAt)}`}
@@ -536,7 +589,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const rec=selectedRecord();if(!rec)return;
     const details=[`${rec.rows.length.toLocaleString()} visit rows`,rec.sourceType==='paste'?'Pasted data':`${rec.sheets} worksheet${rec.sheets===1?'':'s'}`];
     if(rec.skippedSheets?.length)details.push(`${rec.skippedSheets.length} skipped sheet${rec.skippedSheets.length===1?'':'s'}`);
-    if(rec.invalidTimeRows)details.push(`${rec.invalidTimeRows} invalid time row${rec.invalidTimeRows===1?'':'s'} excluded from time metrics`);
+    if(rec.ignoredInactiveRows)details.push(`${rec.ignoredInactiveRows} inactive row${rec.ignoredInactiveRows===1?'':'s'} ignored`);if(rec.invalidTimeRows)details.push(`${rec.invalidTimeRows} invalid time row${rec.invalidTimeRows===1?'':'s'} excluded from time metrics`);
     setSource(rec.invalidTimeRows?'warn':'good',rec.name,details.join(' • '));
     els.lastRefresh.textContent=rec.importedAt?`Imported ${fmtDate(rec.importedAt)}`:'Loaded';
   }
@@ -557,7 +610,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         try{
           const parsed=await parseFile(file),record={
             id:newId(),name:file.name,sourceType:'excel',rows:parsed.rows,sheets:parsed.usedSheets.length,skippedSheets:parsed.skippedSheets,
-            invalidTimeRows:parsed.invalidTimeRows,size:file.size||0,lastModified:file.lastModified||0,importedAt:new Date().toISOString()
+            invalidTimeRows:parsed.invalidTimeRows,ignoredInactiveRows:parsed.ignoredInactiveRows||0,size:file.size||0,lastModified:file.lastModified||0,importedAt:new Date().toISOString()
           };
           if(state.db)await dbPutReport(record);else state.savedReports.push(record);
           imported.push(record);
@@ -575,31 +628,31 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   async function importPastedData(){
     const text=els.pasteDataInput.value,name=cleanText(els.pasteReportName.value)||`Pasted Report ${new Date().toLocaleDateString()}`;if(!text.trim()){showError('Paste report data before importing.');return}
     els.pasteImport.disabled=true;showError('');
-    try{const parsed=parsePastedData(text,name),record={id:newId(),name,sourceType:'paste',rows:parsed.rows,sheets:0,skippedSheets:[],invalidTimeRows:parsed.invalidTimeRows,size:new Blob([text]).size,lastModified:Date.now(),importedAt:new Date().toISOString()};if(state.db)await dbPutReport(record);else state.savedReports.push(record);closePasteModal();await reloadSavedReports(record.id);state.lastLoad=new Date();updateSelectedSource()}catch(err){showError(err.message||String(err))}finally{els.pasteImport.disabled=false}
+    try{const parsed=await parsePastedData(text,name),record={id:newId(),name,sourceType:'paste',rows:parsed.rows,sheets:0,skippedSheets:[],invalidTimeRows:parsed.invalidTimeRows,ignoredInactiveRows:parsed.ignoredInactiveRows||0,size:new Blob([text]).size,lastModified:Date.now(),importedAt:new Date().toISOString()};if(state.db)await dbPutReport(record);else state.savedReports.push(record);closePasteModal();await reloadSavedReports(record.id);state.lastLoad=new Date();updateSelectedSource()}catch(err){showError(err.message||String(err))}finally{els.pasteImport.disabled=false}
   }
 
   function availableMonths(){return[...new Set(state.rows.map(r=>r.monthKey).filter(Boolean))].sort().reverse()}
   function latestMonth(){return availableMonths()[0]||''}
   function multiValues(el){return new Set([...el.querySelectorAll('.multi-option input[data-value]:checked')].map(i=>i.dataset.value).filter(Boolean))}
   function closeMultiSelect(el){el.classList.remove('open');el.querySelector('.multi-select-menu').hidden=true;el.querySelector('.multi-select-trigger').setAttribute('aria-expanded','false')}
-  function closeAllMultiSelects(except=null){[els.monthFilter,els.providerFilter,els.serviceFilter].forEach(el=>{if(el!==except)closeMultiSelect(el)})}
+  function closeAllMultiSelects(except=null){[els.monthFilter,els.providerFilter,els.serviceFilter,els.poeFilter].forEach(el=>{if(el!==except)closeMultiSelect(el)})}
   function multiSummary(el,selected,allLabel){const singular=el.dataset.labelSingular,plural=el.dataset.labelPlural;if(!selected.size)return allLabel;if(selected.size===1)return[...selected][0];return`${selected.size} ${plural}`}
   function setMultiOptions(el,options,selectedValues,allLabel){
     const selected=new Set([...selectedValues].filter(v=>options.some(o=>o.value===v))),menu=el.querySelector('.multi-select-menu');
     menu.innerHTML=`<label class="multi-option all-option"><input type="checkbox" data-value=""${selected.size?'':' checked'}><span>${esc(allLabel)}</span></label>`+options.map(o=>`<label class="multi-option"><input type="checkbox" data-value="${esc(o.value)}"${selected.has(o.value)?' checked':''}><span title="${esc(o.label)}">${esc(o.label)}</span></label>`).join('');
     el.querySelector('.multi-select-trigger').textContent=multiSummary(el,selected,allLabel);el.classList.toggle('disabled',!options.length);el.querySelector('.multi-select-trigger').disabled=!options.length;
   }
-  function setMultiValues(el,values){const wanted=new Set(values);el.querySelectorAll('.multi-option input[data-value]').forEach(i=>i.checked=i.dataset.value?wanted.has(i.dataset.value):wanted.size===0);const allLabel=el===els.monthFilter?'All Months':el===els.providerFilter?'All Providers':'All Services';el.querySelector('.multi-select-trigger').textContent=multiSummary(el,wanted,allLabel)}
+  function setMultiValues(el,values){const wanted=new Set(values);el.querySelectorAll('.multi-option input[data-value]').forEach(i=>i.checked=i.dataset.value?wanted.has(i.dataset.value):wanted.size===0);const allLabel=el===els.monthFilter?'All Months':el===els.providerFilter?'All Providers':el===els.serviceFilter?'All Services':'All POE';el.querySelector('.multi-select-trigger').textContent=multiSummary(el,wanted,allLabel)}
   function monthScopedRows(){const months=multiValues(els.monthFilter);return months.size?state.rows.filter(r=>months.has(r.monthKey)):state.rows}
   function populateFilters(reset=false){
-    const months=availableMonths(),curM=reset?new Set(months[0]?[months[0]]:[]):multiValues(els.monthFilter),curP=reset?new Set():multiValues(els.providerFilter),curS=reset?new Set():multiValues(els.serviceFilter);if(reset)els.searchInput.value='';
+    const months=availableMonths(),curM=reset?new Set(months[0]?[months[0]]:[]):multiValues(els.monthFilter),curP=reset?new Set():multiValues(els.providerFilter),curS=reset?new Set():multiValues(els.serviceFilter),curO=reset?new Set():multiValues(els.poeFilter);if(reset)els.searchInput.value='';
     setMultiOptions(els.monthFilter,months.map(v=>({value:v,label:monthLabel(v)})),curM,'All Months');const scoped=monthScopedRows();
-    const providers=[...new Set(scoped.map(r=>r.provider).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),services=[...new Set(scoped.map(r=>r.service).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
-    setMultiOptions(els.providerFilter,providers.map(v=>({value:v,label:v})),curP,'All Providers');setMultiOptions(els.serviceFilter,services.map(v=>({value:v,label:v})),curS,'All Services');
+    const providers=[...new Set(scoped.map(r=>r.provider).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),services=[...new Set(scoped.map(r=>r.service).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),poes=[...new Set(scoped.map(r=>r.poe).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+    setMultiOptions(els.providerFilter,providers.map(v=>({value:v,label:v})),curP,'All Providers');setMultiOptions(els.serviceFilter,services.map(v=>({value:v,label:v})),curS,'All Services');setMultiOptions(els.poeFilter,poes.map(v=>({value:v,label:v})),curO,'All POE');
   }
   function baseFilteredRows(){
-    const providers=multiValues(els.providerFilter),services=multiValues(els.serviceFilter),q=normalizedKey(els.searchInput.value);
-    return monthScopedRows().filter(r=>{if(providers.size&&!providers.has(r.provider))return false;if(services.size&&!services.has(r.service))return false;if(q&&!normalizedKey(`${r.provider} ${r.service}`).includes(q))return false;return true});
+    const providers=multiValues(els.providerFilter),services=multiValues(els.serviceFilter),poes=multiValues(els.poeFilter),q=normalizedKey(els.searchInput.value);
+    return monthScopedRows().filter(r=>{if(providers.size&&!providers.has(r.provider))return false;if(services.size&&!services.has(r.service))return false;if(poes.size&&!poes.has(r.poe))return false;if(q&&!normalizedKey(`${r.provider} ${r.service}`).includes(q))return false;return true});
   }
 
   function newAggregate(){return{visits:0,delivered:0,over10:0,minutes:0,invalidTimes:0,counts:new Map()}}
@@ -633,12 +686,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const totals=finalizeAggregate(all,statuses);
     return{statuses,providers:providers.map(p=>p.provider),report,allTotal:totals.visits,allDelivered:totals.delivered,overallCancel,minutes:totals.minutes,units:totals.units,invalidTimes:totals.invalidTimes};
   }
-  function productivityClass(v){if(v>=1)return'good';if(v>=.8)return'warn';return'bad'}
   function tableColumnDefs(summary){
     const cols=[{key:'provider',label:'Provider',left:true,cell:r=>esc(r.provider)},{key:'service',label:'Service',left:true,cell:r=>r.isTotal?'<b>TOTAL</b>':esc(r.service)}];
     summary.statuses.forEach(status=>cols.push({key:`status:${normalizedKey(status)}`,label:status,cell:r=>fmtInt(r.counts[status]||0)}));
-    cols.push({key:'visits',label:'Total Visits',cell:r=>fmtInt(r.visits)},{key:'over10',label:'> 10 Business Days',cell:r=>r.over10>0?'Yes':'No'},{key:'cancel',label:'Cancellation %',cell:r=>r.isTotal?fmtPct(r.cancel):''},{key:'overallCancel',label:'Overall Cancellation %',cell:r=>r.isTotal?fmtPct(r.overallCancel):''},{key:'time',label:'Total Time',cell:r=>fmtTime(r.minutes)},{key:'units',label:'15 Min Units',cell:r=>fmtInt(r.units)});
-    TARGETS.forEach(h=>cols.push({key:`productivity:${h}`,label:`${h} Hr/Wk`,cell:r=>{if(!r.isTotal)return'';const v=r.units/(h*16);return`<span class="pct ${productivityClass(v)}">${fmtPct(v)}</span>`}}));return cols;
+    cols.push({key:'visits',label:'Total Visits',cell:r=>fmtInt(r.visits)},{key:'over10',label:'> 10 Business Days',cell:r=>r.over10>0?'<span class="late-yes">Yes</span>':'No'},{key:'cancel',label:'Cancellation %',cell:r=>r.isTotal?fmtPct(r.cancel):''},{key:'overallCancel',label:'Overall Cancellation %',cell:r=>r.isTotal?fmtPct(r.overallCancel):''},{key:'time',label:'Total Time',cell:r=>fmtTime(r.minutes)},{key:'units',label:'15 Min Units',cell:r=>fmtInt(r.units)});
+    TARGETS.forEach(h=>cols.push({key:`productivity:${h}`,label:`${h} Hr/Wk`,cell:r=>{if(!r.isTotal)return'';return fmtPct(r.units/(h*16))}}));return cols;
   }
   function visibleTableColumns(summary){const all=tableColumnDefs(summary);state.lastTableColumns=all;const visible=all.filter(c=>!state.hiddenColumns.has(c.key));return visible.length?visible:[all[0]]}
   function renderTable(summary){
@@ -837,6 +889,15 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     try{const images=[];for(let i=0;i<configs.length;i++){const card=cards[i];if(!card?.querySelector('.chart-svg'))continue;images.push(await chartJpeg(card,configs[i]))}if(!images.length)throw new Error('There are no graph results to export.');const pdf=buildPdf(images),base=(selectedRecord()?.name||'provider-report').replace(/\.(xlsx|xlsm)$/i,'').replace(/[\\/:*?"<>|]+/g,'_'),url=URL.createObjectURL(new Blob([pdf],{type:'application/pdf'})),a=document.createElement('a');a.href=url;a.download=`${base}_graphs.pdf`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),0)}catch(err){showError(err.message||String(err))}finally{els.exportPdfBtn.disabled=!selectedRecord()||!visibleChartConfigs().length}
   }
 
+  function renderFrequencies(rows){
+    const hasReport=!!selectedRecord(),hasRows=rows.length>0;
+    els.frequenciesTable.tBodies[0].innerHTML=rows.map(r=>`<tr><td>${esc(r.childId||'')}</td><td>${esc(r.lastName||'')}</td><td>${esc(r.firstName||'')}</td><td>${esc(r.sc||'')}</td><td>${esc(r.service||'')}</td><td>${esc(r.provider||'')}</td><td>${esc(r.dos||'')}</td><td>${esc(r.enteredOn||'')}</td><td>${esc(r.status||'')}</td><td>${esc(r.location||'')}</td><td>${esc(r.byWhom||'')}</td></tr>`).join('');
+    els.frequenciesTable.style.display=hasRows?'table':'none';
+    els.frequenciesEmpty.style.display=hasRows?'none':'block';
+    els.frequenciesEmpty.innerHTML=hasRows?'':hasReport?'<strong>No matching visits</strong><div>Adjust the current filters to show frequency rows.</div>':'<strong>No data</strong><div>Load a report to view frequencies.</div>';
+    els.frequenciesMeta.textContent=hasReport?`${selectedRecord().name} • ${rows.length.toLocaleString()} visit row${rows.length===1?'':'s'}`:'No report selected';
+  }
+
   function renderReportSelect(){
     const current=state.selectedReportId||'';els.reportSelect.innerHTML='';
     if(!state.savedReports.length){els.reportSelect.add(new Option('No reports',''));els.reportSelect.disabled=true;els.removeReportBtn.disabled=true;els.deleteAllReportsBtn.disabled=true;return}
@@ -851,17 +912,18 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
   function toggleTheme(){applyTheme(state.theme==='dark'?'light':'dark')}
   function renderTabs(){
-    const graphsActive=state.activeTab==='graphs';els.summaryTab.classList.toggle('active',!graphsActive);els.graphsTab.classList.toggle('active',graphsActive);
-    els.summaryTab.setAttribute('aria-selected',String(!graphsActive));els.graphsTab.setAttribute('aria-selected',String(graphsActive));els.summaryTab.tabIndex=graphsActive?-1:0;els.graphsTab.tabIndex=graphsActive?0:-1;els.summaryView.hidden=graphsActive;els.graphsView.hidden=!graphsActive;
+    const active=state.activeTab;
+    const tabs=[['summary',els.summaryTab,els.summaryView],['graphs',els.graphsTab,els.graphsView],['frequencies',els.frequenciesTab,els.frequenciesView]];
+    for(const [name,tab,view] of tabs){const isActive=active===name;tab.classList.toggle('active',isActive);tab.setAttribute('aria-selected',String(isActive));tab.tabIndex=isActive?0:-1;view.hidden=!isActive}
   }
-  function setActiveTab(tab,persist=true){state.activeTab=tab==='graphs'?'graphs':'summary';renderTabs();if(state.activeTab==='graphs')requestAnimationFrame(renderCharts);if(persist&&state.db)dbPutMeta('activeTab',state.activeTab).catch(()=>{})}
+  function setActiveTab(tab,persist=true){state.activeTab=['summary','graphs','frequencies'].includes(tab)?tab:'summary';renderTabs();if(state.activeTab==='graphs')requestAnimationFrame(renderCharts);if(state.activeTab==='frequencies')renderFrequencies(baseFilteredRows());if(persist&&state.db)dbPutMeta('activeTab',state.activeTab).catch(()=>{})}
 
   function render(){
     const hasReport=!!selectedRecord();
     document.body.classList.toggle('has-report',hasReport);
     const rows=baseFilteredRows(),monthRows=monthScopedRows(),globalSummary=summarize(monthRows),summary=summarize(rows,globalSummary.overallCancel,globalSummary.statuses);
-    const monthSel=multiValues(els.monthFilter),providerSel=multiValues(els.providerFilter),serviceSel=multiValues(els.serviceFilter);els.clearFiltersBtn.disabled=!hasReport||(monthSel.size===1&&monthSel.has(latestMonth())&&!providerSel.size&&!serviceSel.size&&!els.searchInput.value.trim());
-    renderKPIs(summary,globalSummary);renderTable(summary);renderStatus(rows);renderReportSelect();renderTabs();if(state.activeTab==='graphs')renderCharts();
+    const monthSel=multiValues(els.monthFilter),providerSel=multiValues(els.providerFilter),serviceSel=multiValues(els.serviceFilter),poeSel=multiValues(els.poeFilter);els.clearFiltersBtn.disabled=!hasReport||(monthSel.size===1&&monthSel.has(latestMonth())&&!providerSel.size&&!serviceSel.size&&!poeSel.size&&!els.searchInput.value.trim());
+    renderKPIs(summary,globalSummary);renderTable(summary);renderStatus(rows);renderReportSelect();renderTabs();if(state.activeTab==='graphs')renderCharts();if(state.activeTab==='frequencies')renderFrequencies(rows);
   }
   function exportVisibleCsv(){
     const rows=[...els.reportTable.querySelectorAll('tr')];if(!rows.length||els.reportTable.style.display==='none')return;
@@ -887,7 +949,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   els.fileInput.addEventListener('change',async e=>{try{await importFileArray(e.target.files)}catch(err){showError(err.message||String(err));setSource('bad','Could not read Excel files',err.message||String(err));els.addFilesBtn.disabled=false}});
   els.reportSelect.addEventListener('change',e=>selectReport(e.target.value));els.removeReportBtn.addEventListener('click',()=>removeReport(state.selectedReportId));els.deleteAllReportsBtn.addEventListener('click',deleteAllReports);els.exportCsvBtn.addEventListener('click',exportVisibleCsv);els.columnsBtn.addEventListener('click',openColumnsModal);els.exportPdfBtn.addEventListener('click',exportGraphsPdf);
   els.viewTabs.addEventListener('click',e=>{const tab=e.target.closest('.view-tab');if(tab)setActiveTab(tab.dataset.tab)});
-  els.viewTabs.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=[els.summaryTab,els.graphsTab];let i=tabs.indexOf(document.activeElement);if(e.key==='Home')i=0;else if(e.key==='End')i=tabs.length-1;else if(e.key==='ArrowRight')i=(i+1)%tabs.length;else i=(i-1+tabs.length)%tabs.length;tabs[i].focus();setActiveTab(tabs[i].dataset.tab)});
+  els.viewTabs.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=[els.summaryTab,els.graphsTab,els.frequenciesTab];let i=tabs.indexOf(document.activeElement);if(e.key==='Home')i=0;else if(e.key==='End')i=tabs.length-1;else if(e.key==='ArrowRight')i=(i+1)%tabs.length;else i=(i-1+tabs.length)%tabs.length;tabs[i].focus();setActiveTab(tabs[i].dataset.tab)});
   els.addChartBtn.addEventListener('click',()=>beginChartEdit());
   els.chartsGrid.addEventListener('click',e=>{const edit=e.target.closest('.chart-edit'),remove=e.target.closest('.chart-remove'),done=e.target.closest('.chart-done'),cancel=e.target.closest('.chart-cancel');if(edit)beginChartEdit(edit.dataset.id);else if(remove)removeChart(remove.dataset.id);else if(done)finishChartEdit();else if(cancel)cancelChartEdit()});
   els.chartsGrid.addEventListener('input',e=>{const field=e.target.closest('.chart-field');if(field&&field.dataset.field==='title')updateChartDraftFromField(field.dataset.field,field.value)});
@@ -895,19 +957,20 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   els.confirmModalCancel.addEventListener('click',()=>closeConfirmModal(false));els.confirmModalConfirm.addEventListener('click',()=>closeConfirmModal(true));els.confirmModal.addEventListener('click',e=>{if(e.target===els.confirmModal)closeConfirmModal(false)});
   els.columnsList.addEventListener('change',e=>{const input=e.target.closest('input[data-column-key]');if(!input||!state.columnDraftHidden)return;if(input.checked)state.columnDraftHidden.delete(input.dataset.columnKey);else state.columnDraftHidden.add(input.dataset.columnKey)});els.columnsShowAll.addEventListener('click',()=>{state.columnDraftHidden=new Set();renderColumnsList()});els.columnsCancel.addEventListener('click',()=>closeColumnsModal(false));els.columnsDone.addEventListener('click',()=>closeColumnsModal(true));els.columnsModal.addEventListener('click',e=>{if(e.target===els.columnsModal)closeColumnsModal(false)});
   els.pasteCancel.addEventListener('click',closePasteModal);els.pasteImport.addEventListener('click',importPastedData);els.pasteModal.addEventListener('click',e=>{if(e.target===els.pasteModal)closePasteModal()});
-  [els.monthFilter,els.providerFilter,els.serviceFilter].forEach(el=>{el.querySelector('.multi-select-trigger').addEventListener('click',()=>{const open=!el.classList.contains('open');closeAllMultiSelects(el);el.classList.toggle('open',open);el.querySelector('.multi-select-menu').hidden=!open;el.querySelector('.multi-select-trigger').setAttribute('aria-expanded',String(open))});el.querySelector('.multi-select-menu').addEventListener('change',e=>{const input=e.target.closest('input[data-value]');if(!input)return;const all=el.querySelector('input[data-value=""]');if(input.dataset.value===''){if(input.checked)el.querySelectorAll('input[data-value]:not([data-value=""])').forEach(i=>i.checked=false);else input.checked=true}else{all.checked=false;const any=[...el.querySelectorAll('input[data-value]:not([data-value=""])')].some(i=>i.checked);if(!any)all.checked=true}const allLabel=el===els.monthFilter?'All Months':el===els.providerFilter?'All Providers':'All Services';el.querySelector('.multi-select-trigger').textContent=multiSummary(el,multiValues(el),allLabel);if(el===els.monthFilter)populateFilters(false);render()})});
+  els.mappingCancel.addEventListener('click',()=>closeMappingModal(null));els.mappingApply.addEventListener('click',()=>{const selects=[...els.mappingList.querySelectorAll('.mapping-field')],mapping={},used=new Set();for(const select of selects){if(select.value===''){showError(`Select a source column for ${FIELD_DEFS[select.dataset.field].label}.`);select.focus();return}const index=Number(select.value);if(used.has(index)){showError('Each required field must use a different source column.');select.focus();return}used.add(index);mapping[select.dataset.field]=index}showError('');closeMappingModal({mapping,remember:els.mappingRemember.checked})});els.mappingModal.addEventListener('click',e=>{if(e.target===els.mappingModal)closeMappingModal(null)});
+  [els.monthFilter,els.providerFilter,els.serviceFilter,els.poeFilter].forEach(el=>{el.querySelector('.multi-select-trigger').addEventListener('click',()=>{const open=!el.classList.contains('open');closeAllMultiSelects(el);el.classList.toggle('open',open);el.querySelector('.multi-select-menu').hidden=!open;el.querySelector('.multi-select-trigger').setAttribute('aria-expanded',String(open))});el.querySelector('.multi-select-menu').addEventListener('change',e=>{const input=e.target.closest('input[data-value]');if(!input)return;const all=el.querySelector('input[data-value=""]');if(input.dataset.value===''){if(input.checked)el.querySelectorAll('input[data-value]:not([data-value=""])').forEach(i=>i.checked=false);else input.checked=true}else{all.checked=false;const any=[...el.querySelectorAll('input[data-value]:not([data-value=""])')].some(i=>i.checked);if(!any)all.checked=true}const allLabel=el===els.monthFilter?'All Months':el===els.providerFilter?'All Providers':el===els.serviceFilter?'All Services':'All POE';el.querySelector('.multi-select-trigger').textContent=multiSummary(el,multiValues(el),allLabel);if(el===els.monthFilter)populateFilters(false);render()})});
   document.addEventListener('click',e=>{if(!e.target.closest('.multi-select'))closeAllMultiSelects()});
-  document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if([els.monthFilter,els.providerFilter,els.serviceFilter].some(el=>el.classList.contains('open')))closeAllMultiSelects();else if(!els.pasteModal.hidden)closePasteModal();else if(!els.columnsModal.hidden)closeColumnsModal(false);else if(state.editingChartId)cancelChartEdit();else if(!els.confirmModal.hidden)closeConfirmModal(false)});
+  document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if([els.monthFilter,els.providerFilter,els.serviceFilter,els.poeFilter].some(el=>el.classList.contains('open')))closeAllMultiSelects();else if(!els.mappingModal.hidden)closeMappingModal(null);else if(!els.pasteModal.hidden)closePasteModal();else if(!els.columnsModal.hidden)closeColumnsModal(false);else if(state.editingChartId)cancelChartEdit();else if(!els.confirmModal.hidden)closeConfirmModal(false)});
   els.searchInput.addEventListener('input',render);
-  els.clearFiltersBtn.addEventListener('click',()=>{setMultiValues(els.monthFilter,latestMonth()?[latestMonth()]:[]);setMultiValues(els.providerFilter,[]);setMultiValues(els.serviceFilter,[]);els.searchInput.value='';populateFilters(false);render()});
+  els.clearFiltersBtn.addEventListener('click',()=>{setMultiValues(els.monthFilter,latestMonth()?[latestMonth()]:[]);setMultiValues(els.providerFilter,[]);setMultiValues(els.serviceFilter,[]);setMultiValues(els.poeFilter,[]);els.searchInput.value='';populateFilters(false);render()});
   if(compactChartMedia.addEventListener)compactChartMedia.addEventListener('change',()=>{if(state.activeTab==='graphs')renderCharts()});
 
 
   async function init(){
     state.charts=defaultCharts();applyTheme(state.theme,false);render();
     try{
-      state.db=await openDatabase();const savedSelection=await dbGetMeta('selectedReportId'),savedCharts=await dbGetMeta('charts'),savedTab=await dbGetMeta('activeTab'),savedTheme=await dbGetMeta('theme'),savedHiddenColumns=await dbGetMeta('hiddenColumns');
-      state.selectedReportId=savedSelection?.value||null;state.charts=normalizeCharts(Array.isArray(savedCharts?.value)?savedCharts.value:defaultCharts());state.activeTab=savedTab?.value==='graphs'?'graphs':'summary';state.hiddenColumns=new Set(Array.isArray(savedHiddenColumns?.value)?savedHiddenColumns.value:[]);
+      state.db=await openDatabase();const savedSelection=await dbGetMeta('selectedReportId'),savedCharts=await dbGetMeta('charts'),savedTab=await dbGetMeta('activeTab'),savedTheme=await dbGetMeta('theme'),savedHiddenColumns=await dbGetMeta('hiddenColumns'),savedHeaderAliases=await dbGetMeta('headerAliases');
+      state.selectedReportId=savedSelection?.value||null;state.charts=normalizeCharts(Array.isArray(savedCharts?.value)?savedCharts.value:defaultCharts());state.activeTab=['summary','graphs','frequencies'].includes(savedTab?.value)?savedTab.value:'summary';state.hiddenColumns=new Set(Array.isArray(savedHiddenColumns?.value)?savedHiddenColumns.value:[]);state.learnedAliases=Object.fromEntries(Object.entries(savedHeaderAliases?.value||{}).filter(([,field])=>FIELD_DEFS[field]));
       applyTheme(savedTheme?.value==='dark'?'dark':savedTheme?.value==='light'?'light':state.theme,false);await saveCharts();await reloadSavedReports();updateSelectedSource();
     }catch(err){state.persistenceAvailable=false;state.db=null;setSource('bad','Report history unavailable','Reports will work for this session, but previously loaded reports will not persist after closing the browser.');showError(`Report history could not be opened: ${err.message||String(err)}`);render()}
   }
