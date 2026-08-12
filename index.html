@@ -40,7 +40,7 @@
     .app{width:100%;max-width:none;margin:0;padding:12px 14px 14px}
     .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:10px}
     .brand h1{font-size:20px;line-height:1.2;margin:0 0 3px;font-weight:760;letter-spacing:-.025em}
-    .brand .sub{color:var(--muted);font-size:11.5px}
+    .brand .sub{color:var(--muted);font-size:11.5px}.app-version{display:inline-block;margin-left:7px;padding-left:7px;border-left:1px solid var(--line);font-variant-numeric:tabular-nums}
     .actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
     .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:var(--control);color:var(--text);border-radius:7px;padding:7px 10px;min-height:34px;cursor:pointer;font-weight:650;white-space:nowrap;transition:background .14s,border-color .14s,transform .08s}
     .btn:hover{border-color:color-mix(in srgb,var(--line) 55%,var(--text));background:var(--control-hover)}
@@ -107,7 +107,7 @@
       table{font-size:12px}thead th,tbody td{padding:8px 9px}thead th:first-child,tbody td:first-child{position:sticky;left:0;min-width:118px;max-width:145px;overflow:hidden;text-overflow:ellipsis;z-index:2}thead th:first-child{z-index:5;background:var(--table-head)}tbody td:first-child{background:var(--panel)}tbody tr.total td:first-child{background:var(--total-bg)}
       .footer-note{padding:9px 11px;line-height:1.45}.status-list{padding:11px}.status-item{margin-bottom:11px}
       .charts-grid{padding:8px;gap:10px}.chart-card{flex:1 1 100%;width:100%;max-width:none;min-width:0;height:480px;border-radius:10px}.chart-card.editing{height:auto;min-height:650px}.chart-card-head{padding:10px 11px;min-height:64px;gap:8px}.chart-card-actions{gap:5px}.chart-card-actions .btn{min-height:40px;padding:7px 9px}.chart-body{padding:8px;overflow:auto;-webkit-overflow-scrolling:touch}.chart-inline-editor{grid-template-columns:1fr 1fr;gap:8px;padding:10px 11px}.chart-inline-editor .field.title-field{grid-column:1/-1}.chart-inline-editor label{font-size:10.5px}
-      .errorbox{max-height:34vh;overflow:auto;overflow-wrap:anywhere;line-height:1.45}.multi-select{min-width:0;width:100%}.multi-select-menu{max-height:46vh;width:min(340px,calc(100vw - 20px));max-width:calc(100vw - 20px)}#serviceFilter .multi-select-menu{left:auto;right:0}.columns-list{grid-template-columns:1fr}
+      .errorbox{max-height:34vh;overflow:auto;overflow-wrap:anywhere;line-height:1.45}.multi-select{min-width:0;width:100%}.multi-select-menu{position:fixed;left:10px;right:10px;top:auto;width:auto;max-width:none;max-height:46vh}.columns-list{grid-template-columns:1fr}
     }
     @media(max-width:520px){
       .chart-inline-editor{grid-template-columns:1fr}.chart-inline-editor .field.title-field{grid-column:auto}.chart-card.editing{min-height:760px}
@@ -130,7 +130,7 @@
   <div class="topbar">
     <div class="brand">
       <h1>Provider Visit Reporting Dashboard</h1>
-      <div class="sub">Provider and service reporting from Excel or pasted data</div>
+      <div class="sub">Provider and service reporting from Excel or pasted data <span class="app-version">v1.1</span></div>
     </div>
     <div class="actions">
       <button class="btn primary" id="addFilesBtn" type="button">Add Excel</button>
@@ -160,7 +160,7 @@
 
   <div class="toolbar">
     <span class="label">Filters</span>
-    <div id="monthFilter" class="multi-select filter" data-label-singular="DOS Month" data-label-plural="DOS Months"><button class="multi-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All DOS Months</button><div class="multi-select-menu" hidden></div></div>
+    <div id="monthFilter" class="multi-select filter" data-label-singular="Month" data-label-plural="Months"><button class="multi-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All Months</button><div class="multi-select-menu" hidden></div></div>
     <div id="providerFilter" class="multi-select filter" data-label-singular="Provider" data-label-plural="Providers"><button class="multi-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All Providers</button><div class="multi-select-menu" hidden></div></div>
     <div id="serviceFilter" class="multi-select filter" data-label-singular="Service" data-label-plural="Services"><button class="multi-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All Services</button><div class="multi-select-menu" hidden></div></div>
     <input id="searchInput" class="search" type="search" placeholder="Search provider or service…">
@@ -196,7 +196,7 @@
             <div>Use <b>Add Excel</b> or <b>Paste Data</b> to load a report.</div>
           </div>
         </div>
-        <div class="footer-note">Cancellation % and Overall Cancellation % appear only on provider TOTAL rows. Productivity is shown against 5–40 hr/week targets and appears only on TOTAL rows. &gt; 10 Business Days is calculated from DOS to Entered On using weekdays only. Time metrics exclude rows with missing or invalid start/end times.</div>
+        <div class="footer-note">Cancellation % and Overall Cancellation % appear only on provider TOTAL rows. Productivity is shown against 5–40 hr/week targets and appears only on TOTAL rows. &gt; 10 Business Days shows Yes when at least one visit in that summary row is more than 10 weekdays from DOS to Entered On; otherwise No. Time metrics exclude rows with missing or invalid start/end times.</div>
       </section>
 
       <aside class="side">
@@ -271,8 +271,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   const REQUIRED = ['provider','service','status','dos','enteredOn','start','end'];
   const REQUIRED_LABELS = ['Provider','Service','Status','DOS','Entered On','START_TIME','END_TIME'];
   const TARGETS = [5,10,15,20,25,30,35,40];
-  const CHART_METRICS={visits:'Total Visits',delivered:'Delivered Visits',cancellations:'Cancelled Visits',over10:'> 10 Business Days',cancellationPct:'Cancellation %',units:'15 Min Units',hours:'Total Hours',productivity:'Productivity %'};
-  const CHART_GROUPS={provider:'Provider',service:'Service',status:'Status',month:'DOS Month'};
+  const CHART_METRICS={visits:'Total Visits',delivered:'Delivered Visits',cancellations:'Cancelled Visits',over10:'Visits > 10 Business Days',cancellationPct:'Cancellation %',units:'15 Min Units',hours:'Total Hours',productivity:'Productivity %'};
+  const CHART_GROUPS={provider:'Provider',service:'Service',status:'Status',month:'Month'};
   const CHART_COLORS=['var(--series-1)','var(--series-2)','var(--series-3)','var(--series-4)','var(--series-5)','var(--series-6)','var(--series-7)','var(--series-8)','var(--series-9)','var(--series-10)'];
   const DB_NAME = 'ProviderVisitReportingDashboardV3';
   const DB_VERSION = 1;
@@ -583,17 +583,17 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function multiValues(el){return new Set([...el.querySelectorAll('.multi-option input[data-value]:checked')].map(i=>i.dataset.value).filter(Boolean))}
   function closeMultiSelect(el){el.classList.remove('open');el.querySelector('.multi-select-menu').hidden=true;el.querySelector('.multi-select-trigger').setAttribute('aria-expanded','false')}
   function closeAllMultiSelects(except=null){[els.monthFilter,els.providerFilter,els.serviceFilter].forEach(el=>{if(el!==except)closeMultiSelect(el)})}
-  function multiSummary(el,selected,allLabel){const plural=el.dataset.labelPlural;if(!selected.size)return allLabel;if(selected.size===1){const value=[...selected][0];return el===els.monthFilter?monthLabel(value):value}return`${selected.size} ${plural}`}
+  function multiSummary(el,selected,allLabel){const singular=el.dataset.labelSingular,plural=el.dataset.labelPlural;if(!selected.size)return allLabel;if(selected.size===1)return[...selected][0];return`${selected.size} ${plural}`}
   function setMultiOptions(el,options,selectedValues,allLabel){
     const selected=new Set([...selectedValues].filter(v=>options.some(o=>o.value===v))),menu=el.querySelector('.multi-select-menu');
     menu.innerHTML=`<label class="multi-option all-option"><input type="checkbox" data-value=""${selected.size?'':' checked'}><span>${esc(allLabel)}</span></label>`+options.map(o=>`<label class="multi-option"><input type="checkbox" data-value="${esc(o.value)}"${selected.has(o.value)?' checked':''}><span title="${esc(o.label)}">${esc(o.label)}</span></label>`).join('');
     el.querySelector('.multi-select-trigger').textContent=multiSummary(el,selected,allLabel);el.classList.toggle('disabled',!options.length);el.querySelector('.multi-select-trigger').disabled=!options.length;
   }
-  function setMultiValues(el,values){const wanted=new Set(values);el.querySelectorAll('.multi-option input[data-value]').forEach(i=>i.checked=i.dataset.value?wanted.has(i.dataset.value):wanted.size===0);const allLabel=el===els.monthFilter?'All DOS Months':el===els.providerFilter?'All Providers':'All Services';el.querySelector('.multi-select-trigger').textContent=multiSummary(el,wanted,allLabel)}
+  function setMultiValues(el,values){const wanted=new Set(values);el.querySelectorAll('.multi-option input[data-value]').forEach(i=>i.checked=i.dataset.value?wanted.has(i.dataset.value):wanted.size===0);const allLabel=el===els.monthFilter?'All Months':el===els.providerFilter?'All Providers':'All Services';el.querySelector('.multi-select-trigger').textContent=multiSummary(el,wanted,allLabel)}
   function monthScopedRows(){const months=multiValues(els.monthFilter);return months.size?state.rows.filter(r=>months.has(r.monthKey)):state.rows}
   function populateFilters(reset=false){
     const months=availableMonths(),curM=reset?new Set(months[0]?[months[0]]:[]):multiValues(els.monthFilter),curP=reset?new Set():multiValues(els.providerFilter),curS=reset?new Set():multiValues(els.serviceFilter);if(reset)els.searchInput.value='';
-    setMultiOptions(els.monthFilter,months.map(v=>({value:v,label:monthLabel(v)})),curM,'All DOS Months');const scoped=monthScopedRows();
+    setMultiOptions(els.monthFilter,months.map(v=>({value:v,label:monthLabel(v)})),curM,'All Months');const scoped=monthScopedRows();
     const providers=[...new Set(scoped.map(r=>r.provider).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),services=[...new Set(scoped.map(r=>r.service).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
     setMultiOptions(els.providerFilter,providers.map(v=>({value:v,label:v})),curP,'All Providers');setMultiOptions(els.serviceFilter,services.map(v=>({value:v,label:v})),curS,'All Services');
   }
@@ -637,7 +637,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function tableColumnDefs(summary){
     const cols=[{key:'provider',label:'Provider',left:true,cell:r=>esc(r.provider)},{key:'service',label:'Service',left:true,cell:r=>r.isTotal?'<b>TOTAL</b>':esc(r.service)}];
     summary.statuses.forEach(status=>cols.push({key:`status:${normalizedKey(status)}`,label:status,cell:r=>fmtInt(r.counts[status]||0)}));
-    cols.push({key:'visits',label:'Total Visits',cell:r=>fmtInt(r.visits)},{key:'over10',label:'> 10 Business Days',cell:r=>fmtInt(r.over10)},{key:'cancel',label:'Cancellation %',cell:r=>r.isTotal?fmtPct(r.cancel):''},{key:'overallCancel',label:'Overall Cancellation %',cell:r=>r.isTotal?fmtPct(r.overallCancel):''},{key:'time',label:'Total Time',cell:r=>fmtTime(r.minutes)},{key:'units',label:'15 Min Units',cell:r=>fmtInt(r.units)});
+    cols.push({key:'visits',label:'Total Visits',cell:r=>fmtInt(r.visits)},{key:'over10',label:'> 10 Business Days',cell:r=>r.over10>0?'Yes':'No'},{key:'cancel',label:'Cancellation %',cell:r=>r.isTotal?fmtPct(r.cancel):''},{key:'overallCancel',label:'Overall Cancellation %',cell:r=>r.isTotal?fmtPct(r.overallCancel):''},{key:'time',label:'Total Time',cell:r=>fmtTime(r.minutes)},{key:'units',label:'15 Min Units',cell:r=>fmtInt(r.units)});
     TARGETS.forEach(h=>cols.push({key:`productivity:${h}`,label:`${h} Hr/Wk`,cell:r=>{if(!r.isTotal)return'';const v=r.units/(h*16);return`<span class="pct ${productivityClass(v)}">${fmtPct(v)}</span>`}}));return cols;
   }
   function visibleTableColumns(summary){const all=tableColumnDefs(summary);state.lastTableColumns=all;const visible=all.filter(c=>!state.hiddenColumns.has(c.key));return visible.length?visible:[all[0]]}
@@ -751,8 +751,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     return`<div class="chart-inline-editor" data-editor-id="${esc(cfg.id)}">
       <div class="field title-field"><label>Title</label><input class="chart-field" data-field="title" type="text" maxlength="80" value="${esc(cfg.title||'')}" placeholder="${esc(autoChartTitle(cfg))}"></div>
       <div class="field"><label>Chart type</label><select class="chart-field" data-field="type">${option('bar','Bar',cfg.type)}${option('line','Line',cfg.type,isProductivity)}${option('pie','Pie',cfg.type,isPercentage)}</select></div>
-      <div class="field"><label>Group by</label><select class="chart-field" data-field="group">${option('provider','Provider',cfg.group)}${option('service','Service',cfg.group,isProductivity)}${option('status','Status',cfg.group,isProductivity||cfg.metric==='cancellationPct')}${option('month','DOS Month',cfg.group,isProductivity)}</select></div>
-      <div class="field"><label>Metric</label><select class="chart-field" data-field="metric">${option('visits','Total Visits',cfg.metric)}${option('delivered','Delivered Visits',cfg.metric)}${option('cancellations','Cancelled Visits',cfg.metric)}${option('over10','> 10 Business Days',cfg.metric)}${option('cancellationPct','Cancellation %',cfg.metric,isPie||cfg.group==='status')}${option('units','15 Min Units',cfg.metric)}${option('hours','Total Hours',cfg.metric)}${option('productivity','Productivity %',cfg.metric,isPie||isLine||cfg.group!=='provider')}</select></div>
+      <div class="field"><label>Group by</label><select class="chart-field" data-field="group">${option('provider','Provider',cfg.group)}${option('service','Service',cfg.group,isProductivity)}${option('status','Status',cfg.group,isProductivity||cfg.metric==='cancellationPct')}${option('month','Month',cfg.group,isProductivity)}</select></div>
+      <div class="field"><label>Metric</label><select class="chart-field" data-field="metric">${option('visits','Total Visits',cfg.metric)}${option('delivered','Delivered Visits',cfg.metric)}${option('cancellations','Cancelled Visits',cfg.metric)}${option('over10','Visits > 10 Business Days',cfg.metric)}${option('cancellationPct','Cancellation %',cfg.metric,isPie||cfg.group==='status')}${option('units','15 Min Units',cfg.metric)}${option('hours','Total Hours',cfg.metric)}${option('productivity','Productivity %',cfg.metric,isPie||isLine||cfg.group!=='provider')}</select></div>
       <div class="field chart-target-field"${targetStyle}><label>Productivity target</label><select class="chart-field" data-field="target">${TARGETS.map(v=>option(String(v),`${v} Hr/Wk`,String(cfg.target))).join('')}</select></div>
       <div class="field"><label>Performers</label><select class="chart-field" data-field="rank"${isLine?' disabled':''}>${option('top','Top performers',cfg.rank)}${option('bottom','Bottom performers',cfg.rank)}${option('all','All performers',cfg.rank)}</select></div>
       <div class="field"><label>Items</label><select class="chart-field" data-field="top"${isLine||cfg.rank==='all'?' disabled':''}>${option('5','5',cfg.top)}${option('10','10',cfg.top)}${option('15','15',cfg.top)}${option('20','20',cfg.top)}${option('all','All',cfg.top)}</select></div>
@@ -869,7 +869,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   els.confirmModalCancel.addEventListener('click',()=>closeConfirmModal(false));els.confirmModalConfirm.addEventListener('click',()=>closeConfirmModal(true));els.confirmModal.addEventListener('click',e=>{if(e.target===els.confirmModal)closeConfirmModal(false)});
   els.columnsList.addEventListener('change',e=>{const input=e.target.closest('input[data-column-key]');if(!input||!state.columnDraftHidden)return;if(input.checked)state.columnDraftHidden.delete(input.dataset.columnKey);else state.columnDraftHidden.add(input.dataset.columnKey)});els.columnsShowAll.addEventListener('click',()=>{state.columnDraftHidden=new Set();renderColumnsList()});els.columnsCancel.addEventListener('click',()=>closeColumnsModal(false));els.columnsDone.addEventListener('click',()=>closeColumnsModal(true));els.columnsModal.addEventListener('click',e=>{if(e.target===els.columnsModal)closeColumnsModal(false)});
   els.pasteCancel.addEventListener('click',closePasteModal);els.pasteImport.addEventListener('click',importPastedData);els.pasteModal.addEventListener('click',e=>{if(e.target===els.pasteModal)closePasteModal()});
-  [els.monthFilter,els.providerFilter,els.serviceFilter].forEach(el=>{el.querySelector('.multi-select-trigger').addEventListener('click',()=>{const open=!el.classList.contains('open');closeAllMultiSelects(el);el.classList.toggle('open',open);el.querySelector('.multi-select-menu').hidden=!open;el.querySelector('.multi-select-trigger').setAttribute('aria-expanded',String(open))});el.querySelector('.multi-select-menu').addEventListener('change',e=>{const input=e.target.closest('input[data-value]');if(!input)return;const all=el.querySelector('input[data-value=""]');if(input.dataset.value===''){if(input.checked)el.querySelectorAll('input[data-value]:not([data-value=""])').forEach(i=>i.checked=false);else input.checked=true}else{all.checked=false;const any=[...el.querySelectorAll('input[data-value]:not([data-value=""])')].some(i=>i.checked);if(!any)all.checked=true}const allLabel=el===els.monthFilter?'All DOS Months':el===els.providerFilter?'All Providers':'All Services';el.querySelector('.multi-select-trigger').textContent=multiSummary(el,multiValues(el),allLabel);if(el===els.monthFilter)populateFilters(false);render()})});
+  [els.monthFilter,els.providerFilter,els.serviceFilter].forEach(el=>{el.querySelector('.multi-select-trigger').addEventListener('click',()=>{const open=!el.classList.contains('open');closeAllMultiSelects(el);el.classList.toggle('open',open);el.querySelector('.multi-select-menu').hidden=!open;el.querySelector('.multi-select-trigger').setAttribute('aria-expanded',String(open))});el.querySelector('.multi-select-menu').addEventListener('change',e=>{const input=e.target.closest('input[data-value]');if(!input)return;const all=el.querySelector('input[data-value=""]');if(input.dataset.value===''){if(input.checked)el.querySelectorAll('input[data-value]:not([data-value=""])').forEach(i=>i.checked=false);else input.checked=true}else{all.checked=false;const any=[...el.querySelectorAll('input[data-value]:not([data-value=""])')].some(i=>i.checked);if(!any)all.checked=true}const allLabel=el===els.monthFilter?'All Months':el===els.providerFilter?'All Providers':'All Services';el.querySelector('.multi-select-trigger').textContent=multiSummary(el,multiValues(el),allLabel);if(el===els.monthFilter)populateFilters(false);render()})});
   document.addEventListener('click',e=>{if(!e.target.closest('.multi-select'))closeAllMultiSelects()});
   document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if([els.monthFilter,els.providerFilter,els.serviceFilter].some(el=>el.classList.contains('open')))closeAllMultiSelects();else if(!els.pasteModal.hidden)closePasteModal();else if(!els.columnsModal.hidden)closeColumnsModal(false);else if(state.editingChartId)cancelChartEdit();else if(!els.confirmModal.hidden)closeConfirmModal(false)});
   els.searchInput.addEventListener('input',render);
