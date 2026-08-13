@@ -113,7 +113,7 @@ body:not(.has-report) .grid{grid-template-columns:1fr}body:not(.has-report) .pan
   <div class="topbar">
     <div class="brand">
       <h1>Provider Visit Reporting Dashboard</h1>
-      <div class="sub">Provider visit reporting from Excel or pasted data <span class="app-version">v2.0.6</span></div>
+      <div class="sub">Provider visit reporting from Excel or pasted data <span class="app-version">v2.0.7</span></div>
     </div>
     <div class="actions">
       <button class="btn primary" id="addFilesBtn" type="button">Add Excel</button>
@@ -1049,6 +1049,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     {key:'provider',label:'Provider',type:'text',cell:r=>esc(r.provider||''),sortValue:r=>r.provider||'',filterValue:r=>r.provider||''},
     {key:'dos',label:'SERVICE_DATE',type:'date',cell:r=>esc(r.dos||''),sortValue:r=>r.dos||'',filterValue:r=>r.dos||''},
     {key:'enteredOn',label:'Entered On',type:'date',cell:r=>esc(r.enteredOn||''),sortValue:r=>r.enteredOn||'',filterValue:r=>r.enteredOn||''},
+    {key:'over10BusinessDays',label:'> 10 Business Days',type:'text',cell:r=>r.over10BusinessDays?'<span class="late-yes">Yes</span>':'No',sortValue:r=>r.over10BusinessDays?'Yes':'No',filterValue:r=>r.over10BusinessDays?'Yes':'No'},
     {key:'status',label:'Status',type:'text',cell:r=>esc(r.status||''),sortValue:r=>r.status||'',filterValue:r=>r.status||''},
     {key:'location',label:'Location',type:'text',cell:r=>esc(r.location||''),sortValue:r=>r.location||'',filterValue:r=>r.location||''},
     {key:'byWhom',label:'By Whom',type:'text',cell:r=>esc(r.byWhom||''),sortValue:r=>r.byWhom||'',filterValue:r=>r.byWhom||''}
